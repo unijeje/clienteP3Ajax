@@ -1,0 +1,64 @@
+body {
+    background-color: #dce2df;
+}
+button{
+    margin-top:5px;
+}
+
+#imgCabecera{
+	width:100%;
+	height:100%;
+}
+
+/*OCULTAR MENU*/
+#menuAlquiler, #menuGestion, #menuListados, #panelMensajes
+{
+    display:none;
+}
+
+/*Ocultar alquileres*/
+#frmNuevoAlquiler, #frmModificarAlquiler, #frmBorraAlquiler
+{
+    display:none;
+}
+
+
+/*OCULTAR Autobuses*/
+#MenuGestionAutobuses
+{
+    display:none;
+}
+
+/*OCULTAR Clientes*/
+#MenuGestionClientes, #frmClienteAlta, #frmClienteBaja, #frmClienteModificar
+{
+    display:none;
+}
+/*OCULTAR Conductores*/
+#MenuGestionConductores, #frmAltaDeVacaciones, #frmBajaDeVacaciones,#frmModificarVacaciones
+{
+    display:none;
+}
+/*OCULTAR Listados*/
+#panelCuenta, #panelConductor, #frmListadoAlquileres
+{
+    display:none;
+    width:100%;
+}
+
+#panelCuenta input
+{
+    float:left;
+    margin-left: 25%;
+}
+
+.invisible{
+    display:none;
+}
+
+
+/*************/
+
+#frmClienteModificar #comboCliente, #frmClienteBaja #comboCliente {
+    background-color: #87CEFA;
+}
