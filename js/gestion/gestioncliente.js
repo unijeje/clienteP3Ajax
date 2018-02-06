@@ -46,7 +46,7 @@ function altaCliente(oEvento)
         var bInserccion=oGestion.altaCliente(oCliente);
         if(bInserccion)
         {
-            document.frmClienteAlta.reset();
+            //document.frmClienteAlta.reset();
             document.frmClienteAlta.style.display="none";
             mensaje("Cliente Insertado Correctamente");
             comboEstadoInicialClientes(); //vuelve a seleccionar el primero del combo

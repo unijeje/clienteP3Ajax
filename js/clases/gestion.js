@@ -204,7 +204,7 @@ class Gestion
     altaCliente(oCliente)
     {
         var res=false;
-        
+        /*
         if(this.buscarCliente(oCliente.dni)==null)
         {
             this._clientes.push(oCliente);
@@ -220,9 +220,37 @@ class Gestion
                 res=true;
                 this.actualizaComboCliente();
             }
-        }        
-        return res;
+        }
+        */
+
+        // Instanciar objeto Ajax
+        var oAjax = instanciarXHR();
+
+        //1. Preparar parametros con JSON
+            
+        var oCliente=  {   dni : oCliente.dni,
+                        nombre : oCliente.nombre,
+                        apellidos : oCliente.apellidos,
+                        telefono : parseInt(oCliente.tlf),
+                        correo : oCliente.correo,
+                        sexo : oCliente.sexo
+                    };
+        
+        var sDatosEnvio = "datos=" + JSON.stringify(oCliente); //convertir el objeto a JSON
+
+        //2. Configurar la llamada --> Asincrono por defecto
+        oAjax.open("POST", encodeURI("/clienteP3Ajax/php/altaCliente.php"));
+        oAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        //3. Asociar manejador de evento de la respuesta
+        oAjax.addEventListener("readystatechange", respuestaAltaCliente, false);
+
+        //4. Hacer la llamada
+        oAjax.send(sDatosEnvio);
+                
+        return true;
     }
+    
     
 
     /*Cliente no se borra de los datos, solo no se muestra a la hora de mostrar clientes actuales*/

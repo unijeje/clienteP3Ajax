@@ -42,13 +42,14 @@ function cargarDatos(ficheroXml)
     console.log(arrayAlquileres);
     */
 
-    
+    /*
     cargarClientes(arrayClientes);   
     cargarConductores(arrayConductores);
     cargarAutobuses(arrayAutobuses);
     cargarAlquileres(arrayAlquileres);
     cargarMantenimientos(arrayMantenimiento);
     cargarVacaciones(arrayVacaciones);
+    */
 }
     
 function cargarClientes(array)

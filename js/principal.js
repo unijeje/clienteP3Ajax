@@ -109,6 +109,36 @@ oBtnListadoCuenta.addEventListener("click",mostrarListadoCuenta,false);
 var oCapaListado=document.getElementById("resultadoListados");
 var oCapaListadoAlquileres=document.getElementById("frmListadoAlquileres");
 
+//AJAX
+function instanciarXHR() 
+{
+    var xhttp = null;
+
+    if (window.XMLHttpRequest) {
+        xhttp = new XMLHttpRequest();
+    } else // code for IE5 and IE6
+    {
+        xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    return xhttp;
+}
+
+function respuestaAltaCliente()
+    {
+        var oAjax = this;
+
+        // 5. Proceso la respuesta cuando llega
+        if (oAjax.readyState == 4 && oAjax.status == 200) {
+
+            sRespuesta=oAjax.responseText;
+
+            alert(sRespuesta);
+
+
+        }
+    }
+
 
 //botones panel de mensajes
 var oBtnCerrar=document.getElementById("btnCerrar");
@@ -839,7 +869,8 @@ function comboEstadoInicialAutubuses()
         oComboAutobusMantenimiento.firstChild.selected;
 
         var oAutobus=oGestion.buscarAutobus(frmAutobusModificar.comboAutobus.value);
-
+        if(oAutobus)
+        {
         frmAutobusModificar.txtAutobusMatricula.value=oAutobus.matricula;
         frmAutobusModificar.txtAutobusAsientos.value=oAutobus.asientos;
         frmAutobusModificar.txtAutobusModelo.value=oAutobus.modelo;
@@ -849,6 +880,7 @@ function comboEstadoInicialAutubuses()
         frmAutobusBaja.txtAutobusAsientos.value=oAutobus.asientos;
         frmAutobusBaja.txtAutobusModelo.value=oAutobus.modelo;
         frmAutobusBaja.txtAutobusConsumo.value=oAutobus.consumo;
+        }
     }
     else
     {
@@ -870,6 +902,10 @@ function comboEstadoInicialAutubuses()
 
         var oMantenimiento=oGestion.buscarMantenimiento(frmModificarMantenimiento.comboAutobusRevisado.value);
 
+        if(oMantenimiento)
+        {
+
+        
         frmModificarMantenimiento.txtDescripcionMantenimiento.value=oMantenimiento.descripcion;
         frmModificarMantenimiento.txtImporteMantenimiento.value=oMantenimiento.importe;
         frmModificarMantenimiento.txtMantenimientoFecha.value=oMantenimiento.fecha;
@@ -877,6 +913,8 @@ function comboEstadoInicialAutubuses()
         frmBajaMantenimiento.txtDescripcionMantenimiento.value=oMantenimiento.descripcion;
         frmBajaMantenimiento.txtImporteMantenimiento.value=oMantenimiento.importe;
         frmBajaMantenimiento.txtMantenimientoFecha.value=oMantenimiento.fecha;
+
+    }
 
      }   
 
