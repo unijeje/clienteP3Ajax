@@ -24,6 +24,10 @@ SET time_zone = "+00:00";
 
 -- --------------------------------------------------------
 
+drop database if exists clientep3_autobuses;
+create database clientep3_autobuses;
+use clientep3_autobuses
+
 --
 -- Estructura de tabla para la tabla `alquiler`
 --
