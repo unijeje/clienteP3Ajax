@@ -43,8 +43,9 @@ function altaCliente(oEvento)
 
         var oCliente=new Cliente(sDniCliente, sNombreCliente, sApellidosCliente, sTlfCliente, sCorreoCliente, sCuentaCliente, sSexoCliente);
         
-        var bInserccion=oGestion.altaCliente(oCliente);
-        if(bInserccion)
+        oGestion.altaCliente(oCliente);
+        /*
+        if(res)
         {
             //document.frmClienteAlta.reset();
             document.frmClienteAlta.style.display="none";
@@ -54,7 +55,8 @@ function altaCliente(oEvento)
         else
         {
             mensaje("Ese cliente ya existe");
-        }   
+        }  
+        */ 
     }
 }
 

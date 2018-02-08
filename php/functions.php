@@ -26,6 +26,21 @@ function ejecutaConsulta($sql)
 		return $miconexion->query($sql);
 		
 }
+
+function ejecutaConsultaArray($sql)
+{
+
+		//recibe una cadena conteniendo una instruccion SELECT y devuelve un array con la fila de datos
+		
+		$resultset=ejecutaConsulta($sql);
+		while($fila=$resultset->fetch(PDO::FETCH_ASSOC))
+		{
+			$datos[]=$fila;
+		}
+		return $datos;
+		
+
+}
 function ejecutaConsultaAccion($sql)
 {
 		/*recibe una cadena conteniendo una instruccion DML, la ejecuta y

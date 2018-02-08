@@ -109,6 +109,8 @@ oBtnListadoCuenta.addEventListener("click",mostrarListadoCuenta,false);
 var oCapaListado=document.getElementById("resultadoListados");
 var oCapaListadoAlquileres=document.getElementById("frmListadoAlquileres");
 
+
+
 //AJAX
 function instanciarXHR() 
 {
@@ -131,9 +133,20 @@ function respuestaAltaCliente()
         // 5. Proceso la respuesta cuando llega
         if (oAjax.readyState == 4 && oAjax.status == 200) {
 
-            sRespuesta=oAjax.responseText;
+            //sRespuesta=oAjax.responseText;
 
-            alert(sRespuesta);
+            //alert(sRespuesta);
+            if(parseInt(oAjax.responseText)>0)
+            {
+                //document.frmClienteAlta.reset();
+                document.frmClienteAlta.style.display="none";
+                mensaje("Cliente Insertado Correctamente");
+                comboEstadoInicialClientes(); //vuelve a seleccionar el primero del combo
+             }
+             else
+                mensaje("Ese cliente ya existe");
+            
+                
 
 
         }

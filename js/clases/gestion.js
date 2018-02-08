@@ -200,29 +200,10 @@ class Gestion
         }
         return oCliente;
     }
-    /*Mira si existe un cliente con ese DNI, si ya existe uno no se introduce y devuelve false*/
+    /*Realiza la llamada ajax con el cliente recibido, la respuesta se encargara de mostrar los mensajes correspondientes*/
     altaCliente(oCliente)
     {
-        var res=false;
-        /*
-        if(this.buscarCliente(oCliente.dni)==null)
-        {
-            this._clientes.push(oCliente);
-            res=true;
-            this.actualizaComboCliente();
-        }
-        else if(this.buscarCliente(oCliente.dni).estado==false) //si ya existe pero esta dado de baja lo da de alta otra vez
-        {
-            for(var i=0;i<this._clientes.length;i++)
-            {
-                if(oCliente.dni==this._clientes[i].dni)
-                    this._clientes[i].estado=true;
-                res=true;
-                this.actualizaComboCliente();
-            }
-        }
-        */
-
+        
         // Instanciar objeto Ajax
         var oAjax = instanciarXHR();
 
@@ -247,8 +228,9 @@ class Gestion
 
         //4. Hacer la llamada
         oAjax.send(sDatosEnvio);
-                
-        return true;
+
+
+        //return res;
     }
     
     
