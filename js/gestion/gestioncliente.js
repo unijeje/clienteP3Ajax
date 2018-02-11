@@ -16,14 +16,17 @@ oBtnDarBajaCliente.addEventListener("click", bajaCliente, false);
 var oBtnActualizarCliente=document.getElementById("btnModificarCliente");
 oBtnActualizarCliente.addEventListener("click", actualizaCliente, false);
 
+/*
 var oComboBajaCliente=document.frmClienteBaja.comboCliente;
 var oComboModificaCliente=document.frmClienteModificar.comboCliente;
 oComboBajaCliente.addEventListener("change", rellenaCamposCliente, false);
 oComboModificaCliente.addEventListener("change", rellenaCamposCliente, false);
+*/
 
-comboEstadoInicialClientes();
+//comboEstadoInicialClientes();
 
-
+var oBtnBuscarCliente=document.getElementById("buscarCliente");
+oBtnBuscarCliente.addEventListener("click", buscarCliente, false);
 
 
 function altaCliente(oEvento)

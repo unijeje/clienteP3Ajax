@@ -34,8 +34,8 @@ var oComboModificaVacaciones=document.frmModificarVacaciones.comboConductorVacac
 oComboBajaVacaciones.addEventListener("change", rellenaCamposBajaVacaciones, false);
 oComboModificaVacaciones.addEventListener("change", rellenaCamposModificarVacaciones, false);
 
-comboEstadoInicialConductores();
-estadoInicialComboVacaciones();
+//comboEstadoInicialConductores();
+//estadoInicialComboVacaciones();
 
 function altaConductor(oEvento){
 	var oE= oEvento || windows.event;

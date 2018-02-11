@@ -49,7 +49,7 @@ oRadioMantenimientoSeleccion2=document.getElementById("rdMantenimientoSeleccion2
 oRadioMantenimientoSeleccion2.addEventListener("click", muestraFormsMantenimiento2, false);
 
 
-comboEstadoInicialAutubuses();
+//comboEstadoInicialAutubuses();
 
 function fAltaAutobus(oEvento){
 

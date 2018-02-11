@@ -2,7 +2,7 @@
 //objeto
 class Gestion
 {
-    constructor(iNumCuenta)
+    constructor()
     {
         //atributos
         this._alquileres=[];
@@ -11,7 +11,7 @@ class Gestion
         this._conductores=[];
 		this._vacaciones=[];
         this._mantenimientos=[];
-        this.cuentaEmpresa=new Cuenta(iNumCuenta);
+        //this.cuentaEmpresa=new Cuenta(iNumCuenta);
         this._cuentas=[];
         //cuenta/factura falta
     }
@@ -220,7 +220,7 @@ class Gestion
         var sDatosEnvio = "datos=" + JSON.stringify(oCliente); //convertir el objeto a JSON
 
         //2. Configurar la llamada --> Asincrono por defecto
-        oAjax.open("POST", encodeURI("/clienteP3Ajax/php/altaCliente.php"));
+        oAjax.open("POST", encodeURI("php/altaCliente.php"));
         oAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
         //3. Asociar manejador de evento de la respuesta

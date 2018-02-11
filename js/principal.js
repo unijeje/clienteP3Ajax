@@ -1,6 +1,6 @@
 //var oGestion=new Gestion();
 var oGestion;
-cargarDatos("datos.xml"); 
+//cargarDatos("datos.xml"); 
 
 //botones principales
 var oBtnAlquiler=document.getElementById("btnAlquiler");
@@ -110,55 +110,11 @@ var oCapaListado=document.getElementById("resultadoListados");
 var oCapaListadoAlquileres=document.getElementById("frmListadoAlquileres");
 
 
-
-//AJAX
-function instanciarXHR() 
-{
-    var xhttp = null;
-
-    if (window.XMLHttpRequest) {
-        xhttp = new XMLHttpRequest();
-    } else // code for IE5 and IE6
-    {
-        xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-
-    return xhttp;
-}
-
-function respuestaAltaCliente()
-    {
-        var oAjax = this;
-
-        // 5. Proceso la respuesta cuando llega
-        if (oAjax.readyState == 4 && oAjax.status == 200) {
-
-            //sRespuesta=oAjax.responseText;
-
-            //alert(sRespuesta);
-            if(parseInt(oAjax.responseText)>0)
-            {
-                //document.frmClienteAlta.reset();
-                document.frmClienteAlta.style.display="none";
-                mensaje("Cliente Insertado Correctamente");
-                comboEstadoInicialClientes(); //vuelve a seleccionar el primero del combo
-             }
-             else
-                mensaje("Ese cliente ya existe");
-            
-                
-
-
-        }
-    }
-
-
 //botones panel de mensajes
 var oBtnCerrar=document.getElementById("btnCerrar");
 oBtnCerrar.addEventListener("click", cerrar, false);
 var oPanelMensajes=document.getElementById("panelMensajes");
 var oPanelMensajeTexto=document.getElementById("pTextoMensaje");
-
 
 //ocultar
 
@@ -485,6 +441,13 @@ function falloValidacion(sTexto, oInput)
         oAnterior.textContent=sTexto;
     else
         oInput.parentNode.appendChild(oDiv);
+}
+
+function comboResultados(oInput, sResultados)
+{
+    console.log(oInput.parentNode.children);
+    //pasarle un select como parametro, en ese select crear combos con los objetos resultados que se le han pasado
+    //oInput.parentNode.lastChild.appendChild()
 }
 
 function falloValidacionAgregar(sTexto, oInput)

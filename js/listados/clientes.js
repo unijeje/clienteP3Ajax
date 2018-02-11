@@ -9,7 +9,7 @@ function listadoClientes()
 	 //var sDatosEnvio = "par=hola";
 
 	 //2. Configurar la llamada --> Asincrono por defecto
-	 oAjax.open("GET", "/clienteP3Ajax/php/listadoClientes.php");
+	 oAjax.open("GET", "php/listadoClientes.php");
 
 	 //3. Asociar manejador de evento de la respuesta
 	 oAjax.addEventListener("readystatechange", respuestaListadoCliente, false);

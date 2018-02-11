@@ -41,7 +41,7 @@ oBajaAlquiler.addEventListener("click", bajaAlquiler, false);
 var oModificarAlquiler=document.getElementById("btnModificarAlquiler");
 oModificarAlquiler.addEventListener("click", modificarAlquiler, false);
 
-comboEstadoInicialAlquileres();
+//comboEstadoInicialAlquileres();
 
 
 function altaAlquiler(oEvento)
