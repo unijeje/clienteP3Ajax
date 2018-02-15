@@ -1,5 +1,5 @@
-//var oGestion=new Gestion();
-var oGestion;
+var oGestion=new Gestion();
+//var oGestion;
 //cargarDatos("datos.xml"); 
 
 //botones principales
@@ -168,6 +168,7 @@ function mostrarMenuListados()
 
 function mostrarFormNuevoAlquiler()
 {
+    mostrarMenuAlquiler();
     document.frmModificarAlquiler.style.display="none";
     document.frmBorraAlquiler.style.display="none";
     document.frmNuevoAlquiler.style.display="block";

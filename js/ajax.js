@@ -28,7 +28,6 @@ function respuestaAltaCliente()
             //document.frmClienteAlta.reset();
             document.frmClienteAlta.style.display="none";
             mensaje("Cliente Insertado Correctamente");
-            comboEstadoInicialClientes(); //vuelve a seleccionar el primero del combo
             }
             else
             mensaje("Ese cliente ya existe");
