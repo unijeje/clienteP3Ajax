@@ -4,7 +4,7 @@ include("functions.php");
 
 $dni=$_GET['datos'];
 
-$sql="SELECT dni,nombre,apellidos,telefono,correo,sexo from cliente where dni like '".$dni."%' ;";
+$sql="SELECT dni,nombre,apellidos,telefono,correo,sexo from cliente;";
 
 //echo $sql;
 

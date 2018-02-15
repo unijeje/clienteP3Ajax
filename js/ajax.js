@@ -25,21 +25,20 @@ function respuestaAltaCliente()
         //alert(sRespuesta);
         if(parseInt(oAjax.responseText)>0)
         {
-            //document.frmClienteAlta.reset();
+            document.frmClienteAlta.reset();
             document.frmClienteAlta.style.display="none";
             mensaje("Cliente Insertado Correctamente");
             }
             else
             mensaje("Ese cliente ya existe");
-        
-            
-
-
     }
 }
 
 function buscarCliente()
 {
+
+
+    
     
     var oAjax = instanciarXHR();
 
@@ -56,6 +55,7 @@ function buscarCliente()
 
     //4. Hacer la llamada
     oAjax.send(null);
+    
 
 }
 
@@ -64,16 +64,14 @@ function respuestaBusquedaCliente()
     var oAjax = this;
 
     if (oAjax.readyState == 4 && oAjax.status == 200) {
-        
-        var oDiv=document.createElement("div");
-        oDiv.setAttribute("id", "clientebusqueda");
-        var oCampo=document.frmClienteBaja.txtClienteDni;
-        oCampo.parentNode.appendChild(oDiv);
 
-        oRespuesta=JSON.parse(oAjax.responseText);
-        //for(var i=0;i<oRespuesta.length;i++)
-        
-        comboResultados(oCampo, oRespuesta);
+        var oRespuesta=JSON.parse(oAjax.responseText);
+
+        var arrayDNI=[];
+        for(var i=0;i<oRespuesta.length;i++)
+            arrayDNI.push(oRespuesta[i].dni);
+
+       $("#frmClienteBaja #txtClienteDni").autocomplete({source: arrayDNI});
         
 
     }

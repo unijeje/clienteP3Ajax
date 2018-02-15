@@ -1,0 +1,60 @@
+<form name="frmClienteModificar" id="frmClienteModificar" class="form-horizontal"> <!-- Modificar cliente -->
+	<h3 class="col-md-offset-5 col-sm-offset-5">Modificar Cliente</h3>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="tipoMMulta">Seleccione Cliente</label>
+		<div class="col-md-6 col-sm-8">
+			<select id="comboCliente" name="comboCliente" class="form-control">
+				<!--se rellenan con actualizaComboCliente al dar de alta uno nuevo -->
+			</select>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtClienteDni">Nif del Cliente:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtClienteDni" name="txtClienteDni" placeholder="NIF" class="form-control input-md" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtClienteNombre">Nombre del Cliente:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtClienteNombre" name="txtClienteNombre" placeholder="NOMBRE" class="form-control input-md" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtClienteApellidos">Apellidos del Cliente:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtClienteApellidos" name="txtClienteApellidos" placeholder="Apellidos" class="form-control input-md" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtClienteTelefono">Teléfono del Cliente:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtClienteTelefono" name="txtClienteTelefono" placeholder="Telefono" class="form-control input-md" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtClienteCorreo">Correo del Cliente:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtClienteCorreo" name="txtClienteCorreo" placeholder="Correo" class="form-control input-md" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtClienteCuenta">Número de cuenta del Cliente:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtClienteCuenta" name="txtClienteCuenta" placeholder="Cuenta" class="form-control input-md" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="radioClienteSexo">Sexo:</label>  
+		<div class="col-md-6 col-sm-8">
+			<label class="radio-inline"><input id="radioClienteSexo" name="radioClienteSexo" value="Masculino" type="radio"/>Masculino</label>
+			<label class="radio-inline"><input id="radioClienteSexo" name="radioClienteSexo" value="Femenino" type="radio"/>Femenino</label>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<div class="col-md-12 col-sm-12">
+		<input type="button" id="btnModificarCliente" name="btnModificarCliente" class="btn btn-block btn-primary" value="Modificar datos" />
+		</div>
+	</div>
+</form>

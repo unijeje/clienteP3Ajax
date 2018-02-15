@@ -11,36 +11,12 @@ button{
 }
 
 /*OCULTAR MENU*/
-#menuAlquiler, #menuGestion, #menuListados, #panelMensajes
+#resultadoListados, #panelMensajes
 {
     display:none;
 }
 
-/*Ocultar alquileres*/
-#frmNuevoAlquiler, #frmModificarAlquiler, #frmBorraAlquiler
-{
-    display:none;
-}
-
-
-/*OCULTAR Autobuses*/
-#MenuGestionAutobuses
-{
-    display:none;
-}
-
-/*OCULTAR Clientes*/
-#MenuGestionClientes, #frmClienteAlta, #frmClienteBaja, #frmClienteModificar
-{
-    display:none;
-}
-/*OCULTAR Conductores*/
-#MenuGestionConductores, #frmAltaDeVacaciones, #frmBajaDeVacaciones,#frmModificarVacaciones
-{
-    display:none;
-}
-/*OCULTAR Listados*/
-#panelCuenta, #panelConductor, #frmListadoAlquileres
+#panelCuenta, #panelConductor
 {
     display:none;
     width:100%;

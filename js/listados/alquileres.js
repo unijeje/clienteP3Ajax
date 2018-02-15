@@ -1,6 +1,4 @@
-//
-var oComboAlquilerCliente=document.frmListadoAlquileres.comboCliente;
-oComboAlquilerCliente.addEventListener("change", listadoAlquileres,false);
+
 
 function listadoAlquileres(){
 	

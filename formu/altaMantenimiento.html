@@ -1,0 +1,45 @@
+<!-- Alta Mantenimiento -->
+				<form name="frmAltaMantenimiento" id="frmAltaMantenimiento" class="form-horizontal"> 
+					<div class="form-group">
+						<label class="col-md-3 col-sm-3 control-label" for="comboAutobus">Seleccione Autobus</label>
+						<div class="col-md-6 col-sm-8">
+							<select id="comboAutobus" name="comboAutobus" class="form-control ">
+								<!--se rellenan con actualizaComboAutobus al dar de alta uno nuevo -->
+							</select>
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<label class="col-md-3 col-sm-3 control-label" for="txtDescripcionMantenimiento">Descripción:</label>  
+						<div class="col-md-6 col-sm-8">
+							<input id="txtDescripcionMantenimiento" name="txtDescripcionMantenimiento" placeholder="Descripcion" class="form-control input-md" type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 col-sm-3 control-label" for="txtImporteMantenimiento">Importe:</label>  
+						<div class="col-md-6 col-sm-8">
+							<input id="txtImporteMantenimiento" name="txtImporteMantenimiento" placeholder="Importe" class="form-control input-md" type="text">
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-md-3 col-sm-3 control-label" for="txtMantenimientoFecha">Fecha:</label>
+						<div class="col-md-6 col-sm-8">
+							<input id="txtAltaMantenimientoFecha" name="txtMantenimientoFecha" placeholder="mm/dd/yyyy" class="form-control input-md" type="date">
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						
+						<div class="col-sm-offset-2 col-md-offset-4 col-md-3 col-sm-3">
+							<input type="button" id="btnAltaMantenimiento" name="btnAltaMantenimiento" class="btn btn-block btn-primary" value="Dar de Alta" />
+						</div>
+			
+						<div class="col-md-3 col-sm-3">
+							<input type="reset" id="btnLimpiarCampos" name="btnLimpiarCampos" class="btn btn-block btn-danger" value="Limpiar Campos" />
+						</div>
+					</div>
+					
+
+				</form>

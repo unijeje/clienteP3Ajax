@@ -1,33 +1,24 @@
 
-/*datos prueba
-var oCliente01=new Cliente("123", "nombre", "ape", "98765", "correo@gmail.com", "abc", "m");
-var oCliente02=new Cliente("1234", "nombre2", "ape2", "298765", "correo1@gmail.com", "abdc", "f");
-oGestion.altaCliente(oCliente01);
-oGestion.altaCliente(oCliente02);
-/*DatosPrueba*/
 
-
+/*
 var oBtnDarAltaCliente=document.getElementById("btnAltaCliente");
 oBtnDarAltaCliente.addEventListener("click", altaCliente, false);
-
 var oBtnDarBajaCliente=document.getElementById("btnBajaCliente");
 oBtnDarBajaCliente.addEventListener("click", bajaCliente, false);
 
+/*
 var oBtnActualizarCliente=document.getElementById("btnModificarCliente");
 oBtnActualizarCliente.addEventListener("click", actualizaCliente, false);
-
-/*
-var oComboBajaCliente=document.frmClienteBaja.comboCliente;
-var oComboModificaCliente=document.frmClienteModificar.comboCliente;
-oComboBajaCliente.addEventListener("change", rellenaCamposCliente, false);
-oComboModificaCliente.addEventListener("change", rellenaCamposCliente, false);
 */
 
-//comboEstadoInicialClientes();
 
+//comboEstadoInicialClientes();
+/*
 var oBtnBuscarCliente=document.getElementById("buscarCliente");
 oBtnBuscarCliente.addEventListener("click", buscarCliente, false);
+*/
 
+buscarCliente();
 
 function altaCliente(oEvento)
 {
@@ -41,25 +32,12 @@ function altaCliente(oEvento)
         var sApellidosCliente=frmClienteAlta.txtClienteApellidos.value.trim();
         var sTlfCliente=frmClienteAlta.txtClienteTelefono.value.trim();
         var sCorreoCliente=frmClienteAlta.txtClienteCorreo.value.trim();
-        var sCuentaCliente=frmClienteAlta.txtClienteCuenta.value.trim();
         var sSexoCliente=frmClienteAlta.radioClienteSexo.value;
 
-        var oCliente=new Cliente(sDniCliente, sNombreCliente, sApellidosCliente, sTlfCliente, sCorreoCliente, sCuentaCliente, sSexoCliente);
+        var oCliente=new Cliente(sDniCliente, sNombreCliente, sApellidosCliente, sTlfCliente, sCorreoCliente, sSexoCliente);
         
         oGestion.altaCliente(oCliente);
-        /*
-        if(res)
-        {
-            //document.frmClienteAlta.reset();
-            document.frmClienteAlta.style.display="none";
-            mensaje("Cliente Insertado Correctamente");
-            comboEstadoInicialClientes(); //vuelve a seleccionar el primero del combo
-        }
-        else
-        {
-            mensaje("Ese cliente ya existe");
-        }  
-        */ 
+
     }
 }
 
@@ -159,23 +137,7 @@ function validarCliente(oForm)
         falloValidacion("", oForm.txtClienteCorreo);
     }
 
-    //Cuenta
-    var sCuentaCliente=oForm.txtClienteCuenta.value.trim();
-    oForm.txtClienteCuenta.value==oForm.txtClienteCuenta.value.trim();
-    if(!oExpRegularNumCuenta.test(sCuentaCliente))
-    {
-        oForm.txtClienteCuenta.parentNode.parentNode.classList.add("has-error");
-        if(bValidacion)
-            oForm.txtClienteCuenta.focus();
-        sError="El numero de cuenta tiene que tener 20 dígitos";
-        falloValidacion(sError, oForm.txtClienteCuenta);
-        bValidacion=false;
-    }
-    else
-    {
-        oForm.txtClienteCuenta.parentNode.parentNode.classList.remove("has-error");
-        falloValidacion("", oForm.txtClienteCuenta);
-    }
+
     //Genero
     var sSexoCliente=oForm.radioClienteSexo.value;
     var bSexoCliente=validarRadio(oForm.radioClienteSexo);
@@ -209,7 +171,7 @@ function bajaCliente()
         {
             mensaje("Cliente "+sDniCliente+" dado de baja correctamente");
             document.frmClienteBaja.style.display="none";
-            comboEstadoInicialClientes(); //vuelve a seleccionar el primero del combo
+          
         }
         else
             mensaje("Error al dar de baja: "+sDniCliente);
@@ -243,7 +205,7 @@ function actualizaCliente(oEvento)
         else
             mensaje("Ya existe un cliente con ese DNI");
         
-        comboEstadoInicialClientes();
+        
     }
     
     
