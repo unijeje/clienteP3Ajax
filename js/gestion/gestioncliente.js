@@ -18,7 +18,7 @@ var oBtnBuscarCliente=document.getElementById("buscarCliente");
 oBtnBuscarCliente.addEventListener("click", buscarCliente, false);
 */
 
-
+var oFormCliente;
 
 function altaCliente(oEvento)
 {
@@ -164,12 +164,15 @@ function bajaCliente()
     var oCliente=oGestion.buscarCliente(sDniCliente);
     if(oCliente==null)
         mensaje("Cliente con el DNI: "+sDniCliente+" no encontrado");
+    else if(oCliente.estado==false)
+        mensaje("Ese cliente ya ha sido dado de baja");
     else
     {
         var bBaja=oGestion.bajaCliente(oCliente);
         if(bBaja)
         {
             mensaje("Cliente "+sDniCliente+" dado de baja correctamente");
+            document.frmClienteBaja.reset();
             document.frmClienteBaja.style.display="none";
           
         }
@@ -186,24 +189,20 @@ function actualizaCliente(oEvento)
     var oForm=oE.target.parentNode.parentNode.parentNode; //recupera el formulario padre sobre el que esta el boton
     if(validarCliente(oForm))
     {
-        var sDniclienteAntiguo=frmClienteModificar.comboCliente.value;
+        /*
         var sDniCliente=frmClienteModificar.txtClienteDni.value.trim();
         var sNombreCliente=frmClienteModificar.txtClienteNombre.value.trim();
         var sApellidosCliente=frmClienteModificar.txtClienteApellidos.value.trim();
         var sTlfCliente=frmClienteModificar.txtClienteTelefono.value.trim();
         var sCorreoCliente=frmClienteModificar.txtClienteCorreo.value.trim();
-        var sCuentaCliente=frmClienteModificar.txtClienteCuenta.value.trim();
         var sSexoCliente=frmClienteModificar.radioClienteSexo.value.trim();
+        */
+       var sDatos=$("#frmClienteModificar").serialize();
 
-        var oNuevoCliente=new Cliente(sDniCliente, sNombreCliente, sApellidosCliente, sTlfCliente, sCorreoCliente, sCuentaCliente, sSexoCliente);
-        var bActualizacion=oGestion.modificarCliente(oNuevoCliente, sDniclienteAntiguo);
-        if(bActualizacion)
-        {
-            mensaje("Cliente actualizado correctamente");
+        //var oNuevoCliente=new Cliente(sDniCliente, sNombreCliente, sApellidosCliente, sTlfCliente, sCorreoCliente, sSexoCliente);
         
-        }
-        else
-            mensaje("Ya existe un cliente con ese DNI");
+        oGestion.modificarCliente(sDatos);
+        
         
         
     }
@@ -211,20 +210,42 @@ function actualizaCliente(oEvento)
     
 }
 
-function rellenaCamposCliente(oEvento) //actualiza
+function rellenaCamposCliente(oEvento) //actualiza campos usando el dni del campo txtClienteDni del formulario del que se le ha enviado
 {
-    var oE = oEvento || windows.event;
+    var oE = oEvento || window.event;
     var oForm=oE.target.parentNode.parentNode.parentNode; //recupera el formulario padre sobre el que esta el combo
-    //console.log(oForm.name);
-    var oCliente=oGestion.buscarCliente(oForm.comboCliente.value);//recupera el conductor a traves del DNI
-
-    oForm.txtClienteDni.value=oCliente.dni;
-    oForm.txtClienteNombre.value=oCliente.nombre;
-    oForm.txtClienteApellidos.value=oCliente.apellidos;
-    oForm.txtClienteTelefono.value=oCliente.tlf;
-    oForm.txtClienteCorreo.value=oCliente.correo;
-    oForm.txtClienteCuenta.value=oCliente.numCuenta;
-    oForm.txtClienteSexo.value=oCliente.sexo;
+    
+    var oCliente=oGestion.buscarCliente(oForm.txtClienteDni.value);//recupera el conductor a traves del DNI
+    //console.log(oForm);
+    if(oCliente)
+    {
+        oForm.txtClienteDni.value=oCliente.dni;
+        oForm.txtClienteNombre.value=oCliente.nombre;
+        oForm.txtClienteApellidos.value=oCliente.apellidos;
+        oForm.txtClienteTelefono.value=oCliente.tlf;
+        oForm.txtClienteCorreo.value=oCliente.correo;
+        if(oForm.id=="frmClienteModificar")
+        {
+            //selecciona el radio del sexo correspondiente
+            $('input:radio[id="radioClienteSexo"]').filter('[value="'+oCliente.sexo+'"]').attr('checked', true);
+        }
+        else
+        { 
+            oForm.txtClienteSexo.value=oCliente.sexo;
+        }
+        
+    }
+    else
+    {
+        mensaje("No se encuentra ese DNI");
+        //oForm.txtClienteDni.value="";
+        oForm.txtClienteNombre.value="";
+        oForm.txtClienteApellidos.value="";
+        oForm.txtClienteTelefono.value="";
+        oForm.txtClienteCorreo.value="";
+        oForm.txtClienteSexo.value="";
+    }
+    
 }
 
 

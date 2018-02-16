@@ -2,13 +2,13 @@
 
 include("functions.php");
 
-$dni=$_GET['datos'];
 
-$sql="SELECT dni,nombre,apellidos,telefono,correo,sexo from cliente;";
+$sql="SELECT dni from cliente;";
 
 //echo $sql;
 
 $datos=ejecutaConsultaArray($sql);
+
 
 echo json_encode($datos);
 

@@ -28,31 +28,25 @@ function respuestaAltaCliente()
             document.frmClienteAlta.reset();
             document.frmClienteAlta.style.display="none";
             mensaje("Cliente Insertado Correctamente");
-            buscarCliente();
+            buscarClientes();
             }
             else
             mensaje("Ese cliente ya existe");
     }
 }
 
-function buscarCliente()
+function buscarClientes()
 {
 
-
-    
-    
     var oAjax = instanciarXHR();
 
     //1. Preparar parametros
-    var sDNI=document.frmClienteBaja.txtClienteDni.value.trim();
-
-    var sDatosEnvio = "datos=" + sDNI;
 
     //2. Configurar la llamada --> Asincrono por defecto
-    oAjax.open("GET", encodeURI("php/buscarCliente.php?" + sDatosEnvio));
+    oAjax.open("GET", encodeURI("php/buscarCliente.php"));
 
     //3. Asociar manejador de evento de la respuesta
-    oAjax.addEventListener("readystatechange", respuestaBusquedaCliente, false);
+    oAjax.addEventListener("readystatechange", respuestaAutoCompleteCliente, false);
 
     //4. Hacer la llamada
     oAjax.send(null);
@@ -60,20 +54,36 @@ function buscarCliente()
 
 }
 
-function respuestaBusquedaCliente()
+function respuestaAutoCompleteCliente()
 {
     var oAjax = this;
 
     if (oAjax.readyState == 4 && oAjax.status == 200) {
-
         var oRespuesta=JSON.parse(oAjax.responseText);
 
+
+        
         var arrayDNI=[];
         for(var i=0;i<oRespuesta.length;i++)
             arrayDNI.push(oRespuesta[i].dni);
 
        $("#frmClienteBaja #txtClienteDni").autocomplete({source: arrayDNI});
-        
+       $("#frmClienteModificar #txtClienteDni").autocomplete({source: arrayDNI});
 
+    }
+}
+
+function respuestaModificarCliente(sDatosDevuelto, sStatus, oAjax)
+{
+    if(sStatus=="success" && sDatosDevuelto=="Exito")
+    {
+        mensaje("Cliente actualizado correctamente");
+        document.frmClienteModificar.reset();
+        document.frmClienteModificar.style.display="none";
+        buscarClientes();
+    }
+    else
+    {
+        mensaje("No se encontro el cliente");
     }
 }

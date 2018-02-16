@@ -18,7 +18,8 @@ function mostrarFormulario(sForm)
 function cargaAltaCliente()
 {
     mostrarFormulario("frmClienteAlta");
-    // Verifico si ya he cargado el formulario antes
+    // Verifico si ya he cargado el formulario antes, si lo ha cargado antes lo muestra. Si no lo ha cargado antes trae el formulario y mira si ya se habia traido el codigo js correspondiente
+    // si se ha traido el codigo javascript de otro formulario solo asigna eventlistener, si no se trae el js
     if ($('#frmClienteAlta').length == 0) {
         $("<div>").appendTo('#formulario').load("formu/altaCliente.html", function()
         {
@@ -53,17 +54,20 @@ function cargaBajaCliente()
         {
             if(bGestionClienteCargado)
             {
-                buscarCliente();
+                buscarClientes();
                 var oBtnDarBajaCliente=document.getElementById("btnBajaCliente");
                 oBtnDarBajaCliente.addEventListener("click", bajaCliente, false);
+                document.frmClienteBaja.buscarCliente.addEventListener("click", rellenaCamposCliente, false);
             }
             else
             {
             $.getScript("js/gestion/gestionCliente.js", function(){
                 bGestionClienteCargado=true;
-                buscarCliente();
+                buscarClientes();
                 var oBtnDarBajaCliente=document.getElementById("btnBajaCliente");
                 oBtnDarBajaCliente.addEventListener("click", bajaCliente, false);
+                //document.frmClienteBaja.txtClienteDni.addEventListener("change", rellenaCamposCliente, false);
+                document.frmClienteBaja.buscarCliente.addEventListener("click", rellenaCamposCliente, false);
                 });
             }
         });
@@ -83,15 +87,19 @@ function cargaModificaCliente()
         {
             if(bGestionClienteCargado)
             {
+                buscarClientes();
                 var oBtnActualizarCliente=document.getElementById("btnModificarCliente");
                 oBtnActualizarCliente.addEventListener("click", actualizaCliente, false);
+                document.frmClienteModificar.buscarCliente.addEventListener("click", rellenaCamposCliente, false);
             }
             else
             {
             $.getScript("js/gestion/gestionCliente.js", function(){
                 bGestionClienteCargado=true;
+                buscarClientes();
                 var oBtnActualizarCliente=document.getElementById("btnModificarCliente");
                 oBtnActualizarCliente.addEventListener("click", actualizaCliente, false);
+                document.frmClienteModificar.buscarCliente.addEventListener("click", rellenaCamposCliente, false);
                 });
             }
         });

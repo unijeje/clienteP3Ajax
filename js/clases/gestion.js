@@ -189,16 +189,36 @@ class Gestion
 
     //clientes
 
-    /*Comprueba con DNI si existe ese cliente en los datos */
+    /*Comprueba con DNI si existe ese cliente en la base de datos */
     buscarCliente(sDni)
     {
         var oCliente=null;
-        for(var i=0;i<this._clientes.length && oCliente==null;i++)
-        {
-            if(sDni==this._clientes[i].dni)
-                oCliente=this._clientes[i];
-        }
+        
+        var sDatos="dni="+sDni;
+
+        //se hace llamada asyncrona para que espere a la respuesta antes de hacer el return
+        $.ajax({
+            url :"php/buscarClienteDni.php",
+            async : false,
+            cache : false, 
+            method : "GET", 
+            dataType : "json",
+            data : sDatos,
+            complete : function(oDatosDevuelto, sStatus)
+            {
+                // si se devuelve un resultado correcto se envia el cliente devuelta
+                if(sStatus=="success" && oDatosDevuelto.responseJSON.dni!=null)
+                {    oCliente=new Cliente(oDatosDevuelto.responseJSON.dni, oDatosDevuelto.responseJSON.nombre, oDatosDevuelto.responseJSON.apellidos,
+                    oDatosDevuelto.responseJSON.telefono, oDatosDevuelto.responseJSON.correo, oDatosDevuelto.responseJSON.sexo);
+                    if(oDatosDevuelto.responseJSON.estado==false)
+                        oCliente.estado=oDatosDevuelto.responseJSON.estado;
+                    //console.log(oCliente);
+                }
+            }
+        });
+
         return oCliente;
+        
     }
     /*Realiza la llamada ajax con el cliente recibido, la respuesta se encargara de mostrar los mensajes correspondientes*/
     altaCliente(oCliente)
@@ -238,40 +258,30 @@ class Gestion
     /*Cliente no se borra de los datos, solo no se muestra a la hora de mostrar clientes actuales*/
     bajaCliente(oCliente)
     {
+        var sDatos="dni="+oCliente.dni;
         var res=false;//no se ha encontrado
-        var oCliente=this.buscarCliente(oCliente.dni);
-        if(oCliente!=null)
-        {
-            oCliente.estado=false;
-            res=true;//se ha dado de baja
-            this.actualizaComboCliente();
-        }
+        $.ajax({
+            url :"php/bajaCliente.php",
+            async : false,
+            cache : false, 
+            method : "POST", 
+            dataType : "text",
+            data : sDatos,
+            complete : function(sDatosDevuelto, sStatus)
+            {
+                if(sDatosDevuelto.responseText=="Exito")
+                    res=true;
+            }
+        });
+
         return res;
     }
-    /*Recibe nuevo Cliente y el DNI antiguo de un combo, busca el cliente y lo reemplaza con el nuevo, comprobando DNI*/
-    modificarCliente(oCliente, dniAntiguo)
+    /*No se modifica el dni*/
+    modificarCliente(sDatos)
     {
-        var res=true;
-
-        //comprobar nuevo DNI
-        if(this.buscarCliente(oCliente.dni)!=null && oCliente.dni!=dniAntiguo)
-         {
-            res=false;
-            oCliente.dni=dniAntiguo;
-         }   
-        //si el dni es incorrecto se deja el mismo que tenia antes y se avisa aunque se cambian los otros datos
-        for(var i=0;i<this._clientes.length;i++)
-        {
-            if(this._clientes[i].dni==dniAntiguo)
-            {
-                //console.log(i);                    
-                this._clientes[i]=oCliente;
-                this.actualizaComboCliente();
-                
-            }
-
-        }
-        return res;
+        //console.log(sDatos);
+        $.get("php/modificarCliente.php",sDatos,respuestaModificarCliente,"text");
+       
        
     }
     /*actualiza los select con los clientes, no muy eficiente pero funciona para todos los casos*/
