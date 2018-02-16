@@ -3,7 +3,7 @@
 include("functions.php");
 
 
-$sql="SELECT dni from cliente;";
+$sql="SELECT dni from cliente where estado=true;";
 
 //echo $sql;
 

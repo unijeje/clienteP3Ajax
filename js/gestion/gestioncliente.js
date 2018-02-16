@@ -174,7 +174,7 @@ function bajaCliente()
             mensaje("Cliente "+sDniCliente+" dado de baja correctamente");
             document.frmClienteBaja.reset();
             document.frmClienteBaja.style.display="none";
-          
+            buscarClientes();
         }
         else
             mensaje("Error al dar de baja: "+sDniCliente);

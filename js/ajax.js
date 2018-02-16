@@ -87,3 +87,30 @@ function respuestaModificarCliente(sDatosDevuelto, sStatus, oAjax)
         mensaje("No se encontro el cliente");
     }
 }
+
+//recuperar desde la tabla de mostrar
+function recuperarCliente(oEvento)
+{
+    var oE=oEvento ||window.event;
+
+    //console.log(oE.target.parentNode.parentNode);
+    var sDni=oE.target.parentNode.parentNode.cells[0].textContent;
+    
+    var sDatos="dni="+sDni;
+
+    $.post("php/reactivarCliente.php",sDatos,function(sDatosDevuelto, sStatus, oAjax){
+        //console.log(sDatosDevuelto);
+        if(sStatus=="success" && sDatosDevuelto=="Exito")
+        {
+            listadoClientes();
+            buscarClientes();
+        }
+
+        
+    },"text");
+
+    
+   
+
+
+}

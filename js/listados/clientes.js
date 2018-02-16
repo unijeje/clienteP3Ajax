@@ -43,6 +43,7 @@ function respuestaListadoCliente()
 		cabeceras[6]="Estado";
 		var oCelda;
 		var oTexto;
+		
 
 		var oTabla=document.createElement("TABLE");
 		var oFila=oTabla.insertRow();
@@ -56,6 +57,7 @@ function respuestaListadoCliente()
 		}
 
 		for ( var i=0;i<oFilas.length;i++){
+			var sBotonRecuperar="";
 			oFila=oTabla.insertRow(1);
 			oCelda=oFila.insertCell();
 			oTexto=document.createTextNode(oFilas[i].dni);
@@ -76,13 +78,22 @@ function respuestaListadoCliente()
 			oTexto=document.createTextNode(oFilas[i].sexo);
 			oCelda.appendChild(oTexto);
 			oCelda=oFila.insertCell();
-			if(oFilas[i].estado)// para que no salga true o false en la tabla
+			if(oFilas[i].estado>0)// para que no salga true o false en la tabla
 				oTexto=document.createTextNode("Activo");
 			else
+			{
 				oTexto=document.createTextNode("Baja");
+
+				sBotonRecuperar='<button id="recuperarCliente" type="button" class="btn btn-info"><span class="glyphicon glyphicon-plus-sign"></span></button>';
+			}	
+			//console.log(oFila);
 	
 			oCelda.appendChild(oTexto);
+			oFila.innerHTML+="<td>"+sBotonRecuperar+"</td>";
 			oCelda=oFila.insertCell();
+
+			
+		
 		}
 
 		oTabla.classList.add("table");
@@ -90,5 +101,8 @@ function respuestaListadoCliente()
 		oTabla.classList.add("text-center");
 		oCapaListado.appendChild(oTabla);
 
+		var oBotones=document.querySelectorAll("#recuperarCliente");
+		for(var i=0;i<oBotones.length;i++)
+			oBotones[i].addEventListener("click", recuperarCliente, false);
 	}
 }
