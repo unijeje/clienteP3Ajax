@@ -18,7 +18,7 @@ var oBtnBuscarCliente=document.getElementById("buscarCliente");
 oBtnBuscarCliente.addEventListener("click", buscarCliente, false);
 */
 
-buscarCliente();
+
 
 function altaCliente(oEvento)
 {

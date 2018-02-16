@@ -53,6 +53,7 @@ function cargaBajaCliente()
         {
             if(bGestionClienteCargado)
             {
+                buscarCliente();
                 var oBtnDarBajaCliente=document.getElementById("btnBajaCliente");
                 oBtnDarBajaCliente.addEventListener("click", bajaCliente, false);
             }
@@ -60,6 +61,7 @@ function cargaBajaCliente()
             {
             $.getScript("js/gestion/gestionCliente.js", function(){
                 bGestionClienteCargado=true;
+                buscarCliente();
                 var oBtnDarBajaCliente=document.getElementById("btnBajaCliente");
                 oBtnDarBajaCliente.addEventListener("click", bajaCliente, false);
                 });

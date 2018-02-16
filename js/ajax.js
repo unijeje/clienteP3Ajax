@@ -28,6 +28,7 @@ function respuestaAltaCliente()
             document.frmClienteAlta.reset();
             document.frmClienteAlta.style.display="none";
             mensaje("Cliente Insertado Correctamente");
+            buscarCliente();
             }
             else
             mensaje("Ese cliente ya existe");
