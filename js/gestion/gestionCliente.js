@@ -1,21 +1,7 @@
 
 
 /*
-var oBtnDarAltaCliente=document.getElementById("btnAltaCliente");
-oBtnDarAltaCliente.addEventListener("click", altaCliente, false);
-var oBtnDarBajaCliente=document.getElementById("btnBajaCliente");
-oBtnDarBajaCliente.addEventListener("click", bajaCliente, false);
 
-/*
-var oBtnActualizarCliente=document.getElementById("btnModificarCliente");
-oBtnActualizarCliente.addEventListener("click", actualizaCliente, false);
-*/
-
-
-//comboEstadoInicialClientes();
-/*
-var oBtnBuscarCliente=document.getElementById("buscarCliente");
-oBtnBuscarCliente.addEventListener("click", buscarCliente, false);
 */
 
 var oFormCliente;

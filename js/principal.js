@@ -6,6 +6,11 @@ $("#menuAltaCliente").click(cargaAltaCliente);
 $("#menuBajaCliente").click(cargaBajaCliente);
 $("#menuModificaCliente").click(cargaModificaCliente);
 
+var bGestionAlquilerCargado=false;
+$("#menuAltaAlquiler").click(cargaAltaAlquiler);
+$("#menubajaAlquiler").click(cargaBajaAlquiler);
+$("#menuModificaAlquiler").click(cargaModificaAlquiler);
+
 
 function mostrarFormulario(sForm)
 {
@@ -13,6 +18,35 @@ function mostrarFormulario(sForm)
     $("#resultadoListados").hide("normal");
     $("#panelMensajes").hide("normal");
     $("#formulario").show("normal");
+}
+
+function cargaAltaAlquiler()
+{
+    mostrarFormulario("frmNuevoAlquiler");
+    // Verifico si ya he cargado el formulario antes, si lo ha cargado antes lo muestra. Si no lo ha cargado antes trae el formulario y mira si ya se habia traido el codigo js correspondiente
+    // si se ha traido el codigo javascript de otro formulario solo asigna eventlistener, si no se trae el js
+    if ($('#frmNuevoAlquiler').length == 0) {
+        $("<div>").appendTo('#formulario').load("formu/altaAlquiler.html", function()
+        {
+            if(bGestionAlquilerCargado)
+            {
+                var oBtnDarAltaCliente=document.getElementById("btnAltaCliente");
+                oBtnDarAltaCliente.addEventListener("click", altaCliente, false);
+            }
+            else
+            {
+                $.getScript("js/gestion/gestionAlquiler.js", function(){
+                    bGestionAlquilerCargado=true;
+                    var oBtnDarAltaCliente=document.getElementById("btnAltaCliente");
+                    oBtnDarAltaCliente.addEventListener("click", altaCliente, false);
+                });
+            }
+            
+        });
+    } else {
+        // Lo muestro si está oculto
+        $('#frmNuevoAlquiler').show("normal");
+    }
 }
 
 function cargaAltaCliente()

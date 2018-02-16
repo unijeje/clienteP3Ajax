@@ -284,38 +284,6 @@ class Gestion
        
        
     }
-    /*actualiza los select con los clientes, no muy eficiente pero funciona para todos los casos*/
-    actualizaComboCliente()
-    {
-        var oComboBajaCliente=document.frmClienteBaja.comboCliente;
-        var oComboModificaCliente=document.frmClienteModificar.comboCliente;
-        var oComboSeleccionaCliente=document.frmNuevoAlquiler.comboCliente;
-        var oComboBorrarAlquiler=document.frmBorraAlquiler.comboCliente;
-        var oComboModificarAlquiler=document.frmModificarAlquiler.comboCliente;
-
-        while (oComboBajaCliente.firstChild) { //tienen el mismo nº de hijos
-            oComboBajaCliente.removeChild(oComboBajaCliente.firstChild);
-            oComboModificaCliente.removeChild(oComboModificaCliente.firstChild);
-            oComboSeleccionaCliente.removeChild(oComboSeleccionaCliente.firstChild);
-            oComboBorrarAlquiler.removeChild(oComboBorrarAlquiler.firstChild);
-            oComboModificarAlquiler.removeChild(oComboModificarAlquiler.firstChild);
-        }
-        for(var i=0;i<this._clientes.length;i++)
-        {
-            if(this._clientes[i].estado==true) //solo mostrar los dados de alta
-            {
-                var newSelect=document.createElement("option");
-                newSelect.value=this._clientes[i].dni;
-                newSelect.text=this._clientes[i].dni+" - "+this._clientes[i].nombre+" "+this._clientes[i].apellidos;
-                oComboBajaCliente.appendChild(newSelect);
-                oComboModificaCliente.appendChild(oComboBajaCliente.lastChild.cloneNode(true));
-                oComboSeleccionaCliente.appendChild(oComboBajaCliente.lastChild.cloneNode(true));
-                oComboBorrarAlquiler.appendChild(oComboBajaCliente.lastChild.cloneNode(true));
-                oComboModificarAlquiler.appendChild(oComboBajaCliente.lastChild.cloneNode(true));
-            }    
-        }      
-
-    }
 
     actualizaComboClientesConAlquiler()
     {

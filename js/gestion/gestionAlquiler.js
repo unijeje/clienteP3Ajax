@@ -13,7 +13,7 @@ oGestion.altaAlquiler(oAlquiler01);
 /*DATOS INICIALES */
 
 
-
+/*
 frmNuevoAlquiler.txtAlquilerNumPers.addEventListener("focusout", gestionCalcularNumConductores);
 frmNuevoAlquiler.txtAlquilerNumPers.addEventListener("focusout", gestionCalcularNumAutobuses);
 frmNuevoAlquiler.txtAlquilerNumPers.addEventListener("focusout", comprobarCero);
@@ -40,7 +40,7 @@ oBajaAlquiler.addEventListener("click", bajaAlquiler, false);
 
 var oModificarAlquiler=document.getElementById("btnModificarAlquiler");
 oModificarAlquiler.addEventListener("click", modificarAlquiler, false);
-
+*/
 //comboEstadoInicialAlquileres();
 
 
