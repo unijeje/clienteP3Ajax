@@ -215,7 +215,10 @@ function rellenaCamposCliente(oEvento) //actualiza
 {
     var oE = oEvento || windows.event;
     var oForm=oE.target.parentNode.parentNode.parentNode; //recupera el formulario padre sobre el que esta el combo
-    //console.log(oForm.name);
+
+    console.log(oForm.name);
+    
+    /*
     var oCliente=oGestion.buscarCliente(oForm.comboCliente.value);//recupera el conductor a traves del DNI
 
     oForm.txtClienteDni.value=oCliente.dni;
@@ -225,6 +228,7 @@ function rellenaCamposCliente(oEvento) //actualiza
     oForm.txtClienteCorreo.value=oCliente.correo;
     oForm.txtClienteCuenta.value=oCliente.numCuenta;
     oForm.txtClienteSexo.value=oCliente.sexo;
+    */
 }
 
 

@@ -54,6 +54,7 @@ function cargaBajaCliente()
             if(bGestionClienteCargado)
             {
                 buscarCliente();
+                $("#frmClienteBaja #txtClienteDni").change(rellenaCamposCliente);
                 var oBtnDarBajaCliente=document.getElementById("btnBajaCliente");
                 oBtnDarBajaCliente.addEventListener("click", bajaCliente, false);
             }
@@ -61,11 +62,15 @@ function cargaBajaCliente()
             {
             $.getScript("js/gestion/gestionCliente.js", function(){
                 bGestionClienteCargado=true;
+                $("#frmClienteBaja #txtClienteDni").change(rellenaCamposCliente);
                 buscarCliente();
                 var oBtnDarBajaCliente=document.getElementById("btnBajaCliente");
                 oBtnDarBajaCliente.addEventListener("click", bajaCliente, false);
                 });
             }
+
+            
+
         });
     } else {
         // Lo muestro si está oculto
