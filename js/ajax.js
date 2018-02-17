@@ -111,6 +111,21 @@ function respuestaAutoCompleteCliente()
                     return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
                 };
             }
+
+            if( $("#frmModificarAlquiler #txtClienteDni").length>0)
+            {
+            $("#frmModificarAlquiler #txtClienteDni").autocomplete({
+                source: dnis,
+                minLength: 0,
+                select: function(event, ui){
+                     $("#frmModificarAlquiler #txtClienteDni").val(ui.item.value);
+                     $("#cliente-dni").val(ui.item.value);
+                     return false;
+                }}).autocomplete("instance")._renderItem=function(ul, item){
+                    return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+                };
+            }
+            
             
         
          
@@ -184,7 +199,72 @@ function respuestaAltaAlquiler()
 
 function buscarAlquileres()
 {
-    //$.get("php/")
+    $.get("php/buscarAlquiler.php", respuestaAutoCompleteAlquiler, "json");
+}
+
+function respuestaAutoCompleteAlquiler(oRespuesta, sStatus, oAjax)
+{
+    if(oAjax.status==200)
+    {
+        var ids=[];
+        
+        for(var i=0;i<oRespuesta.length;i++)
+        {
+            //arrayDNI.push(oRespuesta[i].dni);
+            var arrayDatos={};
+            arrayDatos["value"]=oRespuesta[i].id;
+            arrayDatos["desc"]="Cliente: "+oRespuesta[i].cliente+" - Fecha: "+oRespuesta[i].fecha;
+            ids.push(arrayDatos);
+        }   
+        if( $("#frmBorraAlquiler #txtAlquilerID").length>0)
+        {
+        $("#frmBorraAlquiler #txtAlquilerID").autocomplete({
+           source: ids,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmBorraAlquiler #txtAlquilerID").val(ui.item.value);
+                //$("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
+
+        if( $("#frmModificarAlquiler #txtAlquilerID").length>0)
+        {
+        $("#frmModificarAlquiler #txtAlquilerID").autocomplete({
+           source: ids,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmModificarAlquiler #txtAlquilerID").val(ui.item.value);
+                //$("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
+    }
+}
+
+//recuperar desde la tabla de mostrar
+function recuperarAlquiler(oEvento)
+{
+    var oE=oEvento ||window.event;
+
+    //console.log(oE.target.parentNode.parentNode);
+    var sID=oE.target.parentNode.parentNode.cells[0].textContent;
+    
+    var sDatos="id="+sID;
+
+    $.post("php/reactivarAlquiler.php",sDatos,function(sDatosDevuelto, sStatus, oAjax){
+        //console.log(sDatosDevuelto);
+        if(sStatus=="success" && sDatosDevuelto=="Exito")
+        {
+            listadoAlquileres();
+            buscarAlquileres()
+        } 
+    },"text");
+
 }
 
 function buscarConductores()
@@ -214,6 +294,20 @@ function respuestaAutoCompleteConductor(oRespuesta, sStatus, oAjax)
            minLength: 0,
            select: function(event, ui){
                 $("#frmNuevoAlquiler #txtConductorDni").val(ui.item.value);
+                //$("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
+
+        if( $("#frmModificarAlquiler #txtConductorDni").length>0)
+        {
+        $("#frmModificarAlquiler #txtConductorDni").autocomplete({
+           source: dnis,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmModificarAlquiler #txtConductorDni").val(ui.item.value);
                 //$("#cliente-dni").val(ui.item.value);
                 return false;
            }}).autocomplete("instance")._renderItem=function(ul, item){
@@ -252,6 +346,20 @@ function respuestaAutoCompleteAutobus(oRespuesta, sStatus, oAjax)
            minLength: 0,
            select: function(event, ui){
                 $("#frmNuevoAlquiler #txtAutobusMatricula").val(ui.item.value);
+                $("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
+
+        if( $("#frmModificarAlquiler #txtAutobusMatricula").length>0)
+        {
+        $("#frmModificarAlquiler #txtAutobusMatricula").autocomplete({
+           source: autobuses,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmModificarAlquiler #txtAutobusMatricula").val(ui.item.value);
                 $("#cliente-dni").val(ui.item.value);
                 return false;
            }}).autocomplete("instance")._renderItem=function(ul, item){

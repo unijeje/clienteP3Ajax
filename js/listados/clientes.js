@@ -29,7 +29,7 @@ function respuestaListadoCliente()
 		
 		var oFilas=JSON.parse(sDatos);
 
-		var tablaEliminar=document.querySelector("TABLE");
+		var tablaEliminar=document.querySelector("#resultadoListados TABLE");
 		if(tablaEliminar!=null) //si hay una tabla en el div de listados la quita para reemplazarla
 			tablaEliminar.remove();
 

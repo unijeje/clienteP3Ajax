@@ -88,11 +88,35 @@ class Gestion
     buscarAlquiler(sID)
     {
         var oAlquiler=null;
-        for(var i=0;i<this._alquileres.length && oAlquiler==null;i++)
-        {
-            if(sID==this._alquileres[i].id)
-                oAlquiler=this._alquileres[i];
-        }
+        
+        var sDatos="id="+sID;
+
+        //se hace llamada asyncrona para que espere a la respuesta antes de hacer el return
+        $.ajax({
+            url :"php/buscarAlquilerId.php",
+            async : false,
+            cache : false, 
+            method : "GET", 
+            dataType : "json",
+            data : sDatos,
+            complete : function(oDatosDevuelto, sStatus)
+            {
+                //console.log(oDatosDevuelto);
+                // si se devuelve un resultado correcto se envia el cliente devuelta
+                if(sStatus=="success" && oDatosDevuelto.responseJSON.id!=null)
+                {
+                    //constructor(dniConductor, matriculaAutobus, sID, iHoras, dFecha, iNumPers, sDescripcion, sOrigen, sDestino, iKMS, sCliente)
+                    oAlquiler=new Alquiler(oDatosDevuelto.responseJSON.dni_conductor, oDatosDevuelto.responseJSON.matricula_autobus, oDatosDevuelto.responseJSON.id,
+                    oDatosDevuelto.responseJSON.horas,oDatosDevuelto.responseJSON.fecha, oDatosDevuelto.responseJSON.numpersonas, oDatosDevuelto.responseJSON.descripcion,
+                    oDatosDevuelto.responseJSON.origen, oDatosDevuelto.responseJSON.destino, oDatosDevuelto.responseJSON.kms, oDatosDevuelto.responseJSON.cliente);
+                    
+                    //console.log(oAlquiler);
+                    
+                    
+                }
+            }
+        });
+
         return oAlquiler;
     }
 	
@@ -149,30 +173,40 @@ class Gestion
     }
     bajaAlquiler(oAlquiler)
     {
-        var res=false;
-        for(var i=0;i<this._alquileres.length;i++)
-        {
-            if(oAlquiler.id==this._alquileres[i].id)
+        var sID="id="+oAlquiler.id;
+        var res=false;//no se ha encontrado
+        $.ajax({
+            url :"php/bajaAlquiler.php",
+            async : false,
+            cache : false, 
+            method : "POST", 
+            dataType : "text",
+            data : sID,
+            complete : function(sDatosDevuelto, sStatus)
             {
-                this._alquileres.splice(i, 1);
-                res=true;
-                this.actualizaComboAlquileres();
+                if(sDatosDevuelto.responseText=="Exito")
+                    res=true;
             }
-        }
+        });
+
         return res;
     }
-    modificarAlquiler(oAlquiler)
+    modificarAlquiler(sDatos)
     {
         var res=false;
-        for(var i=0;i<this._alquileres.length;i++)
-        {
-            if(this._alquileres[i].id==oAlquiler.id)
+        $.ajax({
+            url :"php/modificarAlquiler.php",
+            async : false,
+            cache : false, 
+            method : "POST", 
+            dataType : "text",
+            data : sDatos,
+            complete : function(sDatosDevuelto, sStatus)
             {
-                this._alquileres[i]=oAlquiler;
-                this.actualizaComboAlquileres();
-                res=true;
+                if(sDatosDevuelto.responseText=="Exito")
+                    res=true;
             }
-        }
+        });
         return res;
     }
 

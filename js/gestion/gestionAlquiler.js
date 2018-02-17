@@ -87,7 +87,7 @@ function altaAlquiler(oEvento)
 
 function bajaAlquiler()
 {
-    var sIDAlquiler=frmBorraAlquiler.comboAlquiler.value;
+    var sIDAlquiler=frmBorraAlquiler.txtAlquilerID.value;
     var oAlquiler=oGestion.buscarAlquiler(sIDAlquiler);
     if(oAlquiler==null)
         mensaje("El alquiler: "+sIDAlquiler+" no se ha encontrado");
@@ -97,8 +97,9 @@ function bajaAlquiler()
         if(bBaja)
         {
             mensaje("Alquiler "+sIDAlquiler+" Eliminado");
+            document.frmBorraAlquiler.reset();
             document.frmBorraAlquiler.style.display="none";
-            comboEstadoInicialAlquileres();
+            buscarAlquileres();
         }
         else
             mensaje("Error al dar de baja: "+sIDAlquiler);
@@ -112,54 +113,49 @@ function modificarAlquiler(oEvento)
     var oForm=oE.target.parentNode.parentNode.parentNode; //recupera el formulario padre sobre el que esta el boton
     if(validarAlquiler(oForm))
     {
-        var sDniCliente=oForm.comboCliente.value.trim();
-        //buscar Cliente
-        var oCliente=oGestion.buscarCliente(sDniCliente);
-        //console.log(oCliente);
-        var sIDAlquiler=oForm.txtAlquilerID.value.trim();
-        var sHoras=oForm.txtAlquilerHoras.value.trim();
-        var dFecha=new Date(oForm.txtAlquilerFecha.value.trim());
-        var iNumPers=oForm.txtAlquilerNumPers.value.trim();
-        var sDesc=oForm.txtAlquilerDesc.value.trim();
-        var sOrigen=oForm.txtAlquilerOrigen.value.trim();
-        var sDestino=oForm.txtAlquilerDestino.value.trim();
-        var iKMs=oForm.txtAlquilerKms.value.trim();
-        
-        //conductores
-        var oConductores=[];
-        var oComboConductores=oForm.querySelectorAll("#comboConductores");
-        for (var i=0;i<oComboConductores.length;i++)
-            oConductores.push(oGestion.buscarConductor(oComboConductores[i].value));
-        /*
-        for (var i=0;i<oComboConductores.length;i++)
-            console.log(oConductores[i]);
-        */
-        //Autobuses
-        var oAutobuses=[];
-        var oComboAutobuses=oForm.querySelectorAll("#comboAutobuses");
-        for (var i=0;i<oComboAutobuses.length;i++)
-            oAutobuses.push(oGestion.buscarAutobus(oComboAutobuses[i].value));
-
-        //arrayConductores, arrayAutobuses, sID, iHoras, dFecha, iNumPers, sDescripcion, sOrigen, sDestino, iKMS, oCliente
-        var oNuevoAlquiler=new Alquiler(oConductores, oAutobuses, sIDAlquiler, sHoras, dFecha, iNumPers, sDesc, sOrigen, sDestino, iKMs, oCliente);
-        var bActualizacion=oGestion.modificarAlquiler(oNuevoAlquiler);
+        var sDatos=$("#frmModificarAlquiler").serialize();
+        var bActualizacion=oGestion.modificarAlquiler(sDatos);
         if(bActualizacion)
         {
             mensaje("Alquiler actualizado correctamente");
             oForm.style.display="none";
-            comboEstadoInicialAlquileres();
+            oForm.reset();
             //rellenaCamposAlquiler();
         }
         else
             mensaje("No se ha encontrado el alquiler");
             
     }
+    else
+        mensaje("Fallo en la validación");
 }
 
 function validarAlquiler(oForm)
 {
     var bValidacion=true;
     var sError="";
+
+    
+
+
+    /*IDALQUILER*/
+    var sIDAlquiler=oForm.txtAlquilerID.value.trim();
+    oForm.txtAlquilerID.value=oForm.txtAlquilerID.value.trim();
+
+    if(!oExpRegEsNumero.test(sIDAlquiler))
+    {
+        oForm.txtAlquilerID.parentNode.parentNode.classList.add("has-error");
+        
+        oForm.txtAlquilerID.focus();
+        sError="El ID de alquiler tiene que ser un número";
+        falloValidacion(sError, oForm.txtAlquilerID);
+        bValidacion=false;
+    }
+    else
+    {
+        oForm.txtAlquilerID.parentNode.parentNode.classList.remove("has-error");
+        falloValidacion("", oForm.txtAlquilerID);
+    }
 
     /*Cliente, comprobar si existe en la DB*/
     var sDniCliente=oForm.txtClienteDni.value.trim();
@@ -176,7 +172,7 @@ function validarAlquiler(oForm)
             if(oAjax.responseJSON.dni==null)
             {
                 oForm.txtClienteDni.parentNode.parentNode.classList.add("has-error");
-                //console.log(oForm.comboCliente);
+                if(bValidacion)
                 oForm.txtClienteDni.focus();
                 sError="Cliente no encontrado";
                 falloValidacion(sError, oForm.txtClienteDni);
@@ -191,42 +187,6 @@ function validarAlquiler(oForm)
         
     });
 
-/*
-    //console.log(sDniCliente);
-    if(sDniCliente=="")
-    {
-        
-        oForm.txtClienteDni.parentNode.parentNode.classList.add("has-error");
-        //console.log(oForm.comboCliente);
-        oForm.txtClienteDni.focus();
-        sError="Cliente no seleccionado";
-        falloValidacion(sError, oForm.txtClienteDni);
-        bValidacion=false;
-    }
-    else
-    {
-        falloValidacion("", oForm.txtClienteDni);
-        oForm.txtClienteDni.parentNode.parentNode.classList.remove("has-error");
-    }
-*/
-    /*IDALQUILER*/
-    var sIDAlquiler=oForm.txtAlquilerID.value.trim();
-    oForm.txtAlquilerID.value=oForm.txtAlquilerID.value.trim();
-
-    if(!oExpRegEsNumero.test(sIDAlquiler))
-    {
-        oForm.txtAlquilerID.parentNode.parentNode.classList.add("has-error");
-        oForm.txtAlquilerID.focus();
-        sError="El ID de alquiler tiene que ser un número";
-        falloValidacion(sError, oForm.txtAlquilerID);
-        bValidacion=false;
-    }
-    else
-    {
-        oForm.txtAlquilerID.parentNode.parentNode.classList.remove("has-error");
-        falloValidacion("", oForm.txtAlquilerID);
-    }
-
     /*NºHoras*/
     var iAlquilerHoras=oForm.txtAlquilerHoras.value.trim();
     oForm.txtAlquilerHoras.value=oForm.txtAlquilerHoras.value.trim();
@@ -234,6 +194,7 @@ function validarAlquiler(oForm)
     if(!oExpRegEsNumero.test(iAlquilerHoras))
     {
         oForm.txtAlquilerHoras.parentNode.parentNode.classList.add("has-error");
+        if(bValidacion)
         oForm.txtAlquilerHoras.focus();
         sError="El nº de horas tiene que ser un número";
         falloValidacion(sError, oForm.txtAlquilerHoras);
@@ -249,9 +210,10 @@ function validarAlquiler(oForm)
     var iAlquilerFecha=oForm.txtAlquilerFecha.value.trim();
     oForm.txtAlquilerFecha.value=oForm.txtAlquilerFecha.value.trim();
 
-    if(iAlquilerFecha=="")
+    if(!oExpRegFecha.test(iAlquilerFecha))
     {
         oForm.txtAlquilerFecha.parentNode.parentNode.classList.add("has-error");
+        if(bValidacion)
         oForm.txtAlquilerFecha.focus();
         sError="formato de fecha incorrecto, tiene que ser: mm/dd/yyyy";
         falloValidacion(sError, oForm.txtAlquilerFecha);
@@ -270,6 +232,7 @@ function validarAlquiler(oForm)
     if(!oExpRegEsNumero.test(iAlquilerNumPers) || iAlquilerNumPers<1)
     {
         oForm.txtAlquilerNumPers.parentNode.parentNode.classList.add("has-error");
+        if(bValidacion)
         oForm.txtAlquilerNumPers.focus();
         sError="Tiene que ser un numero mayor que 0";
         falloValidacion(sError, oForm.txtAlquilerNumPers);
@@ -288,6 +251,7 @@ function validarAlquiler(oForm)
     if(txtAlquilerDesc=="")
     {
         oForm.txtAlquilerDesc.parentNode.parentNode.classList.add("has-error");
+        if(bValidacion)
         oForm.txtAlquilerDesc.focus();
         sError="Tiene que añadir una descripción";
         falloValidacion(sError, oForm.txtAlquilerDesc);
@@ -306,6 +270,7 @@ function validarAlquiler(oForm)
     if(txtAlquilerOrigen=="")
     {
         oForm.txtAlquilerOrigen.parentNode.parentNode.classList.add("has-error");
+        if(bValidacion)
         oForm.txtAlquilerOrigen.focus();
         sError="Tiene que añadir una dirección de origen";
         falloValidacion(sError, oForm.txtAlquilerOrigen);
@@ -324,6 +289,7 @@ function validarAlquiler(oForm)
     if(txtAlquilerDestino=="")
     {
         oForm.txtAlquilerDestino.parentNode.parentNode.classList.add("has-error");
+        if(bValidacion)
         oForm.txtAlquilerDestino.focus();
         sError="Tiene que añadir una dirección de destino";
         falloValidacion(sError, oForm.txtAlquilerDestino);
@@ -342,6 +308,7 @@ function validarAlquiler(oForm)
     if(!oExpRegEsNumero.test(txtAlquilerKms) || txtAlquilerKms<1)
     {
         oForm.txtAlquilerKms.parentNode.parentNode.classList.add("has-error");
+        if(bValidacion)
         oForm.txtAlquilerKms.focus();
         sError="Tiene que introducir un número de kilómetros";
         falloValidacion(sError, oForm.txtAlquilerKms);
@@ -367,6 +334,7 @@ function validarAlquiler(oForm)
             if(oAjax.responseJSON.dni==null)
             {
                 oForm.txtConductorDni.parentNode.parentNode.classList.add("has-error");
+                if(bValidacion)
                 oForm.txtConductorDni.focus();
                 sError="Conductor no encontrado";
                 falloValidacion(sError, oForm.txtConductorDni);
@@ -396,6 +364,7 @@ function validarAlquiler(oForm)
             if(oAjax.responseJSON.matricula==null)
             {
                 oForm.txtAutobusMatricula.parentNode.parentNode.classList.add("has-error");
+                if(bValidacion)
                 oForm.txtAutobusMatricula.focus();
                 sError="Autobus no encontrado";
                 falloValidacion(sError, oForm.txtAutobusMatricula);
@@ -421,55 +390,13 @@ function rellenaCamposAlquiler(oEvento) //actualiza
     var oE = oEvento || windows.event;
     var oForm=oE.target.parentNode.parentNode.parentNode; //recupera el formulario padre sobre el que esta el combo
     //console.log(oForm.name);
-    var oAlquiler=oGestion.buscarAlquiler(oForm.comboAlquiler.value);
+    var oAlquiler=oGestion.buscarAlquiler(oForm.txtAlquilerID.value);
 
-    escogeIndexCombo(oForm.comboCliente, oAlquiler.cliente.dni);
+    //console.log(oAlquiler);
     
-    var oCombosActuales=oForm.querySelectorAll(".alquilerConductores"); 
-
-    for(var i=0;i<oCombosActuales.length;i++)
-    {
-        oCombosActuales[i].parentNode.removeChild(oCombosActuales[i]);
-    }
-
-    var oComboOriginal=oForm.querySelector(".alquilerConductoresOriginal");
-    
-    for(var i=1;i<oAlquiler.conductor.length;i++)
-    {
-        var oNodoClonado=oComboOriginal.cloneNode(true);
-        oNodoClonado.classList.add("alquilerConductores");
-        oNodoClonado.classList.remove("alquilerConductoresOriginal");
-        oForm.insertBefore(oNodoClonado, oComboOriginal);
-    }
-
-    for(var i=0;i<oAlquiler.conductor.length;i++)
-    {
-        escogeIndexCombo(oForm.comboConductores[i], oAlquiler.conductor[i].dni);
-    }
-
-    var oCombosActuales=oForm.querySelectorAll(".alquilerAutobuses"); 
-
-    for(var i=0;i<oCombosActuales.length;i++)
-    {
-        oCombosActuales[i].parentNode.removeChild(oCombosActuales[i]);
-    }
-
-    oComboOriginal=oForm.querySelector(".alquilerAutobusesOriginal");
-
-    for(var i=1;i<oAlquiler.autobuses.length;i++)
-    {
-        var oNodoClonado=oComboOriginal.cloneNode(true);
-        oNodoClonado.classList.add("alquilerAutobuses");
-        oNodoClonado.classList.remove("alquilerAutobusesOriginal");
-        oForm.insertBefore(oNodoClonado, oComboOriginal);
-    }
-
-    for(var i=0;i<oAlquiler.autobuses.length;i++)
-    {
-        escogeIndexCombo(oForm.comboAutobuses[i], oAlquiler.autobuses[i].matricula);
-    }
-    //frmModificarAlquiler.comboCliente.selectedIndex="0";
+   
     oForm.txtAlquilerID.value=oAlquiler.id;
+    oForm.txtClienteDni.value=oAlquiler.cliente;
     oForm.txtAlquilerHoras.value=oAlquiler.horas;
     oForm.txtAlquilerFecha.value=oAlquiler.fecha;
     oForm.txtAlquilerNumPers.value=oAlquiler.numPers;
@@ -477,7 +404,7 @@ function rellenaCamposAlquiler(oEvento) //actualiza
     oForm.txtAlquilerOrigen.value=oAlquiler.origen;
     oForm.txtAlquilerDestino.value=oAlquiler.destino;
     oForm.txtAlquilerKms.value=oAlquiler.kms;
-
-
+    oForm.txtConductorDni.value=oAlquiler.conductor;
+    oForm.txtAutobusMatricula.value=oAlquiler.autobuses;
     
 }
