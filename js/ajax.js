@@ -61,14 +61,66 @@ function respuestaAutoCompleteCliente()
     if (oAjax.readyState == 4 && oAjax.status == 200) {
         var oRespuesta=JSON.parse(oAjax.responseText);
 
-
+        var dnis=[];
         
-        var arrayDNI=[];
         for(var i=0;i<oRespuesta.length;i++)
-            arrayDNI.push(oRespuesta[i].dni);
+        {
+            //arrayDNI.push(oRespuesta[i].dni);
+            var arrayDNI={};
+            arrayDNI["value"]=oRespuesta[i].dni;
+            arrayDNI["desc"]=oRespuesta[i].nombre+" "+oRespuesta[i].apellidos;
+            dnis.push(arrayDNI);
+        }   
+        if( $("#frmClienteBaja #txtClienteDni").length>0)
+        {
+        $("#frmClienteBaja #txtClienteDni").autocomplete({
+           source: dnis,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmClienteBaja #txtClienteDni").val(ui.item.value);
+                $("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
 
-       $("#frmClienteBaja #txtClienteDni").autocomplete({source: arrayDNI});
+           if( $("#frmClienteModificar #txtClienteDni").length>0)
+           {
+            $("#frmClienteModificar #txtClienteDni").autocomplete({
+                source: dnis,
+                minLength: 0,
+                select: function(event, ui){
+                    $("#frmClienteModificar #txtClienteDni").val(ui.item.value);
+                    $("#cliente-dni").val(ui.item.value);
+                    return false;
+                }}).autocomplete("instance")._renderItem=function(ul, item){
+                    return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+                };
+            }
+            if( $("#frmNuevoAlquiler #txtClienteDni").length>0)
+            {
+            $("#frmNuevoAlquiler #txtClienteDni").autocomplete({
+                source: dnis,
+                minLength: 0,
+                select: function(event, ui){
+                     $("#frmNuevoAlquiler #txtClienteDni").val(ui.item.value);
+                     $("#cliente-dni").val(ui.item.value);
+                     return false;
+                }}).autocomplete("instance")._renderItem=function(ul, item){
+                    return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+                };
+            }
+            
+        
+         
+        
+       
+       
+       /*
        $("#frmClienteModificar #txtClienteDni").autocomplete({source: arrayDNI});
+       $("#frmNuevoAlquiler #txtClienteDni").autocomplete({source: arrayDNI});
+       */
 
     }
 }
@@ -104,13 +156,107 @@ function recuperarCliente(oEvento)
         {
             listadoClientes();
             buscarClientes();
-        }
-
-        
+        } 
     },"text");
 
-    
-   
+}
+
+function respuestaAltaAlquiler()
+{
+    var oAjax = this;
+
+    // 5. Proceso la respuesta cuando llega
+    if (oAjax.readyState == 4 && oAjax.status == 200) {
 
 
+        if(parseInt(oAjax.responseText)>0)
+        {
+            document.frmNuevoAlquiler.reset();
+            document.frmNuevoAlquiler.style.display="none";
+            mensaje("Alquiler Insertado Correctamente");
+            buscarAlquileres();
+        }
+        else
+            mensaje("Fallo al insertar alquiler");
+        
+    }
+}
+
+function buscarAlquileres()
+{
+    //$.get("php/")
+}
+
+function buscarConductores()
+{
+    $.get("php/buscarConductor.php", respuestaAutoCompleteConductor, "json");
+}
+
+function respuestaAutoCompleteConductor(oRespuesta, sStatus, oAjax)
+{
+    if(oAjax.status==200)
+    {
+
+        var dnis=[];
+        
+        for(var i=0;i<oRespuesta.length;i++)
+        {
+            //arrayDNI.push(oRespuesta[i].dni);
+            var arrayDNI={};
+            arrayDNI["value"]=oRespuesta[i].dni;
+            arrayDNI["desc"]=oRespuesta[i].nombre+" "+oRespuesta[i].apellidos;
+            dnis.push(arrayDNI);
+        }   
+        if( $("#frmNuevoAlquiler #txtConductorDni").length>0)
+        {
+        $("#frmNuevoAlquiler #txtConductorDni").autocomplete({
+           source: dnis,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmNuevoAlquiler #txtConductorDni").val(ui.item.value);
+                //$("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
+    }
+}
+
+
+
+function buscarAutobuses()
+{
+    $.get("php/buscarAutobus.php", respuestaAutoCompleteAutobus, "json");
+}
+
+function respuestaAutoCompleteAutobus(oRespuesta, sStatus, oAjax)
+{
+    if(oAjax.status==200)
+    {
+
+        var autobuses=[];
+        
+        for(var i=0;i<oRespuesta.length;i++)
+        {
+            //arrayDNI.push(oRespuesta[i].dni);
+            var arrayDNI={};
+            arrayDNI["value"]=oRespuesta[i].matricula;
+            arrayDNI["desc"]="Modelo: "+oRespuesta[i].modelo+" nº Asientos: "+oRespuesta[i].asientos;
+            autobuses.push(arrayDNI);
+        }   
+        if( $("#frmNuevoAlquiler #txtAutobusMatricula").length>0)
+        {
+        $("#frmNuevoAlquiler #txtAutobusMatricula").autocomplete({
+           source: autobuses,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmNuevoAlquiler #txtAutobusMatricula").val(ui.item.value);
+                $("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
+    }
 }

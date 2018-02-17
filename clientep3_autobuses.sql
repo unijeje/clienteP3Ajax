@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 08-02-2018 a las 20:38:30
+-- Tiempo de generación: 16-02-2018 a las 21:51:35
 -- Versión del servidor: 5.5.27
 -- Versión de PHP: 5.4.7
 
@@ -38,6 +38,7 @@ CREATE TABLE IF NOT EXISTS `alquiler` (
   `cliente` varchar(9) COLLATE utf8_spanish_ci NOT NULL,
   `matricula_autobus` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `dni_conductor` varchar(9) COLLATE utf8_spanish_ci NOT NULL,
+  `estado` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `cliente` (`cliente`),
   KEY `fk_conductor` (`dni_conductor`),
@@ -81,9 +82,11 @@ CREATE TABLE IF NOT EXISTS `cliente` (
 --
 
 INSERT INTO `cliente` (`dni`, `nombre`, `apellidos`, `telefono`, `correo`, `sexo`, `estado`) VALUES
+('12345678A', 'nombreMODIFICADO', 'ape', 975757575, 'ccror2@gmail.com', 'Femenino', 1),
 ('12345678H', 'PEPE', 'PEPE', 955555555, 'correo@gmail.es', 'Masculino', 1),
-('12345678k', 'nombre', 'ape', 955555555, 'corrr@gmail.co', 'Masculino', 1),
-('12345678Q', 'nombres', 'apes', 955555555, 'corrr@gmail.com', 'Masculino', 1);
+('12345678k', 'nombre', 'ape', 955555555, 'corrr@gmail.co', 'Masculino', 0),
+('12345678Q', 'nombres', 'apes', 955555555, 'corrr@gmail.com', 'Masculino', 1),
+('98765432F', 'Test', 'apeTest', 950000000, 'corr@gmail.es', 'Femenino', 0);
 
 -- --------------------------------------------------------
 

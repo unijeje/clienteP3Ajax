@@ -30,15 +30,22 @@ function cargaAltaAlquiler()
         {
             if(bGestionAlquilerCargado)
             {
-                var oBtnDarAltaCliente=document.getElementById("btnAltaCliente");
-                oBtnDarAltaCliente.addEventListener("click", altaCliente, false);
+                buscarClientes();
+                buscarConductores();
+                buscarAutobuses();
+                var oBtnDarAltaAlquiler=document.getElementById("btnAltaAlquiler");
+                oBtnDarAltaAlquiler.addEventListener("click", altaAlquiler, false);
             }
             else
             {
+                buscarClientes();
                 $.getScript("js/gestion/gestionAlquiler.js", function(){
+                    buscarClientes();
+                    buscarConductores();
+                    buscarAutobuses();
                     bGestionAlquilerCargado=true;
-                    var oBtnDarAltaCliente=document.getElementById("btnAltaCliente");
-                    oBtnDarAltaCliente.addEventListener("click", altaCliente, false);
+                    var oBtnDarAltaAlquiler=document.getElementById("btnAltaAlquiler");
+                    oBtnDarAltaAlquiler.addEventListener("click", altaAlquiler, false);
                 });
             }
             
@@ -48,6 +55,65 @@ function cargaAltaAlquiler()
         $('#frmNuevoAlquiler').show("normal");
     }
 }
+
+function cargaBajaAlquiler()
+{
+    mostrarFormulario("frmBorraAlquiler");
+    // Verifico si ya he cargado el formulario antes, si lo ha cargado antes lo muestra. Si no lo ha cargado antes trae el formulario y mira si ya se habia traido el codigo js correspondiente
+    // si se ha traido el codigo javascript de otro formulario solo asigna eventlistener, si no se trae el js
+    if ($('#frmBorraAlquiler').length == 0) {
+        $("<div>").appendTo('#formulario').load("formu/borraAlquiler.html", function()
+        {
+            if(bGestionAlquilerCargado)
+            {
+                var oBajaAlquiler=document.getElementById("btnBorrarAlquiler");
+                oBajaAlquiler.addEventListener("click", bajaAlquiler, false);
+            }
+            else
+            {
+                $.getScript("js/gestion/gestionAlquiler.js", function(){
+                    bGestionAlquilerCargado=true;
+                    var oBajaAlquiler=document.getElementById("btnBorrarAlquiler");
+                    oBajaAlquiler.addEventListener("click", bajaAlquiler, false);
+                });
+            }
+            
+        });
+    } else {
+        // Lo muestro si está oculto
+        $('#frmBorraAlquiler').show("normal");
+    }
+}
+
+function cargaModificaAlquiler()
+{
+    mostrarFormulario("frmModificarAlquiler");
+    // Verifico si ya he cargado el formulario antes, si lo ha cargado antes lo muestra. Si no lo ha cargado antes trae el formulario y mira si ya se habia traido el codigo js correspondiente
+    // si se ha traido el codigo javascript de otro formulario solo asigna eventlistener, si no se trae el js
+    if ($('#frmModificarAlquiler').length == 0) {
+        $("<div>").appendTo('#formulario').load("formu/modificaAlquiler.html", function()
+        {
+            if(bGestionAlquilerCargado)
+            {
+                var oModificarAlquiler=document.getElementById("btnModificarAlquiler");
+                oModificarAlquiler.addEventListener("click", modificarAlquiler, false);
+            }
+            else
+            {
+                $.getScript("js/gestion/gestionAlquiler.js", function(){
+                    bGestionAlquilerCargado=true;
+                    var oModificarAlquiler=document.getElementById("btnModificarAlquiler");
+                    oModificarAlquiler.addEventListener("click", modificarAlquiler, false);
+                });
+            }
+            
+        });
+    } else {
+        // Lo muestro si está oculto
+        $('#frmModificarAlquiler').show("normal");
+    }
+}
+
 
 function cargaAltaCliente()
 {

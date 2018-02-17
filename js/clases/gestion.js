@@ -113,27 +113,38 @@ class Gestion
     altaAlquiler(oAlquiler)
     {
         var res=false;
-        if(this.buscarAlquiler(oAlquiler.id)==null)
-        {
-            this._alquileres.push(oAlquiler);
-            res=true;
-            this.actualizaComboAlquileres();
-            this.actualizaComboClientesConAlquiler();
+        
 
-            //cada vez que se añade un alquiler se calcula el precio que se gana con ese viaje
-            var fGanancia=calcularImporteAlquileEmpresa(oAlquiler.conductor.length, oAlquiler.horas, oAlquiler.kms);
-            //se añade a la cuenta de gestion
-            this.gestionContabilidad("alquiler", null, fGanancia, oAlquiler.fecha);
+        // Instanciar objeto Ajax
+        var oAjax = instanciarXHR();
 
-            //para cada conductor se le paga su parte
-            var fImporte=calcularImporteAlquilerConductor(oAlquiler.horas);
-            for(var i=0;i<oAlquiler.conductor.length;i++)
-            {
-                var numCuentaConductor=oAlquiler.conductor[i].numCuenta;
-                oGestion.gestionContabilidad("nomina", numCuentaConductor, fImporte, oAlquiler.fecha);
-            }
+        //1. Preparar parametros con JSON
+            
+        var oAlquiler=  {   conductor : oAlquiler.conductor,
+                        autobus : oAlquiler.autobuses,
+                        id : oAlquiler.id,
+                        horas : parseInt(oAlquiler.horas),
+                        fecha : oAlquiler.fecha,
+                        numPers : parseInt(oAlquiler.numPers),
+                        descripcion : oAlquiler.descripcion,
+                        origen : oAlquiler.origen,
+                        destino : oAlquiler.destino,
+                        kms : parseInt(oAlquiler.kms),
+                        cliente : oAlquiler.cliente,
+                    };
+        
+        var sDatosEnvio = "datos=" + JSON.stringify(oAlquiler); //convertir el objeto a JSON
 
-        }
+        //2. Configurar la llamada --> Asincrono por defecto
+        oAjax.open("POST", encodeURI("php/altaAlquiler.php"));
+        oAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        //3. Asociar manejador de evento de la respuesta
+        oAjax.addEventListener("readystatechange", respuestaAltaAlquiler, false);
+
+        //4. Hacer la llamada
+        oAjax.send(sDatosEnvio);
+        
         return res;
     }
     bajaAlquiler(oAlquiler)
@@ -163,28 +174,6 @@ class Gestion
             }
         }
         return res;
-    }
-
-
-    actualizaComboAlquileres()
-    {
-        //console.log("actualizaComboAlquileres");
-        var oComboModificaAlquiler=document.frmModificarAlquiler.comboAlquiler;
-        var oComboBorrarAlquiler=document.frmBorraAlquiler.comboAlquiler;
-
-        while (oComboModificaAlquiler.firstChild) { //tienen el mismo nº de hijos
-            oComboModificaAlquiler.removeChild(oComboModificaAlquiler.firstChild);
-            oComboBorrarAlquiler.removeChild(oComboBorrarAlquiler.firstChild);
-        }
-        for(var i=0;i<this._alquileres.length;i++)
-        {
-            var newSelect=document.createElement("option");
-            newSelect.value=this._alquileres[i].id;
-            newSelect.text=this._alquileres[i].id+" - "+this._alquileres[i].origen+" > "+this._alquileres[i].destino+" "+this._alquileres[i].fecha;
-            oComboModificaAlquiler.appendChild(newSelect);
-            oComboBorrarAlquiler.appendChild(oComboModificaAlquiler.lastChild.cloneNode(true));
-            
-        }
     }
 
     //clientes
