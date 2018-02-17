@@ -109,7 +109,7 @@ function respuestaListadoCliente()
 
 function filtrarNombreCliente()
 {
-	var sHTML='<div id="dialog" title="Basic dialog"><p>Introduce nombre o parte del nombre: .</p>';
+	var sHTML='<div id="dialog" title="Filtrar Nombre"><p>Introduce nombre o parte del nombre: .</p>';
 	sHTML+='<input type="text" name="txtNombreCliente" id="txtNombreCliente" placeholder="nombre"/></div>';
 	//sHTML+="</div>";
 	$("#frmFiltrarCliente").append(sHTML);
