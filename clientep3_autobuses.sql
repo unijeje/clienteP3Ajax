@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-02-2018 a las 21:51:35
+-- Tiempo de generación: 17-02-2018 a las 01:29:19
 -- Versión del servidor: 5.5.27
 -- Versión de PHP: 5.4.7
 
@@ -45,6 +45,15 @@ CREATE TABLE IF NOT EXISTS `alquiler` (
   KEY `fk_autobus` (`matricula_autobus`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
+--
+-- Volcado de datos para la tabla `alquiler`
+--
+
+INSERT INTO `alquiler` (`id`, `horas`, `fecha`, `numpersonas`, `descripcion`, `origen`, `destino`, `kms`, `cliente`, `matricula_autobus`, `dni_conductor`, `estado`) VALUES
+(1, 4, '2018-02-16', 5, 'test', 'test', 'test', 5, '12345678A', '123', '123', 1),
+(5, 5, '2018-02-13', 5, '5', '5', '5', 5, '12345678A', '123', '123', 1),
+(124, 5, '2018-02-17', 5, 'coment', 'origen', 'destino', 5, '12345678H', '123', '123', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -59,6 +68,13 @@ CREATE TABLE IF NOT EXISTS `autobus` (
   `itv` tinyint(1) NOT NULL,
   PRIMARY KEY (`matricula`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `autobus`
+--
+
+INSERT INTO `autobus` (`matricula`, `asientos`, `modelo`, `consumo`, `itv`) VALUES
+('123', 5, 'prueba', 5, 1);
 
 -- --------------------------------------------------------
 
@@ -105,6 +121,13 @@ CREATE TABLE IF NOT EXISTS `conductor` (
   `estado` tinyint(1) NOT NULL,
   PRIMARY KEY (`dni`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `conductor`
+--
+
+INSERT INTO `conductor` (`dni`, `nombre`, `apellidos`, `sexo`, `telefono`, `email`, `direccion`, `estado`) VALUES
+('123', 'prueba', 'prueba', 'masculino', 955555555, 'corro@gmail.com', 'prueba', 1);
 
 -- --------------------------------------------------------
 
