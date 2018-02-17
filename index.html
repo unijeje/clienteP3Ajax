@@ -73,12 +73,19 @@
 		<div id="formulario"></div>
 
 		<div id="resultadoListados"> <!--para mostrar los listados -->
-			<div id="panelCuenta">
-				<input type="button" id="btnOrdenarCuentaFecha" name="btnOrdenarCuentaFecha" class="btn btn-primary" value="Ordenar por fecha"/>
+			<div id="panelCliente">
+				<form name="frmFiltrarCliente" id="frmFiltrarCliente">
+					<!--<input type="text" placeholder="nombre" id="txtFiltrarNombre" name="txtFiltrarNombre"/>-->
+					<button type="button" id="btnFiltrarNombre" name="btnFiltrarNombre" class="btn btn-info">
+						<span class="glyphicon glyphicon-search"></span> 
+					</button>
+					
+				</form>
 			</div>
 			<div id="panelConductor">
 				<button type="button" id="btnOrdenarConductoresActivos" name="btnOrdenarConductoresActivos" class="btn btn-primary btn-block">Mostrar solo activos</button>
 			</div>
+			<br>
 		</div>
 
 		<!-- panel de mensajes -->
@@ -100,6 +107,7 @@
 <script src="css/jquery.min.js"></script>
 <script src="css/bootstrap.min.js"></script>
 <script src="css/jquery-ui.min.js"></script>
+
 
 <script type="text/javascript" src="js/ajax.js"></script>
 <script type="text/javascript" src="js/clases/gestion.js"></script>

@@ -16,7 +16,7 @@ button{
     display:none;
 }
 
-#panelCuenta, #panelConductor
+#panelCliente, #panelConductor
 {
     display:none;
     width:100%;

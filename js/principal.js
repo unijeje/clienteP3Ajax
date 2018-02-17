@@ -234,6 +234,12 @@ oBtnListadoAutobuses.addEventListener("click",mostrarListadoAutobuses,false);
 
 var oBtnListadoClientes=document.getElementById("btnListadoClientes");
 oBtnListadoClientes.addEventListener("click",mostrarListadoClientes,false);
+//filtrado
+$( document ).ready(function() {
+    $("#btnFiltrarNombre").click(function(){
+         filtrarNombreCliente();        
+    });
+});
 
 var oBtnListadoConductores=document.getElementById("btnListadoConductores");
 oBtnListadoConductores.addEventListener("click",mostrarListadoConductores,false);
@@ -266,13 +272,14 @@ function mostrarListadoAutobuses()
     $("#formulario").hide("normal");
     listadoAutobuses();
     oCapaListado.style.display="block";
+    $("#panelCliente").hide("normal");
 }
 
 function mostrarListadoClientes()
 {
     $("#formulario").hide("normal");
     listadoClientes();
-
+    $("#panelCliente").show("normal");
     oCapaListado.style.display="block";
 }
 
@@ -281,13 +288,15 @@ function mostrarListadoConductores()
     $("#formulario").hide("normal");
     listadoConductores();
     oCapaListado.style.display="block";
+    $("#panelCliente").hide("normal");
 }
 
 function mostrarListadoVacaciones()
 {
     $("#formulario").hide("normal");
 	listadoVacaciones();
-	oCapaListado.style.display="block";
+    oCapaListado.style.display="block";
+    $("#panelCliente").hide("normal");
 }
 
 function mostrarListadoAlquileres()
@@ -295,9 +304,15 @@ function mostrarListadoAlquileres()
     $("#formulario").hide("normal");
     listadoAlquileres();
     oCapaListado.style.display="block";
+    $("#panelCliente").hide("normal");
 }
 
-
+//eliminar dialogo que se pase como string
+function cerrarDialogo(sDialog)
+{
+	
+	$("#"+sDialog).dialog('destroy').remove();
+}
 //panel de mensajes
 function mensaje(sTexto)
 {

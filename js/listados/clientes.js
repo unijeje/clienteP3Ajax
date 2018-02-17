@@ -106,3 +106,67 @@ function respuestaListadoCliente()
 			oBotones[i].addEventListener("click", recuperarCliente, false);
 	}
 }
+
+function filtrarNombreCliente()
+{
+	var sHTML='<div id="dialog" title="Basic dialog"><p>Introduce nombre o parte del nombre: .</p>';
+	sHTML+='<input type="text" name="txtNombreCliente" id="txtNombreCliente" placeholder="nombre"/></div>';
+	//sHTML+="</div>";
+	$("#frmFiltrarCliente").append(sHTML);
+	/*
+	$("#cerrarDialogCliente").click(function(){
+		cerrarDialogo("dialog");
+	});
+	$("#buscarDialogCliente").click(function(){
+		buscarNombreClienteDialogo();
+	});
+	//console.log($("#frmFiltrarCliente"));
+	/*
+	$( function() {
+		$( "#dialog" ).dialog();
+	  } );
+	  */
+	 $( function() {
+		$( "#dialog" ).dialog({
+		  width: "320px",
+		  height: "auto",
+		  modal: true,
+		  buttons: {
+			"Buscar": function() {
+			  buscarNombreClienteDialogo();
+			},
+			"Mostrar todos": function() {
+				listadoClientes();
+				cerrarDialogo("dialog");
+			},
+			"Cerrar": function() {
+				cerrarDialogo("dialog");
+			}
+		  }
+		});
+	  } );
+
+}
+
+function buscarNombreClienteDialogo()
+{
+	var stxtNombre=$("#dialog #txtNombreCliente").val();
+	//console.log(stxtNombre);
+	
+	// Instanciar objeto Ajax
+	var oAjax = instanciarXHR();
+
+	//1. Preparar parametros
+	var sDatos="nombre="+stxtNombre;
+
+	//2. Configurar la llamada --> Asincrono por defecto
+	oAjax.open("GET", "php/filtrarClienteNombre.php?"+sDatos);
+
+	//3. Asociar manejador de evento de la respuesta
+	oAjax.addEventListener("readystatechange", respuestaListadoCliente, false);
+
+	//4. Hacer la llamada
+	oAjax.send();
+
+	cerrarDialogo("dialog");
+}
