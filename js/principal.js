@@ -11,6 +11,10 @@ $("#menuAltaAlquiler").click(cargaAltaAlquiler);
 $("#menubajaAlquiler").click(cargaBajaAlquiler);
 $("#menuModificaAlquiler").click(cargaModificaAlquiler);
 
+var bGestionConductorCargado=false;
+$("#menuAltaConductor").click(cargarAltaConductor);
+$("#menuBajaConductor").click(cargarBajaConductor);
+$("#menuModificarConductor").click(cargarModificarConductor);
 
 function mostrarFormulario(sForm)
 {
@@ -226,7 +230,76 @@ function cargaModificaCliente()
     }
 }
 
+function cargarAltaConductor(){
+	mostrarFormulario("frmConductorAlta");
+	
+	if($("#frmConductorAlta").length==0){
+		$("<div>").appendTo("#formulario").load("formu/altaConductor.html", function(){
+			if(bGestionConductorCargado){
+				var oBtnAltaConductor= document.getElementById("btnAltaConductor");
+				oBtnAltaConductor.addEventListener("click",altaConductor,false);
+			} else{
+				$.getScript("js/gestion/gestionConductor.js", function(){
+					bGestionConductorCargado= true;
+					var oBtnAltaConductor= document.getElementById("btnAltaConductor");
+					oBtnAltaConductor.addEventListener("click",altaConductor,false);
+				});
+			}
+		});
+	} else{
+		$("#frmConductorAlta").show("normal");
+	}
+}
 
+function cargarBajaConductor(){
+	mostrarFormulario("frmConductorBaja");
+	
+	if($("#frmConductorBaja").length==0){
+		$("<div>").appendTo("#formulario").load("formu/bajaConductor.html", function(){
+			if(bGestionConductorCargado){
+				//buscarConductores();
+				var oBtnBajaConductor= document.getElementById("btnBajaConductor");
+				oBtnBajaConductor.addEventListener("click",bajaConductor,false);
+				//document.frmConductorBaja.buscarConductor.addEventListener("click",rellenaCamposConductor,false);
+			} else{
+				$.getScript("js/gestion/gestionConductor.js", function(){
+					bGestionConductorCargado=true;
+					//buscarConductores();
+					var oBtnBajaConductor= document.getElementById("btnBajaConductor");
+					oBtnBajaConductor.addEventListener("click",bajaConductor,false);
+					//document.frmConductorBaja.buscarConductor.addEventListener("click",rellenaCamposConductor,false);
+				});
+			}
+		});
+	} else{
+		$("frmConductorBaja").show("normal");
+	}
+}
+
+function cargarModificarConductor(){
+	mostrarFormulario("frmConductorModificar");
+	
+	if($("#frmConductorModificar").length==0){
+		$("<div>").appendTo("#formulario").load("formu/modificaConductor.html", function(){
+			if(bGestionConductorCargado){
+				//buscarConductores();
+				var oBtnModificarConductor= document.getElementById("btnModificarConductor");
+				oBtnModificarConductor.addEventListener("click",modificarConductor,false);
+				//document.frmConductorModificar.buscarConductor.addEventListener("click",rellenaCamposConductor,false);
+			} else{
+				$.getScript("js/gestion/gestionConductor.js", function(){
+					bGestionConductorCargado=true;
+					//buscarConductores();
+					var oBtnModificarConductor= document.getElementById("btnModificarConductor");
+					oBtnModificarConductor.addEventListener("click",modificarConductor,false);
+					//document.frmConductorModificar.buscarConductor.addEventListener("click",rellenaCamposConductor,false);
+				});
+			}
+		});
+	} else{
+		$("frmConductorModificar").show("normal");
+	}
+}
 
 //botones Listados
 var oBtnListadoAutobuses=document.getElementById("btnListadoAutobuses");

@@ -1,69 +1,68 @@
 <form name="frmConductorModificar" id="frmConductorModificar" class="form-horizontal"> <!-- Modificar Conductor -->
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="comboConductor">Seleccione Conductor</label>
-						<div class="col-md-6 col-sm-8">
-							<select id="comboConductor" name="comboConductor" class="form-control">
-								<!--se rellenan con actualizaComboConductor al dar de alta uno nuevo -->
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="txtConductorDni">Nif:</label>  
-						<div class="col-md-6 col-sm-8">
-							<input id="txtConductorDni" name="txtConductorDni" placeholder="NIF" class="form-control input-md" type="text" readonly>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="txtConductorNombre">Nombre:</label>  
-						<div class="col-md-6 col-sm-8">
-							<input id="txtConductorNombre" name="txtConductorNombre" placeholder="Nombre" class="form-control input-md" type="text">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="txtConductorApellidos">Apellidos:</label>  
-						<div class="col-md-6 col-sm-8">
-							<input id="txtConductorApellidos" name="txtConductorApellidos" placeholder="Apellidos" class="form-control input-md" type="text">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="radioConductorSexo">Sexo:</label>  
-						<div class="col-md-6 col-sm-8">
-							<label class="radio-inline"><input id="radioConductorSexo" name="radioConductorSexo" value="Masculino" type="radio"/>Masculino</label>
-							<label class="radio-inline"><input id="radioConductorSexo" name="radioConductorSexo" value="Femenino" type="radio"/>Femenino</label>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="txtConductorTelefono">Teléfono:</label>  
-						<div class="col-md-6 col-sm-8">
-							<input id="txtConductorTelefono" name="txtConductorTelefono" placeholder="Telefono" class="form-control input-md" type="text">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="txtConductorCorreo">Correo Electrónico:</label>  
-						<div class="col-md-6 col-sm-8">
-							<input id="txtConductorCorreo" name="txtConductorCorreo" placeholder="Email" class="form-control input-md" type="text">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="txtConductorDireccion">Dirección:</label>  
-						<div class="col-md-6 col-sm-8">
-							<input id="txtConductorDireccion" name="txtConductorDireccion" placeholder="Dirección" class="form-control input-md" type="text">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="txtConductorCuenta">Número de cuenta:</label>  
-						<div class="col-md-6 col-sm-8">
-							<input id="txtConductorCuenta" name="txtConductorCuenta" placeholder="Cuenta" class="form-control input-md" type="text">
-						</div>
-					</div>
-						<br>
-					<div class="form-group">
-						<div class="col-sm-offset-2 col-md-offset-4 col-md-2 col-sm-4">
-							<input type="button" id="btnModificarConductor" name="btnModificarConductor" class="btn btn-block btn-primary" value="Modificar Conductor" />
-						</div>
-			
-						<div class="col-md-2 col-sm-4">
-							<input type="reset" id="btnLimpiarCampos" name="btnLimpiarCampos" class="btn btn-block btn-danger" value="Limpiar Campos" />
-						</div>
-					</div>
-				</form>
+	<h3 class="col-md-offset-5 col-sm-offset-5">Modificar Conductor</h3>
+		<br>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtConductorDni">Nif:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtConductorDni" name="txtConductorDni" placeholder="NIF" class="form-control input-md" type="text">
+		</div>
+		<div class="col-md-1 col-sm-1">
+			<button id="buscarConductor" type="button" class="btn btn-info">
+				<span class="glyphicon glyphicon-search"></span>
+			</button>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtConductorNombre">Nombre:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtConductorNombre" name="txtConductorNombre" placeholder="Nombre" class="form-control input-md" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtConductorApellidos">Apellidos:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtConductorApellidos" name="txtConductorApellidos" placeholder="Apellidos" class="form-control input-md" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="radioConductorSexo">Sexo:</label>  
+		<div class="col-md-6 col-sm-8">
+			<label class="radio-inline"><input id="radioConductorSexo" name="radioConductorSexo" value="Masculino" type="radio"/>Masculino</label>
+			<label class="radio-inline"><input id="radioConductorSexo" name="radioConductorSexo" value="Femenino" type="radio"/>Femenino</label>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtConductorTelefono">Teléfono:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtConductorTelefono" name="txtConductorTelefono" placeholder="Telefono" class="form-control input-md" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtConductorCorreo">Correo Electrónico:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtConductorCorreo" name="txtConductorCorreo" placeholder="Email" class="form-control input-md" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtConductorDireccion">Dirección:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtConductorDireccion" name="txtConductorDireccion" placeholder="Dirección" class="form-control input-md" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtConductorCuenta">Número de cuenta:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtConductorCuenta" name="txtConductorCuenta" placeholder="Cuenta" class="form-control input-md" type="text">
+		</div>
+	</div>
+		<br>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-md-offset-4 col-md-2 col-sm-4">
+			<input type="button" id="btnModificarConductor" name="btnModificarConductor" class="btn btn-block btn-primary" value="Modificar Conductor" />
+		</div>
+
+		<div class="col-md-2 col-sm-4">
+			<input type="reset" id="btnLimpiarCampos" name="btnLimpiarCampos" class="btn btn-block btn-danger" value="Limpiar Campos" />
+		</div>
+	</div>
+</form>
