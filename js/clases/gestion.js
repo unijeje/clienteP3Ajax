@@ -341,25 +341,31 @@ class Gestion
 
     //conductores
 	altaConductor(oConductor){
-		var bEncontrado= false;
-		
-		for(var i=0; i<this._conductores.length && bEncontrado==false; i++){
-			if(this._conductores[i].dni==oConductor.dni){
-                bEncontrado= true;
-                
-			}
-		}
-		
-		if(bEncontrado==false){
-			this._conductores.push(oConductor);
-            this.actualizaComboConductores();
-            
-            //se crea una cuenta de banco para ese conductor
-            this.añadirCuenta(oConductor.numCuenta);
+		// Instanciar objeto Ajax
+        var oAjax = instanciarXHR();
 
-		}
-			
-		return !bEncontrado;
+        //1. Preparar parametros con JSON
+		var oConductor= {
+			dni: oConductor.dni,
+			nombre: oConductor.nombre,
+			apellidos: oConductor.apellidos,
+			sexo: oConductor.sexo,
+			tlf: oConductor.tlf,
+			email: oConductor.email,
+			direccion: oConductor.direccion
+		};
+		
+		var sDatosEnvio= "datos="+JSON.stringify(oConductor);
+		
+		//2. Configurar la llamada --> Asincrono por defecto
+        oAjax.open("POST", encodeURI("php/altaConductor.php"));
+        oAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		
+		//3. Asociar manejador de evento de la respuesta
+        oAjax.addEventListener("readystatechange", respuestaAltaConductor, false);
+		
+		//4. Hacer la llamada
+        oAjax.send(sDatosEnvio);
 	}
 	
 	bajaConductor(oConductor){ //funciona
@@ -444,12 +450,31 @@ class Gestion
 
 	buscarConductor(sDni){
         var oConductor=null;
-        for(var i=0;i<this._conductores.length && oConductor==null;i++)
-        {
-            if(sDni==this._conductores[i].dni)
-                oConductor=this._conductores[i];
-        }
-        return oConductor;
+		var sDatos= "dni="+sDni;
+		
+        //se hace llamada asyncrona para que espere a la respuesta antes de hacer el return
+        $.ajax({
+            url :"php/buscarConductorDni.php",
+            async : false,
+            cache : false, 
+            method : "GET", 
+            dataType : "json",
+            data : sDatos,
+            complete : function(oDatosDevuelto, sStatus)
+            {
+                // si se devuelve un resultado correcto se envia el cconductor devuelta
+                if(sStatus=="success" && oDatosDevuelto.responseJSON.dni!=null)
+                {   oConductor=new Conductor(oDatosDevuelto.responseJSON.dni, oDatosDevuelto.responseJSON.nombre, oDatosDevuelto.responseJSON.apellidos, 
+					oDatosDevuelto.responseJSON.sexo, oDatosDevuelto.responseJSON.telefono, oDatosDevuelto.responseJSON.correo, oDatosDevuelto.responseJSON.direccion);
+					
+                    if(oDatosDevuelto.responseJSON.estado==false)
+                        oConductor.estado=oDatosDevuelto.responseJSON.estado;
+                    //console.log(oCliente);
+                }
+            }
+        });
+
+        return oCliente;
     }
 	
 	buscarVacaciones(sDni){
@@ -461,66 +486,7 @@ class Gestion
         }
         return oConductor;
 	}
-	
-	actualizaComboConductores(){		
-		var oComboBajaConductor=document.frmConductorBaja.comboConductor;
-        var oComboModificaConductor=document.frmConductorModificar.comboConductor;
-        var oComboSeleccionaConductor=document.frmNuevoAlquiler.querySelector(".alquilerConductoresOriginal").childNodes[3].childNodes[1];
-        var oComboModificarAlquiler=document.frmModificarAlquiler.querySelector(".alquilerConductoresOriginal").childNodes[3].childNodes[1];
-        var oComboBorrarAlquiler=document.frmBorraAlquiler.querySelector(".alquilerConductoresOriginal").childNodes[3].childNodes[1];
-        var oComboAltaVacacionesConductor=document.frmAltaDeVacaciones.comboConductor;
-
-		 while (oComboBajaConductor.firstChild) { //tienen el mismo nº de hijos
-            oComboBajaConductor.removeChild(oComboBajaConductor.firstChild);
-            oComboModificaConductor.removeChild(oComboModificaConductor.firstChild);
-            oComboSeleccionaConductor.removeChild(oComboSeleccionaConductor.firstChild);
-            oComboModificarAlquiler.removeChild(oComboModificarAlquiler.firstChild);
-            oComboAltaVacacionesConductor.removeChild(oComboAltaVacacionesConductor.firstChild);
-            //oComboBajaVacacionesConductor.removeChild(oComboBajaVacacionesConductor.firstChild);
-            //oComboModificarVacacionesConductor.removeChild(oComboModificarVacacionesConductor.firstChild);
-            oComboBorrarAlquiler.removeChild(oComboBorrarAlquiler.firstChild);
-        }
-
 		
-        for(var i=0;i<this._conductores.length;i++){
-            if(this._conductores[i].estado==true){
-				var newSelect=document.createElement("option");				
-				newSelect.value=this._conductores[i].dni;
-				newSelect.text=this._conductores[i].dni+" - "+this._conductores[i].nombre+" "+this._conductores[i].apellidos;
-				oComboBajaConductor.appendChild(newSelect);
-                oComboModificaConductor.appendChild(oComboBajaConductor.lastChild.cloneNode(true));
-                oComboSeleccionaConductor.appendChild(oComboBajaConductor.lastChild.cloneNode(true));
-                oComboAltaVacacionesConductor.appendChild(oComboBajaConductor.lastChild.cloneNode(true));
-                //oComboBajaVacacionesConductor.appendChild(oComboBajaConductor.lastChild.cloneNode(true));
-                //oComboModificarVacacionesConductor.appendChild(oComboBajaConductor.lastChild.cloneNode(true));
-                oComboModificarAlquiler.appendChild(oComboBajaConductor.lastChild.cloneNode(true));
-                oComboBorrarAlquiler.appendChild(oComboBajaConductor.lastChild.cloneNode(true));                    
-            }
-		}
-	}
-	
-	actualizaComboVacaciones(){
-		var oComboBajaVacacionesConductor=document.frmBajaDeVacaciones.comboConductorVacaciones;
-        var oComboModificarVacacionesConductor=document.frmModificarVacaciones.comboConductorVacaciones;
-		
-		while (oComboBajaVacacionesConductor.firstChild) {
-            oComboBajaVacacionesConductor.removeChild(oComboBajaVacacionesConductor.firstChild);
-            oComboModificarVacacionesConductor.removeChild(oComboModificarVacacionesConductor.firstChild);
-        }
-		
-		for(var j=0; j<this._vacaciones.length ; j++){
-			for(var l=0; l<this._conductores.length;l++){
-				if(this._conductores[l].dni==this._vacaciones[j].dni && this._vacaciones[j].estado==true){
-					var selectComboVacaciones=document.createElement("option");				
-					selectComboVacaciones.value=this._conductores[l].dni;
-					selectComboVacaciones.text=this._conductores[l].dni+" - "+this._conductores[l].nombre+" "+this._conductores[l].apellidos;
-					oComboBajaVacacionesConductor.appendChild(selectComboVacaciones);
-					oComboModificarVacacionesConductor.appendChild(oComboBajaVacacionesConductor.lastChild.cloneNode(true));
-				}
-			}
-		}
-	}
-	
     //autobuses
     buscarAutobus(sMatricula)
     {

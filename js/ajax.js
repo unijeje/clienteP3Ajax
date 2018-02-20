@@ -314,9 +314,39 @@ function respuestaAutoCompleteConductor(oRespuesta, sStatus, oAjax)
                return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
            };
         }
+		/*
+		if( $("#frmConductorBaja #txtConductorDni").length>0)
+        {
+        $("#frmConductorBaja #txtConductorDni").autocomplete({
+           source: dnis,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmConductorBaja #txtConductorDni").val(ui.item.value);
+                //$("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
+		*/
     }
 }
 
+function respuestaAltaConductor(){
+	var oAjax = this;
+
+    // 5. Proceso la respuesta cuando llega
+    if (oAjax.readyState == 4 && oAjax.status == 200) {
+        
+		if(parseInt(oAjax.responseText)>0){
+            document.frmConductorAlta.reset();
+            document.frmConductorAlta.style.display="none";
+            mensaje("Conductor Insertado Correctamente");
+            buscarConductores();
+            } else
+				mensaje("Ese conductor ya existe");
+    }
+}
 
 
 function buscarAutobuses()

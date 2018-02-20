@@ -13,8 +13,8 @@ $("#menuModificaAlquiler").click(cargaModificaAlquiler);
 
 var bGestionConductorCargado=false;
 $("#menuAltaConductor").click(cargarAltaConductor);
-$("#menuBajaConductor").click(cargarBajaConductor);
-$("#menuModificarConductor").click(cargarModificarConductor);
+//$("#menuBajaConductor").click(cargarBajaConductor);
+//$("#menuModificarConductor").click(cargarModificarConductor);
 
 function mostrarFormulario(sForm)
 {
@@ -257,17 +257,17 @@ function cargarBajaConductor(){
 	if($("#frmConductorBaja").length==0){
 		$("<div>").appendTo("#formulario").load("formu/bajaConductor.html", function(){
 			if(bGestionConductorCargado){
-				//buscarConductores();
+				buscarConductores();
 				var oBtnBajaConductor= document.getElementById("btnBajaConductor");
 				oBtnBajaConductor.addEventListener("click",bajaConductor,false);
-				//document.frmConductorBaja.buscarConductor.addEventListener("click",rellenaCamposConductor,false);
+				document.frmConductorBaja.buscarConductor.addEventListener("click",rellenaCamposConductor,false);
 			} else{
 				$.getScript("js/gestion/gestionConductor.js", function(){
 					bGestionConductorCargado=true;
-					//buscarConductores();
+					buscarConductores();
 					var oBtnBajaConductor= document.getElementById("btnBajaConductor");
 					oBtnBajaConductor.addEventListener("click",bajaConductor,false);
-					//document.frmConductorBaja.buscarConductor.addEventListener("click",rellenaCamposConductor,false);
+					document.frmConductorBaja.buscarConductor.addEventListener("click",rellenaCamposConductor,false);
 				});
 			}
 		});
@@ -282,17 +282,17 @@ function cargarModificarConductor(){
 	if($("#frmConductorModificar").length==0){
 		$("<div>").appendTo("#formulario").load("formu/modificaConductor.html", function(){
 			if(bGestionConductorCargado){
-				//buscarConductores();
+				buscarConductores();
 				var oBtnModificarConductor= document.getElementById("btnModificarConductor");
 				oBtnModificarConductor.addEventListener("click",modificarConductor,false);
-				//document.frmConductorModificar.buscarConductor.addEventListener("click",rellenaCamposConductor,false);
+				document.frmConductorModificar.buscarConductor.addEventListener("click",rellenaCamposConductor,false);
 			} else{
 				$.getScript("js/gestion/gestionConductor.js", function(){
 					bGestionConductorCargado=true;
-					//buscarConductores();
+					buscarConductores();
 					var oBtnModificarConductor= document.getElementById("btnModificarConductor");
 					oBtnModificarConductor.addEventListener("click",modificarConductor,false);
-					//document.frmConductorModificar.buscarConductor.addEventListener("click",rellenaCamposConductor,false);
+					document.frmConductorModificar.buscarConductor.addEventListener("click",rellenaCamposConductor,false);
 				});
 			}
 		});
@@ -445,94 +445,6 @@ function validarRadio(arrayRadio)
             res=true;
     }
     return res;
-}
-
-
-
-
-
-function comboEstadoInicialConductores(){
-    //conductores
-	var oComboBajaConductor=document.frmConductorBaja.comboConductor;
-    var oComboModificaConductor=document.frmConductorModificar.comboConductor;
-    var oComboSeleccionaConductor=document.frmNuevoAlquiler.querySelector(".alquilerConductoresOriginal").childNodes[3].childNodes[1];
-	
-	if(oComboBajaConductor.firstChild){
-        oComboBajaConductor.firstChild.selected;// seleccionar el primero al cargar el programa
-        frmConductorModificar.firstChild.selected;// seleccionar el primero al cargar el programa
-        oComboSeleccionaConductor.firstChild.selected;
-        var oConductor= oGestion.buscarConductor(frmConductorModificar.comboConductor.value);
-        if(oConductor)
-        {
-            frmConductorModificar.txtConductorDni.value=oConductor.dni;
-            frmConductorModificar.txtConductorNombre.value=oConductor.nombre;
-            frmConductorModificar.txtConductorApellidos.value=oConductor.apellidos;
-            frmConductorModificar.radioConductorSexo.value=oConductor.sexo;
-            frmConductorModificar.txtConductorTelefono.value=oConductor.tlf;
-            frmConductorModificar.txtConductorCorreo.value=oConductor.email;
-            frmConductorModificar.txtConductorDireccion.value= oConductor.direccion;
-            frmConductorModificar.txtConductorCuenta.value=oConductor.numCuenta;
-    
-            frmConductorBaja.txtConductorDni.value=oConductor.dni;
-            frmConductorBaja.txtConductorNombre.value=oConductor.nombre;
-            frmConductorBaja.txtConductorApellidos.value=oConductor.apellidos;
-            frmConductorBaja.radioConductorSexo.value=oConductor.sexo;
-            frmConductorBaja.txtConductorTelefono.value=oConductor.tlf;
-            frmConductorBaja.txtConductorCorreo.value=oConductor.email;
-            frmConductorBaja.txtConductorDireccion.value= oConductor.direccion;
-            frmConductorBaja.txtConductorCuenta.value=oConductor.numCuenta;
-        }
-
-
-    } else{
-        frmConductorModificar.txtConductorDni.value=null;
-        frmConductorModificar.txtConductorNombre.value=null;
-        frmConductorModificar.txtConductorApellidos.value=null;
-        frmConductorModificar.radioConductorSexo.value=null;
-        frmConductorModificar.txtConductorTelefono.value=null;
-        frmConductorModificar.txtConductorCorreo.value=null;
-		frmConductorModificar.txtConductorDireccion.value= null;
-        frmConductorModificar.txtConductorCuenta.value=null;
-
-        frmConductorBaja.txtConductorDni.value=null;
-        frmConductorBaja.txtConductorNombre.value=null;
-        frmConductorBaja.txtConductorApellidos.value=null;
-        frmConductorBaja.radioConductorSexo.value=null;
-        frmConductorBaja.txtConductorTelefono.value=null;
-        frmConductorBaja.txtConductorCorreo.value=null;
-		frmConductorBaja.txtConductorDireccion.value= null;
-        frmConductorBaja.txtConductorCuenta.value=null;
-    }
-}
-   
-function estadoInicialComboVacaciones(){	
-    var oComboBajaDeVacaciones= document.frmBajaDeVacaciones.comboConductorVacaciones;
-    var oComboModificarVacaciones= document.frmBajaDeVacaciones.comboConductorVacaciones;
-	
-	if(oComboBajaDeVacaciones.firstChild){
-		oComboBajaDeVacaciones.firstChild.selected;
-		frmModificarVacaciones.firstChild.selected;
-		
-		var oVacaciones= oGestion.buscarVacaciones(frmBajaDeVacaciones.comboConductorVacaciones.value);
-		
-		if(oVacaciones){
-			frmBajaDeVacaciones.fechaIni.value= oVacaciones.fechaIni;
-			frmBajaDeVacaciones.fechaFin.value= oVacaciones.fechaFin;
-			frmBajaDeVacaciones.descripcion.value= oVacaciones.descripcion;
-			
-			frmModificarVacaciones.fechaInicioAntigua.value= oVacaciones.fechaIni;
-			frmModificarVacaciones.fechaFinAntigua.value= oVacaciones.fechaFin;
-			frmModificarVacaciones.descripcion.value= oVacaciones.descripcion;
-		} else{
-			frmBajaDeVacaciones.fechaIni.value= null;
-			frmBajaDeVacaciones.fechaFin.value= null;
-			frmBajaDeVacaciones.descripcion.value= null;
-			
-			frmModificarVacaciones.fechaInicioAntigua.value= null;
-			frmModificarVacaciones.fechaFinAntigua.value= null;
-			frmModificarVacaciones.descripcion.value= null;
-		}
-	}
 }
 
  //autobuses

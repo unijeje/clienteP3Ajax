@@ -10,7 +10,6 @@ class Conductor
 		this.tlf= iTlf;
 		this.email= sEmail;
 		this.direccion= sDireccion;
-		this.numCuenta= iNumCuenta;
 		this.estado= true;
 	}
 }
