@@ -9,9 +9,9 @@ oGestion.altaAutobus(oAutobus2);
 oGestion.altaMantenimiento(oMantenimiento44);
 //console.log(oMantenimiento44.fecha);
 */
+$("#btnBuscarAutobus").click(rellenaCamposAutobus);
 
-
-var oBtnDarAltaAutobus=document.getElementById("btnAltaAutobus");
+/*var oBtnDarAltaAutobus=document.getElementById("btnAltaAutobus");
 oBtnDarAltaAutobus.addEventListener("click",fAltaAutobus,false);
 
 var oBtnDarBajaAutobus=document.getElementById("btnBajaAutobus");
@@ -36,7 +36,7 @@ var oComboAutobusRevisado=document.frmBajaMantenimiento.comboAutobusRevisado;
 var oComboAutobusRevisado2=document.frmModificarMantenimiento.comboAutobusRevisado;
 var oRadioMantenimientoSeleccion=document.frmAutobusMantenimiento.rdMantenimientoSeleccion;
 
-oComboBajaAutobus.addEventListener("change", rellenaCamposAutobus, false);
+//oComboBajaAutobus.addEventListener("change", rellenaCamposAutobus, false);
 oComboModificaAutobus.addEventListener("change", rellenaCamposAutobus, false);
 oComboAutobusRevisado.addEventListener("change", rellenaCamposMantenimiento, false);
 oComboAutobusRevisado2.addEventListener("change", rellenaCamposMantenimiento, false);
@@ -49,8 +49,8 @@ oRadioMantenimientoSeleccion2=document.getElementById("rdMantenimientoSeleccion2
 oRadioMantenimientoSeleccion2.addEventListener("click", muestraFormsMantenimiento2, false);
 
 
-//comboEstadoInicialAutubuses();
-
+comboEstadoInicialAutubuses();
+*/
 function fAltaAutobus(oEvento){
 
     var oE = oEvento || windows.event;
@@ -61,10 +61,14 @@ function fAltaAutobus(oEvento){
     	var sMatriculaAutobus=frmAutobusAlta.txtAutobusMatricula.value.trim();
         var iAsientosAutobus=parseInt(frmAutobusAlta.txtAutobusAsientos.value.trim());
         var sModeloAutobus=frmAutobusAlta.txtAutobusModelo.value.trim();
-        var iConsumoAutobus=parseFloat(frmAutobusAlta.txtAutobusConsumo.value.trim());
+        var fConsumoAutobus=parseFloat(frmAutobusAlta.txtAutobusConsumo.value.trim());
 
-        var oNuevoAutobus=new Autobus(sMatriculaAutobus,iAsientosAutobus,sModeloAutobus,iConsumoAutobus);
+        var oNuevoAutobus=new Autobus(sMatriculaAutobus,iAsientosAutobus,sModeloAutobus,fConsumoAutobus);
+        var datos="autobus="+JSON.stringify(oNuevoAutobus);
 
+        $.post("php/altaAutobus.php",datos,mostrarMensajeAccion,"json");
+        //$.post("php/altaAutobus.php",$( "#frmAutobusAlta" ).serialize(),);
+/*
         var bInsercion=oGestion.altaAutobus(oNuevoAutobus);
         if (bInsercion)
         {
@@ -73,7 +77,7 @@ function fAltaAutobus(oEvento){
         	mensaje("Autobus dado de alta correctamente");
         }
         else
-        	mensaje("Ya existe un autobus con esa matrícula");
+        	mensaje("Ya existe un autobus con esa matrícula");*/
     }
 }
 
@@ -83,7 +87,11 @@ function fBajaAutobus()
     //console.log(sMatriculaAutobus);
 
 	var oNuevoAutobus=new Autobus(sMatriculaAutobus,"","","");
+    var datos="autobus="+JSON.stringify(oNuevoAutobus);
 
+    $.post("php/bajaAutobus.php",datos,mostrarMensajeAccion,"json");
+
+/*
 	var bBaja=oGestion.bajaAutobus(oNuevoAutobus);
 
 	  if(bBaja)
@@ -93,7 +101,7 @@ function fBajaAutobus()
             comboEstadoInicialAutubuses(); //vuelve a seleccionar el primero del combo
         }
         else
-            mensaje("Error al dar de baja: "+sMatriculaAutobus);      
+            mensaje("Error al dar de baja: "+sMatriculaAutobus); */     
     
 }
 
@@ -219,7 +227,7 @@ function rellenaCamposAutobus(oEvento) //actualiza
     var oE = oEvento || windows.event;
     var oForm=oE.target.parentNode.parentNode.parentNode; //recupera el formulario padre sobre el que esta el combo
     //console.log(oForm.name);
-    var oAutobus=oGestion.buscarAutobus(oForm.comboAutobus.value);//recupera el autobus a traves de la matricula
+    //var oAutobus=oGestion.buscarAutobus(oForm.comboAutobus.value);//recupera el autobus a traves de la matricula
 
      oForm.txtAutobusMatricula.value=oAutobus.matricula;
      oForm.txtAutobusAsientos.value=oAutobus.asientos;
@@ -428,4 +436,9 @@ function validarAutobus(oForm)
 
     return bValidacion;
     
+}
+
+
+function mostrarMensajeAccion(oRespuesta, sStatus, oAjax){
+    mensaje(oRespuesta);
 }
