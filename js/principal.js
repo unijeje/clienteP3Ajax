@@ -18,7 +18,7 @@ $("#menuAltaConductor").click(cargarAltaConductor);
 
 function mostrarFormulario(sForm)
 {
-    $("form:not('#"+sForm+"')").hide("normal");
+    $("#formulario form:not('#"+sForm+"')").hide("normal");
     $("#resultadoListados").hide("normal");
     $("#panelMensajes").hide("normal");
     $("#formulario").show("normal");
@@ -191,6 +191,9 @@ function cargaBajaCliente()
                 document.frmClienteBaja.buscarCliente.addEventListener("click", rellenaCamposCliente, false);
                 });
             }
+
+            
+
         });
     } else {
         // Lo muestro si está oculto
@@ -324,7 +327,7 @@ var oBtnListadoAlquileres=document.getElementById("btnListadoAlquileres");
 oBtnListadoAlquileres.addEventListener("click",mostrarListadoAlquileres,false);
 
 var oCapaListado=document.getElementById("resultadoListados");
-var oCapaListadoAlquileres=document.getElementById("frmListadoAlquileres");
+//var oCapaListadoAlquileres=document.getElementById("frmListadoAlquileres");
 
 
 //botones panel de mensajes

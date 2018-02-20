@@ -66,6 +66,7 @@ CREATE TABLE IF NOT EXISTS `autobus` (
   `modelo` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `consumo` int(5) NOT NULL,
   `itv` tinyint(1) NOT NULL,
+  `estado` tinyint(1) NOT NULL,
   PRIMARY KEY (`matricula`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -74,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `autobus` (
 --
 
 INSERT INTO `autobus` (`matricula`, `asientos`, `modelo`, `consumo`, `itv`) VALUES
-('123', 5, 'prueba', 5, 1);
+('1234TTT', 5, 'prueba', 5, 1);
 
 -- --------------------------------------------------------
 
