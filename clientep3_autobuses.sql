@@ -50,9 +50,9 @@ CREATE TABLE IF NOT EXISTS `alquiler` (
 --
 
 INSERT INTO `alquiler` (`id`, `horas`, `fecha`, `numpersonas`, `descripcion`, `origen`, `destino`, `kms`, `cliente`, `matricula_autobus`, `dni_conductor`, `estado`) VALUES
-(1, 4, '2018-02-16', 5, 'test', 'test', 'test', 5, '12345678A', '123', '123', 1),
-(5, 5, '2018-02-13', 5, '5', '5', '5', 5, '12345678A', '123', '123', 1),
-(124, 5, '2018-02-17', 5, 'coment', 'origen', 'destino', 5, '12345678H', '123', '123', 1);
+(1, 4, '2018-02-16', 5, 'test', 'test', 'test', 5, '12345678A', '1234TTT', '123', 1),
+(5, 5, '2018-02-13', 5, '5', '5', '5', 5, '12345678A', '1234TTT', '123', 1),
+(124, 5, '2018-02-17', 5, 'coment', 'origen', 'destino', 5, '12345678H', '1234TTT', '123', 1);
 
 -- --------------------------------------------------------
 
@@ -74,8 +74,8 @@ CREATE TABLE IF NOT EXISTS `autobus` (
 -- Volcado de datos para la tabla `autobus`
 --
 
-INSERT INTO `autobus` (`matricula`, `asientos`, `modelo`, `consumo`, `itv`) VALUES
-('1234TTT', 5, 'prueba', 5, 1);
+INSERT INTO `autobus` (`matricula`, `asientos`, `modelo`, `consumo`, `itv`, `estado` ) VALUES
+('1234TTT', 5, 'prueba', 5, 1,0);
 
 -- --------------------------------------------------------
 
