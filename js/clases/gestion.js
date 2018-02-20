@@ -88,11 +88,35 @@ class Gestion
     buscarAlquiler(sID)
     {
         var oAlquiler=null;
-        for(var i=0;i<this._alquileres.length && oAlquiler==null;i++)
-        {
-            if(sID==this._alquileres[i].id)
-                oAlquiler=this._alquileres[i];
-        }
+        
+        var sDatos="id="+sID;
+
+        //se hace llamada asyncrona para que espere a la respuesta antes de hacer el return
+        $.ajax({
+            url :"php/buscarAlquilerId.php",
+            async : false,
+            cache : false, 
+            method : "GET", 
+            dataType : "json",
+            data : sDatos,
+            complete : function(oDatosDevuelto, sStatus)
+            {
+                //console.log(oDatosDevuelto);
+                // si se devuelve un resultado correcto se envia el cliente devuelta
+                if(sStatus=="success" && oDatosDevuelto.responseJSON.id!=null)
+                {
+                    //constructor(dniConductor, matriculaAutobus, sID, iHoras, dFecha, iNumPers, sDescripcion, sOrigen, sDestino, iKMS, sCliente)
+                    oAlquiler=new Alquiler(oDatosDevuelto.responseJSON.dni_conductor, oDatosDevuelto.responseJSON.matricula_autobus, oDatosDevuelto.responseJSON.id,
+                    oDatosDevuelto.responseJSON.horas,oDatosDevuelto.responseJSON.fecha, oDatosDevuelto.responseJSON.numpersonas, oDatosDevuelto.responseJSON.descripcion,
+                    oDatosDevuelto.responseJSON.origen, oDatosDevuelto.responseJSON.destino, oDatosDevuelto.responseJSON.kms, oDatosDevuelto.responseJSON.cliente);
+                    
+                    //console.log(oAlquiler);
+                    
+                    
+                }
+            }
+        });
+
         return oAlquiler;
     }
 	
@@ -113,92 +137,111 @@ class Gestion
     altaAlquiler(oAlquiler)
     {
         var res=false;
-        if(this.buscarAlquiler(oAlquiler.id)==null)
-        {
-            this._alquileres.push(oAlquiler);
-            res=true;
-            this.actualizaComboAlquileres();
-            this.actualizaComboClientesConAlquiler();
+        
 
-            //cada vez que se añade un alquiler se calcula el precio que se gana con ese viaje
-            var fGanancia=calcularImporteAlquileEmpresa(oAlquiler.conductor.length, oAlquiler.horas, oAlquiler.kms);
-            //se añade a la cuenta de gestion
-            this.gestionContabilidad("alquiler", null, fGanancia, oAlquiler.fecha);
+        // Instanciar objeto Ajax
+        var oAjax = instanciarXHR();
 
-            //para cada conductor se le paga su parte
-            var fImporte=calcularImporteAlquilerConductor(oAlquiler.horas);
-            for(var i=0;i<oAlquiler.conductor.length;i++)
-            {
-                var numCuentaConductor=oAlquiler.conductor[i].numCuenta;
-                oGestion.gestionContabilidad("nomina", numCuentaConductor, fImporte, oAlquiler.fecha);
-            }
+        //1. Preparar parametros con JSON
+            
+        var oAlquiler=  {   conductor : oAlquiler.conductor,
+                        autobus : oAlquiler.autobuses,
+                        id : oAlquiler.id,
+                        horas : parseInt(oAlquiler.horas),
+                        fecha : oAlquiler.fecha,
+                        numPers : parseInt(oAlquiler.numPers),
+                        descripcion : oAlquiler.descripcion,
+                        origen : oAlquiler.origen,
+                        destino : oAlquiler.destino,
+                        kms : parseInt(oAlquiler.kms),
+                        cliente : oAlquiler.cliente,
+                    };
+        
+        var sDatosEnvio = "datos=" + JSON.stringify(oAlquiler); //convertir el objeto a JSON
 
-        }
+        //2. Configurar la llamada --> Asincrono por defecto
+        oAjax.open("POST", encodeURI("php/altaAlquiler.php"));
+        oAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        //3. Asociar manejador de evento de la respuesta
+        oAjax.addEventListener("readystatechange", respuestaAltaAlquiler, false);
+
+        //4. Hacer la llamada
+        oAjax.send(sDatosEnvio);
+        
         return res;
     }
     bajaAlquiler(oAlquiler)
     {
-        var res=false;
-        for(var i=0;i<this._alquileres.length;i++)
-        {
-            if(oAlquiler.id==this._alquileres[i].id)
+        var sID="id="+oAlquiler.id;
+        var res=false;//no se ha encontrado
+        $.ajax({
+            url :"php/bajaAlquiler.php",
+            async : false,
+            cache : false, 
+            method : "POST", 
+            dataType : "text",
+            data : sID,
+            complete : function(sDatosDevuelto, sStatus)
             {
-                this._alquileres.splice(i, 1);
-                res=true;
-                this.actualizaComboAlquileres();
+                if(sDatosDevuelto.responseText=="Exito")
+                    res=true;
             }
-        }
+        });
+
         return res;
     }
-    modificarAlquiler(oAlquiler)
+    modificarAlquiler(sDatos)
     {
         var res=false;
-        for(var i=0;i<this._alquileres.length;i++)
-        {
-            if(this._alquileres[i].id==oAlquiler.id)
+        $.ajax({
+            url :"php/modificarAlquiler.php",
+            async : false,
+            cache : false, 
+            method : "POST", 
+            dataType : "text",
+            data : sDatos,
+            complete : function(sDatosDevuelto, sStatus)
             {
-                this._alquileres[i]=oAlquiler;
-                this.actualizaComboAlquileres();
-                res=true;
+                if(sDatosDevuelto.responseText=="Exito")
+                    res=true;
             }
-        }
+        });
         return res;
-    }
-
-
-    actualizaComboAlquileres()
-    {
-        //console.log("actualizaComboAlquileres");
-        var oComboModificaAlquiler=document.frmModificarAlquiler.comboAlquiler;
-        var oComboBorrarAlquiler=document.frmBorraAlquiler.comboAlquiler;
-
-        while (oComboModificaAlquiler.firstChild) { //tienen el mismo nº de hijos
-            oComboModificaAlquiler.removeChild(oComboModificaAlquiler.firstChild);
-            oComboBorrarAlquiler.removeChild(oComboBorrarAlquiler.firstChild);
-        }
-        for(var i=0;i<this._alquileres.length;i++)
-        {
-            var newSelect=document.createElement("option");
-            newSelect.value=this._alquileres[i].id;
-            newSelect.text=this._alquileres[i].id+" - "+this._alquileres[i].origen+" > "+this._alquileres[i].destino+" "+this._alquileres[i].fecha;
-            oComboModificaAlquiler.appendChild(newSelect);
-            oComboBorrarAlquiler.appendChild(oComboModificaAlquiler.lastChild.cloneNode(true));
-            
-        }
     }
 
     //clientes
 
-    /*Comprueba con DNI si existe ese cliente en los datos */
+    /*Comprueba con DNI si existe ese cliente en la base de datos */
     buscarCliente(sDni)
     {
         var oCliente=null;
-        for(var i=0;i<this._clientes.length && oCliente==null;i++)
-        {
-            if(sDni==this._clientes[i].dni)
-                oCliente=this._clientes[i];
-        }
+        
+        var sDatos="dni="+sDni;
+
+        //se hace llamada asyncrona para que espere a la respuesta antes de hacer el return
+        $.ajax({
+            url :"php/buscarClienteDni.php",
+            async : false,
+            cache : false, 
+            method : "GET", 
+            dataType : "json",
+            data : sDatos,
+            complete : function(oDatosDevuelto, sStatus)
+            {
+                // si se devuelve un resultado correcto se envia el cliente devuelta
+                if(sStatus=="success" && oDatosDevuelto.responseJSON.dni!=null)
+                {    oCliente=new Cliente(oDatosDevuelto.responseJSON.dni, oDatosDevuelto.responseJSON.nombre, oDatosDevuelto.responseJSON.apellidos,
+                    oDatosDevuelto.responseJSON.telefono, oDatosDevuelto.responseJSON.correo, oDatosDevuelto.responseJSON.sexo);
+                    if(oDatosDevuelto.responseJSON.estado==false)
+                        oCliente.estado=oDatosDevuelto.responseJSON.estado;
+                    //console.log(oCliente);
+                }
+            }
+        });
+
         return oCliente;
+        
     }
     /*Realiza la llamada ajax con el cliente recibido, la respuesta se encargara de mostrar los mensajes correspondientes*/
     altaCliente(oCliente)
@@ -238,73 +281,31 @@ class Gestion
     /*Cliente no se borra de los datos, solo no se muestra a la hora de mostrar clientes actuales*/
     bajaCliente(oCliente)
     {
+        var sDatos="dni="+oCliente.dni;
         var res=false;//no se ha encontrado
-        var oCliente=this.buscarCliente(oCliente.dni);
-        if(oCliente!=null)
-        {
-            oCliente.estado=false;
-            res=true;//se ha dado de baja
-            this.actualizaComboCliente();
-        }
-        return res;
-    }
-    /*Recibe nuevo Cliente y el DNI antiguo de un combo, busca el cliente y lo reemplaza con el nuevo, comprobando DNI*/
-    modificarCliente(oCliente, dniAntiguo)
-    {
-        var res=true;
-
-        //comprobar nuevo DNI
-        if(this.buscarCliente(oCliente.dni)!=null && oCliente.dni!=dniAntiguo)
-         {
-            res=false;
-            oCliente.dni=dniAntiguo;
-         }   
-        //si el dni es incorrecto se deja el mismo que tenia antes y se avisa aunque se cambian los otros datos
-        for(var i=0;i<this._clientes.length;i++)
-        {
-            if(this._clientes[i].dni==dniAntiguo)
+        $.ajax({
+            url :"php/bajaCliente.php",
+            async : false,
+            cache : false, 
+            method : "POST", 
+            dataType : "text",
+            data : sDatos,
+            complete : function(sDatosDevuelto, sStatus)
             {
-                //console.log(i);                    
-                this._clientes[i]=oCliente;
-                this.actualizaComboCliente();
-                
+                if(sDatosDevuelto.responseText=="Exito")
+                    res=true;
             }
+        });
 
-        }
         return res;
-       
     }
-    /*actualiza los select con los clientes, no muy eficiente pero funciona para todos los casos*/
-    actualizaComboCliente()
+    /*No se modifica el dni*/
+    modificarCliente(sDatos)
     {
-        var oComboBajaCliente=document.frmClienteBaja.comboCliente;
-        var oComboModificaCliente=document.frmClienteModificar.comboCliente;
-        var oComboSeleccionaCliente=document.frmNuevoAlquiler.comboCliente;
-        var oComboBorrarAlquiler=document.frmBorraAlquiler.comboCliente;
-        var oComboModificarAlquiler=document.frmModificarAlquiler.comboCliente;
-
-        while (oComboBajaCliente.firstChild) { //tienen el mismo nº de hijos
-            oComboBajaCliente.removeChild(oComboBajaCliente.firstChild);
-            oComboModificaCliente.removeChild(oComboModificaCliente.firstChild);
-            oComboSeleccionaCliente.removeChild(oComboSeleccionaCliente.firstChild);
-            oComboBorrarAlquiler.removeChild(oComboBorrarAlquiler.firstChild);
-            oComboModificarAlquiler.removeChild(oComboModificarAlquiler.firstChild);
-        }
-        for(var i=0;i<this._clientes.length;i++)
-        {
-            if(this._clientes[i].estado==true) //solo mostrar los dados de alta
-            {
-                var newSelect=document.createElement("option");
-                newSelect.value=this._clientes[i].dni;
-                newSelect.text=this._clientes[i].dni+" - "+this._clientes[i].nombre+" "+this._clientes[i].apellidos;
-                oComboBajaCliente.appendChild(newSelect);
-                oComboModificaCliente.appendChild(oComboBajaCliente.lastChild.cloneNode(true));
-                oComboSeleccionaCliente.appendChild(oComboBajaCliente.lastChild.cloneNode(true));
-                oComboBorrarAlquiler.appendChild(oComboBajaCliente.lastChild.cloneNode(true));
-                oComboModificarAlquiler.appendChild(oComboBajaCliente.lastChild.cloneNode(true));
-            }    
-        }      
-
+        //console.log(sDatos);
+        $.get("php/modificarCliente.php",sDatos,respuestaModificarCliente,"text");
+       
+       
     }
 
     actualizaComboClientesConAlquiler()

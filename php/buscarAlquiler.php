@@ -2,15 +2,12 @@
 
 include("functions.php");
 
+$sql="SELECT id,fecha,cliente from alquiler where estado=true;";
 
-$sql="SELECT dni, nombre, apellidos from cliente where estado=true;";
-
-//echo $sql;
 
 $datos=ejecutaConsultaArray($sql);
 
 
 echo json_encode($datos);
-
 
 ?>

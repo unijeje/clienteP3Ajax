@@ -1,93 +1,104 @@
 <!--Formulario nuevo Alquiler-->
 				
-				<form name="frmNuevoAlquiler" id="frmNuevoAlquiler" class="form-horizontal"> <!--Formulario Nuevo Alquiler -->
-					<div class="row">
-						<div class="col-xs-12">
-							<h2 class="text-center">Añadir Nuevo Alquiler</h2>
-						</div>
-					</div>
-						<br>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="comboCliente">Seleccione Cliente</label>
-						<div class="col-md-6 col-sm-8">
-							<select id="comboCliente" name="comboCliente" class="form-control ">
-								<!--se rellenan con actualizaComboCliente al dar de alta uno nuevo -->
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="txtAlquilerID">ID Alquiler:</label>  
-						<div class="col-md-6 col-sm-8">
-							<input id="txtAlquilerID" name="txtAlquilerID" placeholder="123" class="form-control input-md" type="text">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="txtAlquilerHoras">Nº Horas:</label>  
-						<div class="col-md-6 col-sm-8">
-							<input id="txtAlquilerHoras" name="txtAlquilerHoras" placeholder="nº" class="form-control input-md" type="number">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="txtAlquilerFecha">Fecha:</label>  
-						<div class="col-md-6 col-sm-8">
-							<input id="txtAlquilerFecha" name="txtAlquilerFecha" placeholder="mm/dd/yyyy" class="form-control input-md" type="date">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="txtAlquilerNumPers">Nº Total Personas:</label>  
-						<div class="col-md-6 col-sm-8">
-							<input id="txtAlquilerNumPers" name="txtAlquilerNumPers" placeholder="nº" class="form-control input-md" type="number">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="txtAlquilerDesc">Descripción: </label>  
-						<div class="col-md-6 col-sm-8">
-							<textarea id="txtAlquilerDesc" name="txtAlquilerDesc" placeholder="comentario" class="form-control input-md" type="number"></textarea>
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="txtAlquilerOrigen">Origen:</label>  
-						<div class="col-md-6 col-sm-8">
-							<input id="txtAlquilerOrigen" name="txtAlquilerOrigen" placeholder="lugar" class="form-control input-md" type="text">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="txtAlquilerDestino">Destino:</label>  
-						<div class="col-md-6 col-sm-8">
-							<input id="txtAlquilerDestino" name="txtAlquilerDestino" placeholder="lugar" class="form-control input-md" type="text">
-						</div>
-					</div>
-					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="txtAlquilerKms">Nº Total Kilómetros:</label>  
-						<div class="col-md-6 col-sm-8">
-							<input id="txtAlquilerKms" name="txtAlquilerKms" placeholder="kilómetros" class="form-control input-md" type="number">
-						</div>
-					</div>
-					<div class="form-group alquilerConductoresOriginal">
-						<label class="col-md-3 col-sm-3 control-label" for="comboConductores">Seleccione Conductor: </label>
-						<div class="col-md-6 col-sm-8">
-							<select id="comboConductores" required name="comboConductores" class="form-control ">
-								<!--se rellenan con actualizaComboConductores al dar de alta uno nuevo -->
-							</select>
-						</div>
+<form name="frmNuevoAlquiler" id="frmNuevoAlquiler" class="form-horizontal"> <!--Formulario Nuevo Alquiler -->
+	
+	<div class="row">
+		<div class="col-xs-12">
+			<h2 class="text-center">Añadir Nuevo Alquiler</h2>
+		</div>
+	</div>
+		<br>
 
-					</div>
-					<div class="form-group alquilerAutobusesOriginal">
-						<label class="col-md-3 col-sm-3 control-label" for="comboAutobuses">Seleccione Autobus: </label>
-						<div class="col-md-6 col-sm-8">
-							<select id="comboAutobuses" name="comboAutobuses" class="form-control ">
-								<!--se rellenan con actualizaComboAutobuses al dar de alta uno nuevo -->
-							</select>
-						</div>
-					</div>
-						<br>
-					<div class="form-group">
-						<div class="col-sm-offset-2 col-md-offset-4 col-md-2 col-sm-4">
-							<input type="button" id="btnAltaAlquiler" name="btnAltaAlquiler" class="btn btn-block btn-primary" value="Dar de Alta" />
-						</div>
-			
-						<div class="col-md-2 col-sm-4">
-							<input type="reset" id="btnLimpiarCampos" name="btnLimpiarCampos" class="btn btn-block btn-danger" value="Limpiar Campos" />
-						</div>
-					</div>
-				</form>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtAlquilerID">ID Alquiler:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtAlquilerID" name="txtAlquilerID" placeholder="123" class="form-control input-md" type="text">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtClienteDni">Nif del Cliente:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtClienteDni" name="txtClienteDni" placeholder="NIF" class="form-control input-md" type="text">
+		</div>
+		<input type="hidden" id="cliente-dni">
+		<p id="cliente-description"></p>
+	</div>
+	
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtAlquilerHoras">Nº Horas:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtAlquilerHoras" name="txtAlquilerHoras" placeholder="nº" class="form-control input-md" type="number">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtAlquilerFecha">Fecha:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtAlquilerFechaAlta" name="txtAlquilerFecha" placeholder="mm/dd/yyyy" class="form-control input-md" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtAlquilerNumPers">Nº Total Personas:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtAlquilerNumPers" name="txtAlquilerNumPers" placeholder="nº" class="form-control input-md" type="number">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtAlquilerDesc">Descripción: </label>  
+		<div class="col-md-6 col-sm-8">
+			<textarea id="txtAlquilerDesc" name="txtAlquilerDesc" placeholder="comentario" class="form-control input-md" type="number"></textarea>
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtAlquilerOrigen">Origen:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtAlquilerOrigen" name="txtAlquilerOrigen" placeholder="lugar" class="form-control input-md" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtAlquilerDestino">Destino:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtAlquilerDestino" name="txtAlquilerDestino" placeholder="lugar" class="form-control input-md" type="text">
+		</div>
+	</div>
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtAlquilerKms">Nº Total Kilómetros:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtAlquilerKms" name="txtAlquilerKms" placeholder="kilómetros" class="form-control input-md" type="number">
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtConductorDni">Nif del Conductor:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtConductorDni" name="txtConductorDni" placeholder="NIF" class="form-control input-md" type="text">
+		</div>
+		
+	</div>
+
+	<div class="form-group">
+		<label class="col-md-3 col-sm-3 control-label" for="txtAutobusMatricula">Matricula Autobus:</label>  
+		<div class="col-md-6 col-sm-8">
+			<input id="txtAutobusMatricula" name="txtAutobusMatricula" placeholder="NIF" class="form-control input-md" type="text">
+		</div>
+	
+	</div>
+
+		<br>
+	<div class="form-group">
+		<div class="col-sm-offset-2 col-md-offset-4 col-md-2 col-sm-4">
+			<input type="button" id="btnAltaAlquiler" name="btnAltaAlquiler" class="btn btn-block btn-primary" value="Dar de Alta" />
+		</div>
+
+		<div class="col-md-2 col-sm-4">
+			<input type="reset" id="btnLimpiarCampos" name="btnLimpiarCampos" class="btn btn-block btn-danger" value="Limpiar Campos" />
+		</div>
+	</div>
+</form>
+
+<script>
+$( function() {
+$( "#frmNuevoAlquiler #txtAlquilerFechaAlta" ).datepicker({ dateFormat: 'yy-mm-dd' });
+} );
+
+</script>

@@ -6,19 +6,141 @@ $("#menuAltaCliente").click(cargaAltaCliente);
 $("#menuBajaCliente").click(cargaBajaCliente);
 $("#menuModificaCliente").click(cargaModificaCliente);
 
+var bGestionAlquilerCargado=false;
+$("#menuAltaAlquiler").click(cargaAltaAlquiler);
+$("#menubajaAlquiler").click(cargaBajaAlquiler);
+$("#menuModificaAlquiler").click(cargaModificaAlquiler);
+
+var bGestionConductorCargado=false;
+$("#menuAltaConductor").click(cargarAltaConductor);
+$("#menuBajaConductor").click(cargarBajaConductor);
+$("#menuModificarConductor").click(cargarModificarConductor);
 
 function mostrarFormulario(sForm)
 {
-    $("form:not('#"+sForm+"')").hide("normal");
+    $("#formulario form:not('#"+sForm+"')").hide("normal");
     $("#resultadoListados").hide("normal");
     $("#panelMensajes").hide("normal");
     $("#formulario").show("normal");
 }
 
+function cargaAltaAlquiler()
+{
+    mostrarFormulario("frmNuevoAlquiler");
+    // Verifico si ya he cargado el formulario antes, si lo ha cargado antes lo muestra. Si no lo ha cargado antes trae el formulario y mira si ya se habia traido el codigo js correspondiente
+    // si se ha traido el codigo javascript de otro formulario solo asigna eventlistener, si no se trae el js
+    if ($('#frmNuevoAlquiler').length == 0) {
+        $("<div>").appendTo('#formulario').load("formu/altaAlquiler.html", function()
+        {
+            if(bGestionAlquilerCargado)
+            {
+                buscarClientes();
+                buscarConductores();
+                buscarAutobuses();
+                var oBtnDarAltaAlquiler=document.getElementById("btnAltaAlquiler");
+                oBtnDarAltaAlquiler.addEventListener("click", altaAlquiler, false);
+                
+            }
+            else
+            {
+                buscarClientes();
+                $.getScript("js/gestion/gestionAlquiler.js", function(){
+                    buscarClientes();
+                    buscarConductores();
+                    buscarAutobuses();
+                    bGestionAlquilerCargado=true;
+                    var oBtnDarAltaAlquiler=document.getElementById("btnAltaAlquiler");
+                    oBtnDarAltaAlquiler.addEventListener("click", altaAlquiler, false);
+                    
+                    
+                });
+            }
+            
+        });
+    } else {
+        // Lo muestro si está oculto
+        $('#frmNuevoAlquiler').show("normal");
+    }
+}
+
+function cargaBajaAlquiler()
+{
+    mostrarFormulario("frmBorraAlquiler");
+    // Verifico si ya he cargado el formulario antes, si lo ha cargado antes lo muestra. Si no lo ha cargado antes trae el formulario y mira si ya se habia traido el codigo js correspondiente
+    // si se ha traido el codigo javascript de otro formulario solo asigna eventlistener, si no se trae el js
+    if ($('#frmBorraAlquiler').length == 0) {
+        $("<div>").appendTo('#formulario').load("formu/borraAlquiler.html", function()
+        {
+            if(bGestionAlquilerCargado)
+            {
+                buscarAlquileres();
+                document.frmBorraAlquiler.buscarAlquiler.addEventListener("click", rellenaCamposAlquiler, false);
+                var oBajaAlquiler=document.getElementById("btnBorrarAlquiler");
+                oBajaAlquiler.addEventListener("click", bajaAlquiler, false);
+            }
+            else
+            {
+                $.getScript("js/gestion/gestionAlquiler.js", function(){
+                    buscarAlquileres();
+                    document.frmBorraAlquiler.buscarAlquiler.addEventListener("click", rellenaCamposAlquiler, false);
+                    bGestionAlquilerCargado=true;
+                    var oBajaAlquiler=document.getElementById("btnBorrarAlquiler");
+                    oBajaAlquiler.addEventListener("click", bajaAlquiler, false);
+                });
+            }
+            
+        });
+    } else {
+        // Lo muestro si está oculto
+        $('#frmBorraAlquiler').show("normal");
+    }
+}
+
+function cargaModificaAlquiler()
+{
+    mostrarFormulario("frmModificarAlquiler");
+    // Verifico si ya he cargado el formulario antes, si lo ha cargado antes lo muestra. Si no lo ha cargado antes trae el formulario y mira si ya se habia traido el codigo js correspondiente
+    // si se ha traido el codigo javascript de otro formulario solo asigna eventlistener, si no se trae el js
+    if ($('#frmModificarAlquiler').length == 0) {
+        $("<div>").appendTo('#formulario').load("formu/modificaAlquiler.html", function()
+        {
+            if(bGestionAlquilerCargado)
+            {
+                buscarAlquileres();
+                buscarClientes();
+                buscarConductores();
+                buscarAutobuses();
+                document.frmModificarAlquiler.buscarAlquiler.addEventListener("click", rellenaCamposAlquiler, false);
+                var oModificarAlquiler=document.getElementById("btnModificarAlquiler");
+                oModificarAlquiler.addEventListener("click", modificarAlquiler, false);
+            }
+            else
+            {
+                $.getScript("js/gestion/gestionAlquiler.js", function(){
+                    buscarAlquileres();
+                    buscarClientes();
+                    buscarConductores();
+                    buscarAutobuses();
+                    document.frmModificarAlquiler.buscarAlquiler.addEventListener("click", rellenaCamposAlquiler, false);
+                    bGestionAlquilerCargado=true;
+                    var oModificarAlquiler=document.getElementById("btnModificarAlquiler");
+                    oModificarAlquiler.addEventListener("click", modificarAlquiler, false);
+                });
+            }
+            
+        });
+    } else {
+        // Lo muestro si está oculto
+        $('#frmModificarAlquiler').show("normal");
+    }
+}
+
+
 function cargaAltaCliente()
 {
     mostrarFormulario("frmClienteAlta");
-    // Verifico si ya he cargado el formulario antes
+    // Verifico si ya he cargado el formulario antes, si lo ha cargado antes lo muestra. Si no lo ha cargado antes trae el formulario y mira si ya se habia traido el codigo js correspondiente
+    // si se ha traido el codigo javascript de otro formulario solo asigna eventlistener, si no se trae el js
     if ($('#frmClienteAlta').length == 0) {
         $("<div>").appendTo('#formulario').load("formu/altaCliente.html", function()
         {
@@ -53,19 +175,20 @@ function cargaBajaCliente()
         {
             if(bGestionClienteCargado)
             {
-                buscarCliente();
-                $("#frmClienteBaja #txtClienteDni").change(rellenaCamposCliente);
+                buscarClientes();
                 var oBtnDarBajaCliente=document.getElementById("btnBajaCliente");
                 oBtnDarBajaCliente.addEventListener("click", bajaCliente, false);
+                document.frmClienteBaja.buscarCliente.addEventListener("click", rellenaCamposCliente, false);
             }
             else
             {
             $.getScript("js/gestion/gestionCliente.js", function(){
                 bGestionClienteCargado=true;
-                $("#frmClienteBaja #txtClienteDni").change(rellenaCamposCliente);
-                buscarCliente();
+                buscarClientes();
                 var oBtnDarBajaCliente=document.getElementById("btnBajaCliente");
                 oBtnDarBajaCliente.addEventListener("click", bajaCliente, false);
+                //document.frmClienteBaja.txtClienteDni.addEventListener("change", rellenaCamposCliente, false);
+                document.frmClienteBaja.buscarCliente.addEventListener("click", rellenaCamposCliente, false);
                 });
             }
 
@@ -88,15 +211,19 @@ function cargaModificaCliente()
         {
             if(bGestionClienteCargado)
             {
+                buscarClientes();
                 var oBtnActualizarCliente=document.getElementById("btnModificarCliente");
                 oBtnActualizarCliente.addEventListener("click", actualizaCliente, false);
+                document.frmClienteModificar.buscarCliente.addEventListener("click", rellenaCamposCliente, false);
             }
             else
             {
             $.getScript("js/gestion/gestionCliente.js", function(){
                 bGestionClienteCargado=true;
+                buscarClientes();
                 var oBtnActualizarCliente=document.getElementById("btnModificarCliente");
                 oBtnActualizarCliente.addEventListener("click", actualizaCliente, false);
+                document.frmClienteModificar.buscarCliente.addEventListener("click", rellenaCamposCliente, false);
                 });
             }
         });
@@ -106,7 +233,76 @@ function cargaModificaCliente()
     }
 }
 
+function cargarAltaConductor(){
+	mostrarFormulario("frmConductorAlta");
+	
+	if($("#frmConductorAlta").length==0){
+		$("<div>").appendTo("#formulario").load("formu/altaConductor.html", function(){
+			if(bGestionConductorCargado){
+				var oBtnAltaConductor= document.getElementById("btnAltaConductor");
+				oBtnAltaConductor.addEventListener("click",altaConductor,false);
+			} else{
+				$.getScript("js/gestion/gestionConductor.js", function(){
+					bGestionConductorCargado= true;
+					var oBtnAltaConductor= document.getElementById("btnAltaConductor");
+					oBtnAltaConductor.addEventListener("click",altaConductor,false);
+				});
+			}
+		});
+	} else{
+		$("#frmConductorAlta").show("normal");
+	}
+}
 
+function cargarBajaConductor(){
+	mostrarFormulario("frmConductorBaja");
+	
+	if($("#frmConductorBaja").length==0){
+		$("<div>").appendTo("#formulario").load("formu/bajaConductor.html", function(){
+			if(bGestionConductorCargado){
+				//buscarConductores();
+				var oBtnBajaConductor= document.getElementById("btnBajaConductor");
+				oBtnBajaConductor.addEventListener("click",bajaConductor,false);
+				//document.frmConductorBaja.buscarConductor.addEventListener("click",rellenaCamposConductor,false);
+			} else{
+				$.getScript("js/gestion/gestionConductor.js", function(){
+					bGestionConductorCargado=true;
+					//buscarConductores();
+					var oBtnBajaConductor= document.getElementById("btnBajaConductor");
+					oBtnBajaConductor.addEventListener("click",bajaConductor,false);
+					//document.frmConductorBaja.buscarConductor.addEventListener("click",rellenaCamposConductor,false);
+				});
+			}
+		});
+	} else{
+		$("frmConductorBaja").show("normal");
+	}
+}
+
+function cargarModificarConductor(){
+	mostrarFormulario("frmConductorModificar");
+	
+	if($("#frmConductorModificar").length==0){
+		$("<div>").appendTo("#formulario").load("formu/modificaConductor.html", function(){
+			if(bGestionConductorCargado){
+				//buscarConductores();
+				var oBtnModificarConductor= document.getElementById("btnModificarConductor");
+				oBtnModificarConductor.addEventListener("click",modificarConductor,false);
+				//document.frmConductorModificar.buscarConductor.addEventListener("click",rellenaCamposConductor,false);
+			} else{
+				$.getScript("js/gestion/gestionConductor.js", function(){
+					bGestionConductorCargado=true;
+					//buscarConductores();
+					var oBtnModificarConductor= document.getElementById("btnModificarConductor");
+					oBtnModificarConductor.addEventListener("click",modificarConductor,false);
+					//document.frmConductorModificar.buscarConductor.addEventListener("click",rellenaCamposConductor,false);
+				});
+			}
+		});
+	} else{
+		$("frmConductorModificar").show("normal");
+	}
+}
 
 //botones Listados
 var oBtnListadoAutobuses=document.getElementById("btnListadoAutobuses");
@@ -114,6 +310,12 @@ oBtnListadoAutobuses.addEventListener("click",mostrarListadoAutobuses,false);
 
 var oBtnListadoClientes=document.getElementById("btnListadoClientes");
 oBtnListadoClientes.addEventListener("click",mostrarListadoClientes,false);
+//filtrado
+$( document ).ready(function() {
+    $("#btnFiltrarNombre").click(function(){
+         filtrarNombreCliente();        
+    });
+});
 
 var oBtnListadoConductores=document.getElementById("btnListadoConductores");
 oBtnListadoConductores.addEventListener("click",mostrarListadoConductores,false);
@@ -125,7 +327,7 @@ var oBtnListadoAlquileres=document.getElementById("btnListadoAlquileres");
 oBtnListadoAlquileres.addEventListener("click",mostrarListadoAlquileres,false);
 
 var oCapaListado=document.getElementById("resultadoListados");
-var oCapaListadoAlquileres=document.getElementById("frmListadoAlquileres");
+//var oCapaListadoAlquileres=document.getElementById("frmListadoAlquileres");
 
 
 //botones panel de mensajes
@@ -146,13 +348,14 @@ function mostrarListadoAutobuses()
     $("#formulario").hide("normal");
     listadoAutobuses();
     oCapaListado.style.display="block";
+    $("#panelCliente").hide("normal");
 }
 
 function mostrarListadoClientes()
 {
     $("#formulario").hide("normal");
     listadoClientes();
-
+    $("#panelCliente").show("normal");
     oCapaListado.style.display="block";
 }
 
@@ -161,13 +364,15 @@ function mostrarListadoConductores()
     $("#formulario").hide("normal");
     listadoConductores();
     oCapaListado.style.display="block";
+    $("#panelCliente").hide("normal");
 }
 
 function mostrarListadoVacaciones()
 {
     $("#formulario").hide("normal");
 	listadoVacaciones();
-	oCapaListado.style.display="block";
+    oCapaListado.style.display="block";
+    $("#panelCliente").hide("normal");
 }
 
 function mostrarListadoAlquileres()
@@ -175,9 +380,15 @@ function mostrarListadoAlquileres()
     $("#formulario").hide("normal");
     listadoAlquileres();
     oCapaListado.style.display="block";
+    $("#panelCliente").hide("normal");
 }
 
-
+//eliminar dialogo que se pase como string
+function cerrarDialogo(sDialog)
+{
+	
+	$("#"+sDialog).dialog('destroy').remove();
+}
 //panel de mensajes
 function mensaje(sTexto)
 {
@@ -239,274 +450,9 @@ function validarRadio(arrayRadio)
     return res;
 }
 
-function escogeIndexCombo(oCombo, sValue)
-{
-    for(var i=0; i<oCombo.childNodes.length;i++)
-    {
-        if(oCombo.childNodes[i].value==sValue)
-        {
-            oCombo.selectedIndex=i;
-        }
-    }
-}
-
-function comboEstadoInicialAlquileres()
-{
-    var oComboBorrarAlquiler=document.frmBorraAlquiler.comboAlquiler;
-    var oComboModificarAlquiler=document.frmModificarAlquiler.comboAlquiler;
-
-    if(oComboBorrarAlquiler.firstChild)
-    {
-        oComboModificarAlquiler.selectedIndex="0";// seleccionar el primero al cargar el programa
-        oComboBorrarAlquiler.selectedIndex="0";// seleccionar el primero al cargar el programa
-        
-        var oAlquiler=oGestion.buscarAlquiler(frmModificarAlquiler.comboAlquiler.value);
-        
-        if(oAlquiler)
-        {   
-            //MODIFICAR
-            escogeIndexCombo(frmModificarAlquiler.comboCliente, oAlquiler.cliente.dni);
-
-            var oCombosActuales=frmModificarAlquiler.querySelectorAll(".alquilerConductores"); 
-
-            for(var i=0;i<oCombosActuales.length;i++)
-            {
-                oCombosActuales[i].parentNode.removeChild(oCombosActuales[i]);
-            }
-
-            oCombosActuales=frmModificarAlquiler.querySelectorAll(".alquilerAutobuses"); 
-
-            for(var i=0;i<oCombosActuales.length;i++)
-            {
-                oCombosActuales[i].parentNode.removeChild(oCombosActuales[i]);
-            }
-            
-            var oComboOriginal=frmModificarAlquiler.querySelector(".alquilerConductoresOriginal");
-            
 
 
-            for(var i=1;i<oAlquiler.conductor.length;i++)
-            {
-                var oNodoClonado=oComboOriginal.cloneNode(true);
-                oNodoClonado.classList.add("alquilerConductores");
-                oNodoClonado.classList.remove("alquilerConductoresOriginal");
-                frmModificarAlquiler.insertBefore(oNodoClonado, oComboOriginal);
-            }
 
-            for(var i=0;i<oAlquiler.conductor.length;i++)
-            {
-                escogeIndexCombo(frmModificarAlquiler.comboConductores[i], oAlquiler.conductor[i].dni);
-            }
-
-            oComboOriginal=frmModificarAlquiler.querySelector(".alquilerAutobusesOriginal");
-
-            for(var i=1;i<oAlquiler.autobuses.length;i++)
-            {
-                var oNodoClonado=oComboOriginal.cloneNode(true);
-                oNodoClonado.classList.add("alquilerAutobuses");
-                oNodoClonado.classList.remove("alquilerAutobusesOriginal");
-                frmModificarAlquiler.insertBefore(oNodoClonado, oComboOriginal);
-            }
-
-            for(var i=0;i<oAlquiler.autobuses.length;i++)
-            {
-                escogeIndexCombo(frmModificarAlquiler.comboAutobuses[i], oAlquiler.autobuses[i].matricula);
-            }
-            //frmModificarAlquiler.comboCliente.selectedIndex="0";
-            frmModificarAlquiler.txtAlquilerID.value=oAlquiler.id;
-            frmModificarAlquiler.txtAlquilerHoras.value=oAlquiler.horas;
-            frmModificarAlquiler.txtAlquilerFecha.value=oAlquiler.fecha;
-            frmModificarAlquiler.txtAlquilerNumPers.value=oAlquiler.numPers;
-            frmModificarAlquiler.txtAlquilerDesc.value=oAlquiler.descripcion;
-            frmModificarAlquiler.txtAlquilerOrigen.value=oAlquiler.origen;
-            frmModificarAlquiler.txtAlquilerDestino.value=oAlquiler.destino;
-            frmModificarAlquiler.txtAlquilerKms.value=oAlquiler.kms;
-
-            //BORRAR
-
-            escogeIndexCombo(frmBorraAlquiler.comboCliente, oAlquiler.cliente.dni);
-
-            oCombosActuales=frmBorraAlquiler.querySelectorAll(".alquilerConductores"); 
-
-            for(var i=0;i<oCombosActuales.length;i++)
-            {
-                oCombosActuales[i].parentNode.removeChild(oCombosActuales[i]);
-            }
-
-            oCombosActuales=frmBorraAlquiler.querySelectorAll(".alquilerAutobuses"); 
-
-            for(var i=0;i<oCombosActuales.length;i++)
-            {
-                oCombosActuales[i].parentNode.removeChild(oCombosActuales[i]);
-            }
-
-            oComboOriginal=frmBorraAlquiler.querySelector(".alquilerConductoresOriginal");
-            
-            for(var i=1;i<oAlquiler.conductor.length;i++)
-            {
-                var oNodoClonado=oComboOriginal.cloneNode(true);
-                oNodoClonado.classList.add("alquilerConductores");
-                oNodoClonado.classList.remove("alquilerConductoresOriginal");
-                frmBorraAlquiler.insertBefore(oNodoClonado, oComboOriginal);
-            }
-
-            for(var i=0;i<oAlquiler.conductor.length;i++)
-            {
-                escogeIndexCombo(frmBorraAlquiler.comboConductores[i], oAlquiler.conductor[i].dni);
-            }
-
-            oComboOriginal=frmBorraAlquiler.querySelector(".alquilerAutobusesOriginal");
-
-            for(var i=1;i<oAlquiler.autobuses.length;i++)
-            {
-                var oNodoClonado=oComboOriginal.cloneNode(true);
-                oNodoClonado.classList.add("alquilerAutobuses");
-                oNodoClonado.classList.remove("alquilerAutobusesOriginal");
-                frmBorraAlquiler.insertBefore(oNodoClonado, oComboOriginal);
-            }
-
-            for(var i=0;i<oAlquiler.autobuses.length;i++)
-            {
-                escogeIndexCombo(frmBorraAlquiler.comboAutobuses[i], oAlquiler.autobuses[i].matricula);
-            }
-
-            frmBorraAlquiler.txtAlquilerID.value=oAlquiler.id;
-            frmBorraAlquiler.txtAlquilerHoras.value=oAlquiler.horas;
-            frmBorraAlquiler.txtAlquilerFecha.value=oAlquiler.fecha;
-            frmBorraAlquiler.txtAlquilerNumPers.value=oAlquiler.numPers;
-            frmBorraAlquiler.txtAlquilerDesc.value=oAlquiler.descripcion;
-            frmBorraAlquiler.txtAlquilerOrigen.value=oAlquiler.origen;
-            frmBorraAlquiler.txtAlquilerDestino.value=oAlquiler.destino;
-            frmBorraAlquiler.txtAlquilerKms.value=oAlquiler.kms;
-        }
-        
-    }  
-    else
-    {
-       var oComboConductores=frmModificarAlquiler.querySelectorAll("#comboConductores");
-        var oComboAutobuses=frmModificarAlquiler.querySelectorAll("#comboAutobuses");
-        //console.log(oComboOriginal);
-        frmModificarAlquiler.comboCliente.selectedIndex="-1";
-        for(var i=0;i<oComboConductores.length;i++)
-        {
-            oComboConductores[i].selectedIndex="-1";
-            oComboAutobuses[i].selectedIndex="-1";
-        }
-        frmModificarAlquiler.txtAlquilerID.value=null;
-        frmModificarAlquiler.txtAlquilerHoras.value=null;
-        frmModificarAlquiler.txtAlquilerFecha.value=null;
-        frmModificarAlquiler.txtAlquilerNumPers.value=null;
-        frmModificarAlquiler.txtAlquilerDesc.value=null;
-        frmModificarAlquiler.txtAlquilerOrigen.value=null;
-        frmModificarAlquiler.txtAlquilerDestino.value=null;
-        frmModificarAlquiler.txtAlquilerKms.value=null;
-        
-        oComboConductores=frmBorraAlquiler.querySelectorAll("#comboConductores");
-        oComboAutobuses=frmBorraAlquiler.querySelectorAll("#comboAutobuses");
-        frmBorraAlquiler.comboCliente.selectedIndex="-1";
-        for(var i=0;i<oComboConductores.length;i++)
-        {
-            oComboConductores[i].selectedIndex="-1";
-            oComboAutobuses[i].selectedIndex="-1";
-        }
-        frmBorraAlquiler.txtAlquilerID.value=null;
-        frmBorraAlquiler.txtAlquilerHoras.value=null;
-        frmBorraAlquiler.txtAlquilerFecha.value=null;
-        frmBorraAlquiler.txtAlquilerNumPers.value=null;
-        frmBorraAlquiler.txtAlquilerDesc.value=null;
-        frmBorraAlquiler.txtAlquilerOrigen.value=null;
-        frmBorraAlquiler.txtAlquilerDestino.value=null;
-        frmBorraAlquiler.txtAlquilerKms.value=null;
-    }
-    /*
-    var oComboConductores=frmModificarAlquiler.querySelectorAll("#comboConductores");
-    var oComboAutobuses=frmModificarAlquiler.querySelectorAll("#comboAutobuses");
-    //console.log(oComboOriginal);
-    frmModificarAlquiler.comboCliente.selectedIndex="-1";
-    for(var i=0;i<oComboConductores.length;i++)
-    {
-        oComboConductores[i].selectedIndex="-1";
-        oComboAutobuses[i].selectedIndex="-1";
-    }
-    frmModificarAlquiler.txtAlquilerID.value=null;
-    frmModificarAlquiler.txtAlquilerHoras.value=null;
-    frmModificarAlquiler.txtAlquilerFecha.value=null;
-    frmModificarAlquiler.txtAlquilerNumPers.value=null;
-    frmModificarAlquiler.txtAlquilerDesc.value=null;
-    frmModificarAlquiler.txtAlquilerOrigen.value=null;
-    frmModificarAlquiler.txtAlquilerDestino.value=null;
-    frmModificarAlquiler.txtAlquilerKms.value=null;
-    
-    oComboConductores=frmBorraAlquiler.querySelectorAll("#comboConductores");
-    oComboAutobuses=frmBorraAlquiler.querySelectorAll("#comboAutobuses");
-    frmBorraAlquiler.comboCliente.selectedIndex="-1";
-    for(var i=0;i<oComboConductores.length;i++)
-    {
-        oComboConductores[i].selectedIndex="-1";
-        oComboAutobuses[i].selectedIndex="-1";
-    }
-    frmBorraAlquiler.txtAlquilerID.value=null;
-    frmBorraAlquiler.txtAlquilerHoras.value=null;
-    frmBorraAlquiler.txtAlquilerFecha.value=null;
-    frmBorraAlquiler.txtAlquilerNumPers.value=null;
-    frmBorraAlquiler.txtAlquilerDesc.value=null;
-    frmBorraAlquiler.txtAlquilerOrigen.value=null;
-    frmBorraAlquiler.txtAlquilerDestino.value=null;
-    frmBorraAlquiler.txtAlquilerKms.value=null;
-    */
-}
-
-function comboEstadoInicialClientes() //al iniciar el programa muestra los datos del primero y al borrar/actualizar vuelve a mostrar el primero
-{
-    //cliente
-    var oComboBajaCliente=document.frmClienteBaja.comboCliente;
-    var oComboModificaCliente=document.frmClienteModificar.comboCliente;
-    var oComboSeleccionaCliente=document.frmNuevoAlquiler.comboCliente;
-    if(oComboBajaCliente.firstChild)
-    {
-        oComboBajaCliente.firstChild.selected;// seleccionar el primero al cargar el programa
-        oComboModificaCliente.firstChild.selected;// seleccionar el primero al cargar el programa
-        oComboSeleccionaCliente.firstChild.selected;
-        var oCliente=oGestion.buscarCliente(frmClienteModificar.comboCliente.value);
-        if(oCliente)
-        {   
-            frmClienteModificar.txtClienteDni.value=oCliente.dni;
-            frmClienteModificar.txtClienteNombre.value=oCliente.nombre;
-            frmClienteModificar.txtClienteApellidos.value=oCliente.apellidos;
-            frmClienteModificar.txtClienteTelefono.value=oCliente.tlf;
-            frmClienteModificar.txtClienteCorreo.value=oCliente.correo;
-            frmClienteModificar.txtClienteCuenta.value=oCliente.numCuenta;
-            frmClienteModificar.radioClienteSexo.value=oCliente.sexo;
-
-            frmClienteBaja.txtClienteDni.value=oCliente.dni;
-            frmClienteBaja.txtClienteNombre.value=oCliente.nombre;
-            frmClienteBaja.txtClienteApellidos.value=oCliente.apellidos;
-            frmClienteBaja.txtClienteTelefono.value=oCliente.tlf;
-            frmClienteBaja.txtClienteCorreo.value=oCliente.correo;
-            frmClienteBaja.txtClienteCuenta.value=oCliente.numCuenta;
-            frmClienteBaja.txtClienteSexo.value=oCliente.sexo;
-        }
-
-    }  
-    else
-    {
-        frmClienteModificar.txtClienteDni.value=null;
-        frmClienteModificar.txtClienteNombre.value=null;
-        frmClienteModificar.txtClienteApellidos.value=null;
-        frmClienteModificar.txtClienteTelefono.value=null;
-        frmClienteModificar.txtClienteCorreo.value=null;
-        frmClienteModificar.txtClienteCuenta.value=null;
-        frmClienteModificar.txtClienteSexo.value=null;
-
-        frmClienteBaja.txtClienteDni.value=null;
-        frmClienteBaja.txtClienteNombre.value=null;
-        frmClienteBaja.txtClienteApellidos.value=null;
-        frmClienteBaja.txtClienteTelefono.value=null;
-        frmClienteBaja.txtClienteCorreo.value=null;
-        frmClienteBaja.txtClienteCuenta.value=null;
-        frmClienteBaja.txtClienteSexo.value=null;
-    }
-}
 
 function comboEstadoInicialConductores(){
     //conductores
@@ -670,15 +616,7 @@ function comboEstadoInicialAutubuses()
 
 
  }
-function calcularImporteAlquilerConductor(sHoras)
-{
-    return parseFloat(sHoras*8);
-}
 
-function calcularImporteAlquileEmpresa(numAutobuses, sHoras, kms)
-{
-    return parseFloat( (numAutobuses*10*sHoras)+ (2*kms) );
-}
 
 // EXPRESIONES REGULARES
 
@@ -711,4 +649,4 @@ var oExpRegDescripcion=/^[a-z\s\d-]{3,50}$/i; // entre 3 y 50 caracteres con num
 
 var oExpRegImporte=/^\d{1,3}([.]\d{1}\d?)?$/; // un numero entero y posibilidad de un decimal separado por .
 
-//var oExpRegFecha = /^((0?[1-9]|1[012])[- /.](0?[1-9]|[12][0-9]|3[01])[- /.](19|20)?[0-9]{2})*$/; //mm/dd/yyyy
+var oExpRegFecha = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/

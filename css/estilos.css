@@ -16,7 +16,7 @@ button{
     display:none;
 }
 
-#panelCuenta, #panelConductor
+#panelCliente, #panelConductor
 {
     display:none;
     width:100%;
@@ -31,6 +31,19 @@ button{
 .invisible{
     display:none;
 }
+
+.ui-autocomplete {
+    max-height: 200px;
+    overflow-y: auto;
+    /* prevent horizontal scrollbar */
+    overflow-x: hidden;
+  }
+  /* IE 6 doesn't support max-height
+   * we use height instead, but this forces the menu to always be this tall
+   */
+  * html .ui-autocomplete {
+    height: 200px;
+  }
 
 
 /*************/

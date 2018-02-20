@@ -2,10 +2,10 @@
 //objeto
 class Alquiler
 {
-    constructor(arrayConductores, arrayAutobuses, sID, iHoras, dFecha, iNumPers, sDescripcion, sOrigen, sDestino, iKMS, oCliente)
+    constructor(dniConductor, matriculaAutobus, sID, iHoras, dFecha, iNumPers, sDescripcion, sOrigen, sDestino, iKMS, sCliente)
     {
-        this.conductor=arrayConductores;
-        this.autobuses=arrayAutobuses;
+        this.conductor=dniConductor;
+        this.autobuses=matriculaAutobus;
         this.id=sID;
         this.horas=iHoras;
         this.fecha=dFecha;
@@ -14,7 +14,7 @@ class Alquiler
         this.origen=sOrigen;
         this.destino=sDestino;
         this.kms=iKMS;
-        this.cliente=oCliente;
+        this.cliente=sCliente;
     }
     //funciones
     

@@ -21,8 +21,8 @@
 			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Alquileres <span class="caret"></span></a>
 			  <ul class="dropdown-menu">
 				<li><a id="menuAltaAlquiler" href="#">Alta</a></li>
-				<li><a href="#">Baja</a></li>
-				<li><a href="#">Modificación</a></li>
+				<li><a id="menubajaAlquiler" href="#">Baja</a></li>
+				<li><a id="menuModificaAlquiler" href="#">Modificación</a></li>
 			  </ul>
 			</li>
 			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Autobuses <span class="caret"></span></a>
@@ -41,15 +41,16 @@
 			</li>
 			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Conductores <span class="caret"></span></a>
 				<ul class="dropdown-menu">
-				<li><a href="#">Alta</a></li>
-				<li><a href="#">Baja</a></li>
-				<li><a href="#">Modificación</a></li>
+				<li><a id="menuAltaConductor" href="#">Alta</a></li>
+				<li><a id="menuBajaConductor" href="#">Baja</a></li>
+				<li><a id="menuModificarConductor" href="#">Modificación</a></li>
 				</ul>
 			</li>
 			<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Listados <span class="caret"></span></a>
 				<ul class="dropdown-menu">
 				<li><a id="btnListadoAlquileres" href="#">Alquileres</a></li>
 				<li><a id="btnListadoAutobuses" href="#">Autobuses</a></li>
+				<li><a id="btnListadoMantenimiento" href="#">Mantenimientos</a></li>
 				<li><a id="btnListadoClientes" href="#">Clientes</a></li>
 				<li><a id="btnListadoConductores" href="#">Conductores</a></li>
 				<li><a id="btnListadoVacaciones" href="#">Vacaciones</a></li>
@@ -72,12 +73,19 @@
 		<div id="formulario"></div>
 
 		<div id="resultadoListados"> <!--para mostrar los listados -->
-			<div id="panelCuenta">
-				<input type="button" id="btnOrdenarCuentaFecha" name="btnOrdenarCuentaFecha" class="btn btn-primary" value="Ordenar por fecha"/>
+			<div id="panelCliente">
+				<form name="frmFiltrarCliente" id="frmFiltrarCliente">
+					<!--<input type="text" placeholder="nombre" id="txtFiltrarNombre" name="txtFiltrarNombre"/>-->
+					<button type="button" id="btnFiltrarNombre" name="btnFiltrarNombre" class="btn btn-info">
+						<span class="glyphicon glyphicon-search"></span> 
+					</button>
+					
+				</form>
 			</div>
 			<div id="panelConductor">
 				<button type="button" id="btnOrdenarConductoresActivos" name="btnOrdenarConductoresActivos" class="btn btn-primary btn-block">Mostrar solo activos</button>
 			</div>
+			<br>
 		</div>
 
 		<!-- panel de mensajes -->
@@ -99,6 +107,7 @@
 <script src="css/jquery.min.js"></script>
 <script src="css/bootstrap.min.js"></script>
 <script src="css/jquery-ui.min.js"></script>
+
 
 <script type="text/javascript" src="js/ajax.js"></script>
 <script type="text/javascript" src="js/clases/gestion.js"></script>

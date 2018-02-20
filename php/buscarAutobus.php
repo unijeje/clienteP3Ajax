@@ -3,7 +3,7 @@
 include("functions.php");
 
 
-$sql="SELECT dni, nombre, apellidos from cliente where estado=true;";
+$sql="SELECT matricula, modelo, asientos from autobus where itv=true;";
 
 //echo $sql;
 

@@ -29,7 +29,7 @@ function respuestaListadoCliente()
 		
 		var oFilas=JSON.parse(sDatos);
 
-		var tablaEliminar=document.querySelector("TABLE");
+		var tablaEliminar=document.querySelector("#resultadoListados TABLE");
 		if(tablaEliminar!=null) //si hay una tabla en el div de listados la quita para reemplazarla
 			tablaEliminar.remove();
 
@@ -43,6 +43,7 @@ function respuestaListadoCliente()
 		cabeceras[6]="Estado";
 		var oCelda;
 		var oTexto;
+		
 
 		var oTabla=document.createElement("TABLE");
 		var oFila=oTabla.insertRow();
@@ -56,6 +57,7 @@ function respuestaListadoCliente()
 		}
 
 		for ( var i=0;i<oFilas.length;i++){
+			var sBotonRecuperar="";
 			oFila=oTabla.insertRow(1);
 			oCelda=oFila.insertCell();
 			oTexto=document.createTextNode(oFilas[i].dni);
@@ -76,13 +78,22 @@ function respuestaListadoCliente()
 			oTexto=document.createTextNode(oFilas[i].sexo);
 			oCelda.appendChild(oTexto);
 			oCelda=oFila.insertCell();
-			if(oFilas[i].estado)// para que no salga true o false en la tabla
+			if(oFilas[i].estado>0)// para que no salga true o false en la tabla
 				oTexto=document.createTextNode("Activo");
 			else
+			{
 				oTexto=document.createTextNode("Baja");
+
+				sBotonRecuperar='<button id="recuperarCliente" type="button" class="btn btn-info"><span class="glyphicon glyphicon-plus-sign"></span></button>';
+			}	
+			//console.log(oFila);
 	
 			oCelda.appendChild(oTexto);
+			oFila.innerHTML+="<td>"+sBotonRecuperar+"</td>";
 			oCelda=oFila.insertCell();
+
+			
+		
 		}
 
 		oTabla.classList.add("table");
@@ -90,5 +101,72 @@ function respuestaListadoCliente()
 		oTabla.classList.add("text-center");
 		oCapaListado.appendChild(oTabla);
 
+		var oBotones=document.querySelectorAll("#recuperarCliente");
+		for(var i=0;i<oBotones.length;i++)
+			oBotones[i].addEventListener("click", recuperarCliente, false);
 	}
+}
+
+function filtrarNombreCliente()
+{
+	var sHTML='<div id="dialog" title="Filtrar Nombre"><p>Introduce nombre o parte del nombre: .</p>';
+	sHTML+='<input type="text" name="txtNombreCliente" id="txtNombreCliente" placeholder="nombre"/></div>';
+	//sHTML+="</div>";
+	$("#frmFiltrarCliente").append(sHTML);
+	/*
+	$("#cerrarDialogCliente").click(function(){
+		cerrarDialogo("dialog");
+	});
+	$("#buscarDialogCliente").click(function(){
+		buscarNombreClienteDialogo();
+	});
+	//console.log($("#frmFiltrarCliente"));
+	/*
+	$( function() {
+		$( "#dialog" ).dialog();
+	  } );
+	  */
+	 $( function() {
+		$( "#dialog" ).dialog({
+		  width: "320px",
+		  height: "auto",
+		  modal: true,
+		  buttons: {
+			"Buscar": function() {
+			  buscarNombreClienteDialogo();
+			},
+			"Mostrar todos": function() {
+				listadoClientes();
+				cerrarDialogo("dialog");
+			},
+			"Cerrar": function() {
+				cerrarDialogo("dialog");
+			}
+		  }
+		});
+	  } );
+
+}
+
+function buscarNombreClienteDialogo()
+{
+	var stxtNombre=$("#dialog #txtNombreCliente").val();
+	//console.log(stxtNombre);
+	
+	// Instanciar objeto Ajax
+	var oAjax = instanciarXHR();
+
+	//1. Preparar parametros
+	var sDatos="nombre="+stxtNombre;
+
+	//2. Configurar la llamada --> Asincrono por defecto
+	oAjax.open("GET", "php/filtrarClienteNombre.php?"+sDatos);
+
+	//3. Asociar manejador de evento de la respuesta
+	oAjax.addEventListener("readystatechange", respuestaListadoCliente, false);
+
+	//4. Hacer la llamada
+	oAjax.send();
+
+	cerrarDialogo("dialog");
 }
