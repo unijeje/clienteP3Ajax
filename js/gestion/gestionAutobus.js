@@ -9,8 +9,8 @@ oGestion.altaAutobus(oAutobus2);
 oGestion.altaMantenimiento(oMantenimiento44);
 //console.log(oMantenimiento44.fecha);
 */
-$("#btnBuscarAutobus").click(rellenaCamposAutobus);
-
+$("#buscarAutobus").click(buscaCamposAutobus);
+var oFormTarget=null;
 /*var oBtnDarAltaAutobus=document.getElementById("btnAltaAutobus");
 oBtnDarAltaAutobus.addEventListener("click",fAltaAutobus,false);
 
@@ -67,6 +67,7 @@ function fAltaAutobus(oEvento){
         var datos="autobus="+JSON.stringify(oNuevoAutobus);
 
         $.post("php/altaAutobus.php",datos,mostrarMensajeAccion,"json");
+        oFormTarget=oForm;
         //$.post("php/altaAutobus.php",$( "#frmAutobusAlta" ).serialize(),);
 /*
         var bInsercion=oGestion.altaAutobus(oNuevoAutobus);
@@ -81,8 +82,11 @@ function fAltaAutobus(oEvento){
     }
 }
 
-function fBajaAutobus()
+function fBajaAutobus(oEvento)
 {
+    var oE = oEvento || windows.event;
+    oFormTarget=oE.target.parentNode.parentNode.parentNode;
+
 	var sMatriculaAutobus=frmAutobusBaja.txtAutobusMatricula.value.trim();
     //console.log(sMatriculaAutobus);
 
@@ -185,7 +189,7 @@ function fBajaMantenimiento()
 
 function fModificarMantenimiento(oEvento)
 {
-     var oE = oEvento || windows.event;
+    var oE = oEvento || windows.event;
     var oForm=oE.target.parentNode.parentNode.parentNode; //recupera el formulario padre sobre el que esta el boton
 
     if (validarMantenimiento(oForm)){
@@ -228,7 +232,6 @@ function rellenaCamposAutobus(oEvento) //actualiza
     var oForm=oE.target.parentNode.parentNode.parentNode; //recupera el formulario padre sobre el que esta el combo
     //console.log(oForm.name);
     //var oAutobus=oGestion.buscarAutobus(oForm.comboAutobus.value);//recupera el autobus a traves de la matricula
-
      oForm.txtAutobusMatricula.value=oAutobus.matricula;
      oForm.txtAutobusAsientos.value=oAutobus.asientos;
      oForm.txtAutobusModelo.value=oAutobus.modelo;
@@ -236,7 +239,7 @@ function rellenaCamposAutobus(oEvento) //actualiza
 
 }
 
-function rellenaCamposMantenimiento(oEvento) //actualiza
+function rellenaCamposMantenimiento(oForm,oAutobus) //actualiza
 {
     var oE = oEvento || windows.event;
     var oForm=oE.target.parentNode.parentNode.parentNode; //recupera el formulario padre sobre el que esta el combo
@@ -437,8 +440,30 @@ function validarAutobus(oForm)
     return bValidacion;
     
 }
+function buscaCamposAutobus(oEvento){
+    var oE = oEvento || windows.event;
+    var oForm=oE.target.parentNode.parentNode.parentNode;
+    var datos="datos="
+    datos+=oForm.txtAutobusMatriculaB.value;
 
+    $.get("php/rellenaAutobus.php",datos,function(oRespuesta, sStatus, oAjax){
+   
+    //console.log(oRespuesta);
+    //console.log(oForm.txtAutobusMatricula);
+     oForm.txtAutobusMatricula.value=oRespuesta.matricula;
+     oForm.txtAutobusAsientos.value=oRespuesta.asientos;
+     oForm.txtAutobusModelo.value=oRespuesta.modelo;
+     oForm.txtAutobusConsumo.value=oRespuesta.consumo;
+
+    },"json");
+}
 
 function mostrarMensajeAccion(oRespuesta, sStatus, oAjax){
-    mensaje(oRespuesta);
+    if(oRespuesta[0]){
+        oFormTarget.reset();
+        oFormTarget.style.display="none";
+    }
+
+    mensaje(oRespuesta[1]);
+    oFormTarget=null;
 }
