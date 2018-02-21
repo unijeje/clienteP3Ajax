@@ -126,3 +126,33 @@ function validarConductor(formAltaConductor){
 	
 	return bValido;
 }
+
+function bajaConductor()
+{
+
+}
+
+function modificarConductor()
+{
+
+}
+
+function rellenaCamposConductor()
+{
+
+}
+
+function altaVacacion()
+{
+
+}
+
+function bajaVacacion()
+{
+
+}
+
+function modificaVacacion()
+{
+	
+}

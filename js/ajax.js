@@ -328,7 +328,49 @@ function respuestaAutoCompleteConductor(oRespuesta, sStatus, oAjax)
                return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
            };
         }
-		*/
+        */
+       if( $("#frmBajaDeVacaciones #txtVacacionConductor").length>0)
+       {
+       $("#frmBajaDeVacaciones #txtVacacionConductor").autocomplete({
+          source: dnis,
+          minLength: 0,
+          select: function(event, ui){
+               $("#frmBajaDeVacaciones #txtVacacionConductor").val(ui.item.value);
+               //$("#cliente-dni").val(ui.item.value);
+               return false;
+          }}).autocomplete("instance")._renderItem=function(ul, item){
+              return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+          };
+       }
+
+       if( $("#frmModificarVacaciones #txtVacacionConductor").length>0)
+       {
+       $("#frmModificarVacaciones #txtVacacionConductor").autocomplete({
+          source: dnis,
+          minLength: 0,
+          select: function(event, ui){
+               $("#frmModificarVacaciones #txtVacacionConductor").val(ui.item.value);
+               //$("#cliente-dni").val(ui.item.value);
+               return false;
+          }}).autocomplete("instance")._renderItem=function(ul, item){
+              return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+          };
+       }
+
+       if( $("#frmAltaDeVacaciones #txtVacacionConductor").length>0)
+       {
+       $("#frmAltaDeVacaciones #txtVacacionConductor").autocomplete({
+          source: dnis,
+          minLength: 0,
+          select: function(event, ui){
+               $("#frmAltaDeVacaciones #txtVacacionConductor").val(ui.item.value);
+               //$("#cliente-dni").val(ui.item.value);
+               return false;
+          }}).autocomplete("instance")._renderItem=function(ul, item){
+              return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+          };
+       }
+
     }
 }
 
@@ -404,6 +446,48 @@ function respuestaAutoCompleteAutobus(oRespuesta, sStatus, oAjax)
            minLength: 0,
            select: function(event, ui){
                 $("#frmAutobusBaja #txtAutobusMatriculaB").val(ui.item.value);
+                //$("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
+
+        if( $("#frmAltaMantenimiento #txtAutobusMantenimiento").length>0)
+        {
+        $("#frmAltaMantenimiento #txtAutobusMantenimiento").autocomplete({
+           source: autobuses,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmAltaMantenimiento #txtAutobusMantenimiento").val(ui.item.value);
+                //$("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
+
+        if( $("#frmBajaMantenimiento #txtAutobusMantenimiento").length>0)
+        {
+        $("#frmBajaMantenimiento #txtAutobusMantenimiento").autocomplete({
+           source: autobuses,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmBajaMantenimiento #txtAutobusMantenimiento").val(ui.item.value);
+                //$("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
+
+        if( $("#frmModificarMantenimiento #txtAutobusMantenimiento").length>0)
+        {
+        $("#frmModificarMantenimiento #txtAutobusMantenimiento").autocomplete({
+           source: autobuses,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmModificarMantenimiento #txtAutobusMantenimiento").val(ui.item.value);
                 //$("#cliente-dni").val(ui.item.value);
                 return false;
            }}).autocomplete("instance")._renderItem=function(ul, item){

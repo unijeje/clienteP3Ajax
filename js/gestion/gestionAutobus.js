@@ -8,7 +8,7 @@ oGestion.altaAutobus(oAutobus1);
 oGestion.altaAutobus(oAutobus2);
 oGestion.altaMantenimiento(oMantenimiento44);
 //console.log(oMantenimiento44.fecha);
-*/
+
 $("#buscarAutobus").click(buscaCamposAutobus);
 var oFormTarget=null;
 /*var oBtnDarAltaAutobus=document.getElementById("btnAltaAutobus");

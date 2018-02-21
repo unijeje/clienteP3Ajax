@@ -13,13 +13,23 @@ $("#menuModificaAlquiler").click(cargaModificaAlquiler);
 
 var bGestionConductorCargado=false;
 $("#menuAltaConductor").click(cargarAltaConductor);
-//$("#menuBajaConductor").click(cargarBajaConductor);
-//$("#menuModificarConductor").click(cargarModificarConductor);
+$("#menuBajaConductor").click(cargarBajaConductor);
+$("#menuModificarConductor").click(cargarModificarConductor);
 
 var bGestionAutobusCargado=false;
 $("#menuAltaAutobus").click(cargaAltaAutobus);
 $("#menuBajaAutobus").click(cargaBajaAutobus);
-//$("#menuModificaAutobus").click(cargaModificaAutobus);
+$("#menuModificaAutobus").click(cargaModificaAutobus);
+
+//var bGestionMantenimientoCargado=false; //es mismo que autobus
+$("#menuAltaMantenimiento").click(cargaAltaMantenimiento);
+$("#menuBajaMantenimiento").click(cargaBajaMantenimiento);
+$("#menuModificarMantenimiento").click(cargaModificarMantenimiento);
+
+//var bGestionConductorCargado=false; //es el mismo que conductor
+$("#menuAltaVacaciones").click(cargarAltaVacacion);
+$("#menuBajaVacaciones").click(cargarBajaVacacion);
+$("#menuModificarVacaciones").click(cargarModificarVacacion);
 
 function mostrarFormulario(sForm)
 {
@@ -280,7 +290,7 @@ function cargarBajaConductor(){
 			}
 		});
 	} else{
-		$("frmConductorBaja").show("normal");
+		$("#frmConductorBaja").show("normal");
 	}
 }
 
@@ -305,7 +315,7 @@ function cargarModificarConductor(){
 			}
 		});
 	} else{
-		$("frmConductorModificar").show("normal");
+		$("#frmConductorModificar").show("normal");
 	}
 }
 
@@ -351,6 +361,7 @@ function cargaBajaAutobus()
                 buscarAutobuses();
                 var oBtnDarBajaAutobus=document.getElementById("btnBajaAutobus");
                 oBtnDarBajaAutobus.addEventListener("click", fBajaAutobus, false);
+                document.frmAutobusBaja.buscarAutobus.addEventListener("click", buscaCamposAutobus, false);
             }
             else
             {
@@ -359,6 +370,7 @@ function cargaBajaAutobus()
                     bGestionAutobusCargado=true;
                     var oBtnDarBajaAutobus=document.getElementById("btnBajaAutobus");
                     oBtnDarBajaAutobus.addEventListener("click", fBajaAutobus, false);
+                    document.frmAutobusBaja.buscarAutobus.addEventListener("click", buscaCamposAutobus, false);
                 });
             }
             
@@ -369,6 +381,206 @@ function cargaBajaAutobus()
     }
 }
 
+function cargaModificaAutobus()
+{
+    mostrarFormulario("frmAutobusModificar");
+    // Verifico si ya he cargado el formulario antes, si lo ha cargado antes lo muestra. Si no lo ha cargado antes trae el formulario y mira si ya se habia traido el codigo js correspondiente
+    // si se ha traido el codigo javascript de otro formulario solo asigna eventlistener, si no se trae el js
+    if ($('#frmAutobusModificar').length == 0) {
+        $("<div>").appendTo('#formulario').load("formu/modificaAutobus.html", function()
+        {
+            if(bGestionAutobusCargado)
+            {
+                buscarAutobuses();
+                var oBtnModificarAutobus=document.getElementById("btnModificarAutobus");
+                oBtnModificarAutobus.addEventListener("click", fModificarAutobus, false);
+                document.frmAutobusModificar.buscarAutobus.addEventListener("click", buscaCamposAutobus, false);
+            }
+            else
+            {
+                $.getScript("js/gestion/gestionAutobus.js", function(){
+                    buscarAutobuses();
+                    bGestionAutobusCargado=true;
+                    var oBtnModificarAutobus=document.getElementById("btnModificarAutobus");
+                    oBtnModificarAutobus.addEventListener("click", fModificarAutobus, false);
+                    document.frmAutobusModificar.buscarAutobus.addEventListener("click", buscaCamposAutobus, false);
+                });
+            }
+            
+        });
+    } else {
+        // Lo muestro si está oculto
+        $('#frmAutobusModificar').show("normal");
+    }
+}
+
+function cargaAltaMantenimiento()
+{
+    mostrarFormulario("frmAltaMantenimiento");
+    // Verifico si ya he cargado el formulario antes, si lo ha cargado antes lo muestra. Si no lo ha cargado antes trae el formulario y mira si ya se habia traido el codigo js correspondiente
+    // si se ha traido el codigo javascript de otro formulario solo asigna eventlistener, si no se trae el js
+    if ($('#frmAltaMantenimiento').length == 0) {
+        $("<div>").appendTo('#formulario').load("formu/altaMantenimiento.html", function()
+        {
+            if(bGestionAutobusCargado)
+            {
+                buscarAutobuses();
+                var oBtnAltaMantenimiento=document.getElementById("btnAltaMantenimiento");
+                oBtnAltaMantenimiento.addEventListener("click",fAltaMantenimiento,false);
+                //document.frmAltaMantenimiento.buscarAutobus.addEventListener("click", buscaCamposAutobus, false);
+            }
+            else
+            {
+                $.getScript("js/gestion/gestionAutobus.js", function(){
+                    buscarAutobuses();
+                    bGestionAutobusCargado=true;
+                    var oBtnAltaMantenimiento=document.getElementById("btnAltaMantenimiento");
+                    oBtnAltaMantenimiento.addEventListener("click",fAltaMantenimiento,false);
+                    //document.frmAltaMantenimiento.buscarAutobus.addEventListener("click", buscaCamposAutobus, false);
+                });
+            }
+            
+        });
+    } else {
+        // Lo muestro si está oculto
+        $('#frmAltaMantenimiento').show("normal");
+    }
+}
+
+function cargaBajaMantenimiento()
+{
+    mostrarFormulario("frmBajaMantenimiento");
+    // Verifico si ya he cargado el formulario antes, si lo ha cargado antes lo muestra. Si no lo ha cargado antes trae el formulario y mira si ya se habia traido el codigo js correspondiente
+    // si se ha traido el codigo javascript de otro formulario solo asigna eventlistener, si no se trae el js
+    if ($('#frmBajaMantenimiento').length == 0) {
+        $("<div>").appendTo('#formulario').load("formu/borraMantenimiento.html", function()
+        {
+            if(bGestionAutobusCargado)
+            {
+                buscarAutobuses();
+                var oBtnBajaMantenimiento=document.getElementById("btnBajaMantenimiento");
+                oBtnBajaMantenimiento.addEventListener("click",fBajaMantenimiento,false);
+                //document.frmBajaMantenimiento.buscarAutobus.addEventListener("click", buscaCamposAutobus, false);
+            }
+            else
+            {
+                $.getScript("js/gestion/gestionAutobus.js", function(){
+                    buscarAutobuses();
+                    bGestionAutobusCargado=true;
+                    var oBtnBajaMantenimiento=document.getElementById("btnBajaMantenimiento");
+                    oBtnBajaMantenimiento.addEventListener("click",fBajaMantenimiento,false);
+                    //document.frmBajaMantenimiento.buscarAutobus.addEventListener("click", buscaCamposAutobus, false);
+                });
+            }
+            
+        });
+    } else {
+        // Lo muestro si está oculto
+        $('#frmBajaMantenimiento').show("normal");
+    }
+}
+
+function cargaModificarMantenimiento()
+{
+    mostrarFormulario("frmModificarMantenimiento");
+    // Verifico si ya he cargado el formulario antes, si lo ha cargado antes lo muestra. Si no lo ha cargado antes trae el formulario y mira si ya se habia traido el codigo js correspondiente
+    // si se ha traido el codigo javascript de otro formulario solo asigna eventlistener, si no se trae el js
+    if ($('#frmModificarMantenimiento').length == 0) {
+        $("<div>").appendTo('#formulario').load("formu/modificaMantenimiento.html", function()
+        {
+            if(bGestionAutobusCargado)
+            {
+                buscarAutobuses();
+                var oBtnModificarMantenimiento=document.getElementById("btnModificarMantenimiento");
+                oBtnModificarMantenimiento.addEventListener("click",fModificarMantenimiento,false);
+                //document.frmModificarMantenimiento.buscarAutobus.addEventListener("click", buscaCamposAutobus, false);
+            }
+            else
+            {
+                $.getScript("js/gestion/gestionAutobus.js", function(){
+                    buscarAutobuses();
+                    bGestionAutobusCargado=true;
+                    var oBtnModificarMantenimiento=document.getElementById("btnModificarMantenimiento");
+                    oBtnModificarMantenimiento.addEventListener("click",fModificarMantenimiento,false);
+                    //document.frmModificarMantenimiento.buscarAutobus.addEventListener("click", buscaCamposAutobus, false);
+                });
+            }
+            
+        });
+    } else {
+        // Lo muestro si está oculto
+        $('#frmModificarMantenimiento').show("normal");
+    }
+}
+
+function cargarAltaVacacion(){
+	mostrarFormulario("frmAltaDeVacaciones");
+	
+	if($("#frmAltaDeVacaciones").length==0){
+		$("<div>").appendTo("#formulario").load("formu/altaVacaciones.html", function(){
+			if(bGestionConductorCargado){
+                buscarConductores();
+				var oBtnAltaVacacion= document.getElementById("btnAltaVacaciones");
+				oBtnAltaVacacion.addEventListener("click",altaVacacion,false);
+			} else{
+				$.getScript("js/gestion/gestionConductor.js", function(){
+                    buscarConductores();
+					bGestionConductorCargado= true;
+					var oBtnAltaVacacion= document.getElementById("btnAltaVacaciones");
+				    oBtnAltaVacacion.addEventListener("click",altaVacacion,false);
+				});
+			}
+		});
+	} else{
+		$("#frmAltaDeVacaciones").show("normal");
+	}
+}
+
+function cargarModificarVacacion(){
+	mostrarFormulario("frmModificarVacaciones");
+	
+	if($("#frmModificarVacaciones").length==0){
+		$("<div>").appendTo("#formulario").load("formu/modificaVacaciones.html", function(){
+			if(bGestionConductorCargado){
+                buscarConductores();
+				var oBtnModificaVacacion= document.getElementById("btnMofificarVacaciones");
+				oBtnModificaVacacion.addEventListener("click",altaVacacion,false);
+			} else{
+				$.getScript("js/gestion/gestionConductor.js", function(){
+                    buscarConductores();
+					bGestionConductorCargado= true;
+					var oBtnModificaVacacion= document.getElementById("btnMofificarVacaciones");
+				    oBtnModificaVacacion.addEventListener("click",altaVacacion,false);
+				});
+			}
+		});
+	} else{
+		$("#frmModificarVacaciones").show("normal");
+	}
+}
+
+function cargarBajaVacacion(){
+	mostrarFormulario("frmBajaDeVacaciones");
+	
+	if($("#frmBajaDeVacaciones").length==0){
+		$("<div>").appendTo("#formulario").load("formu/borraVacaciones.html", function(){
+			if(bGestionConductorCargado){
+                buscarConductores();
+				var oBtnBajaVacacion= document.getElementById("btnBajaVacaciones");
+				oBtnBajaVacacion.addEventListener("click",bajaVacacion,false);
+			} else{
+				$.getScript("js/gestion/gestionConductor.js", function(){
+                    buscarConductores();
+					bGestionConductorCargado= true;
+					var oBtnBajaVacacion= document.getElementById("btnBajaVacaciones");
+				    oBtnBajaVacacion.addEventListener("click",bajaVacacion,false);
+				});
+			}
+		});
+	} else{
+		$("#frmBajaDeVacaciones").show("normal");
+	}
+}
 
 //botones Listados
 var oBtnListadoAutobuses=document.getElementById("btnListadoAutobuses");
@@ -483,12 +695,6 @@ function falloValidacion(sTexto, oInput)
         oInput.parentNode.appendChild(oDiv);
 }
 
-function comboResultados(oInput, sResultados)
-{
-    console.log(oInput.parentNode.children);
-    //pasarle un select como parametro, en ese select crear combos con los objetos resultados que se le han pasado
-    //oInput.parentNode.lastChild.appendChild()
-}
 
 function falloValidacionAgregar(sTexto, oInput)
 {
