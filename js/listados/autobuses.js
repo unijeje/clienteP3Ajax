@@ -1,7 +1,33 @@
 //todos y mantenimiento
-
 function listadoAutobuses()
 {
+	 // Instanciar objeto Ajax
+	 var oAjax = instanciarXHR();
+
+	 //1. Preparar parametros
+	 //var sDatosEnvio = "par=hola";
+
+	 //2. Configurar la llamada --> Asincrono por defecto
+	 oAjax.open("GET", "php/listadoAutobuses.php");
+
+	 //3. Asociar manejador de evento de la respuesta
+	 oAjax.addEventListener("readystatechange", respuestaListadoAutobuses, false);
+
+	 //4. Hacer la llamada
+	 oAjax.send();
+	
+}
+
+function respuestaListadoAutobuses()
+{
+	var oAjax = this;
+
+	// 5. Proceso la respuesta cuando llega
+	if (oAjax.readyState == 4 && oAjax.status == 200) {
+
+		var sDatos=oAjax.responseText;
+		
+		var oFilas=JSON.parse(sDatos);
 	
 	var tablaEliminar=document.querySelector("TABLE");
 	if(tablaEliminar!=null) //si hay una tabla en el div de listados la quita para reemplazarla
@@ -28,28 +54,28 @@ function listadoAutobuses()
 		oFila.appendChild(oCelda);
 	}
 
-	for ( var i=0;i<oGestion._autobuses.length;i++){
+	for ( var i=0;i<oFilas.length;i++){
 		oFila=oTabla.insertRow(1);
 		oCelda=oFila.insertCell();
-		oTexto=document.createTextNode(oGestion._autobuses[i].matricula);
+		oTexto=document.createTextNode(oFilas[i].matricula);
 		oCelda.appendChild(oTexto);
 		oCelda=oFila.insertCell();
-		oTexto=document.createTextNode(oGestion._autobuses[i].asientos);
+		oTexto=document.createTextNode(oFilas[i].asientos);
 		oCelda.appendChild(oTexto);
 		oCelda=oFila.insertCell();
-		oTexto=document.createTextNode(oGestion._autobuses[i].modelo);
+		oTexto=document.createTextNode(oFilas[i].modelo);
 		oCelda.appendChild(oTexto);
 		oCelda=oFila.insertCell();
-		oTexto=document.createTextNode(oGestion._autobuses[i].consumo);
+		oTexto=document.createTextNode(oFilas[i].consumo);
 		oCelda.appendChild(oTexto);
 		oCelda=oFila.insertCell();
-		if(oGestion._autobuses[i].itv)
+		if(oFilas[i].itv)
 			oTexto=document.createTextNode("Revisado");
 		else
 			oTexto=document.createTextNode("No revisado");
 		oCelda.appendChild(oTexto);
 		oCelda=oFila.insertCell();
-		if(oGestion._autobuses[i].estado)// para que no salga true o false en la tabla
+		if(oFilas[i].estado)// para que no salga true o false en la tabla
 			oTexto=document.createTextNode("Activo");
 		else
 			oTexto=document.createTextNode("Baja");
@@ -61,5 +87,5 @@ function listadoAutobuses()
 	oTabla.classList.add("table-striped");
 	oTabla.classList.add("text-center");
 	oCapaListado.appendChild(oTabla);
-	
+	}
 }
