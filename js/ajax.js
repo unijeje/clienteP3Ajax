@@ -396,5 +396,19 @@ function respuestaAutoCompleteAutobus(oRespuesta, sStatus, oAjax)
                return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
            };
         }
+
+        if( $("#frmAutobusBaja #txtAutobusMatriculaB").length>0)
+        {
+        $("#frmAutobusBaja #txtAutobusMatriculaB").autocomplete({
+           source: autobuses,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmAutobusBaja #txtAutobusMatriculaB").val(ui.item.value);
+                //$("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
     }
 }

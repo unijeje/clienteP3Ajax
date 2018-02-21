@@ -16,6 +16,11 @@ $("#menuAltaConductor").click(cargarAltaConductor);
 //$("#menuBajaConductor").click(cargarBajaConductor);
 //$("#menuModificarConductor").click(cargarModificarConductor);
 
+var bGestionAutobusCargado=false;
+$("#menuAltaAutobus").click(cargaAltaAutobus);
+$("#menuBajaAutobus").click(cargaBajaAutobus);
+//$("#menuModificaAutobus").click(cargaModificaAutobus);
+
 function mostrarFormulario(sForm)
 {
     $("#formulario form:not('#"+sForm+"')").hide("normal");
@@ -303,6 +308,67 @@ function cargarModificarConductor(){
 		$("frmConductorModificar").show("normal");
 	}
 }
+
+function cargaAltaAutobus()
+{
+    mostrarFormulario("frmAutobusAlta");
+    // Verifico si ya he cargado el formulario antes, si lo ha cargado antes lo muestra. Si no lo ha cargado antes trae el formulario y mira si ya se habia traido el codigo js correspondiente
+    // si se ha traido el codigo javascript de otro formulario solo asigna eventlistener, si no se trae el js
+    if ($('#frmAutobusAlta').length == 0) {
+        $("<div>").appendTo('#formulario').load("formu/altaAutobus.html", function()
+        {
+            if(bGestionAutobusCargado)
+            {
+                var oBtnDarAltaAutobus=document.getElementById("btnAltaAutobus");
+                oBtnDarAltaAutobus.addEventListener("click", fAltaAutobus, false);
+            }
+            else
+            {
+                $.getScript("js/gestion/gestionAutobus.js", function(){
+                    bGestionAutobusCargado=true;
+                    var oBtnDarAltaAutobus=document.getElementById("btnAltaAutobus");
+                    oBtnDarAltaAutobus.addEventListener("click", fAltaAutobus, false);
+                });
+            }
+            
+        });
+    } else {
+        // Lo muestro si está oculto
+        $('#frmAutobusAlta').show("normal");
+    }
+}
+
+function cargaBajaAutobus()
+{
+    mostrarFormulario("frmAutobusBaja");
+    // Verifico si ya he cargado el formulario antes, si lo ha cargado antes lo muestra. Si no lo ha cargado antes trae el formulario y mira si ya se habia traido el codigo js correspondiente
+    // si se ha traido el codigo javascript de otro formulario solo asigna eventlistener, si no se trae el js
+    if ($('#frmAutobusBaja').length == 0) {
+        $("<div>").appendTo('#formulario').load("formu/borraAutobus.html", function()
+        {
+            if(bGestionAutobusCargado)
+            {
+                buscarAutobuses();
+                var oBtnDarBajaAutobus=document.getElementById("btnBajaAutobus");
+                oBtnDarBajaAutobus.addEventListener("click", fBajaAutobus, false);
+            }
+            else
+            {
+                $.getScript("js/gestion/gestionAutobus.js", function(){
+                    buscarAutobuses();
+                    bGestionAutobusCargado=true;
+                    var oBtnDarBajaAutobus=document.getElementById("btnBajaAutobus");
+                    oBtnDarBajaAutobus.addEventListener("click", fBajaAutobus, false);
+                });
+            }
+            
+        });
+    } else {
+        // Lo muestro si está oculto
+        $('#frmAutobusBaja').show("normal");
+    }
+}
+
 
 //botones Listados
 var oBtnListadoAutobuses=document.getElementById("btnListadoAutobuses");
