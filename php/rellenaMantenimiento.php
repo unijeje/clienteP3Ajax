@@ -2,7 +2,7 @@
 
 include("functions.php");
 
-$sql="SELECT descripcion, importe, fecha from mantenimiento where matricula_autobus='".$_GET['datos']."';";
+$sql="SELECT descripcion, importe, fecha from mantenimiento where matricula_autobus='".$_GET['datos']."' and estado=true;";
 
 //echo $sql;
 

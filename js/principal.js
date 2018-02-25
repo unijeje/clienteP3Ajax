@@ -490,19 +490,19 @@ function cargaModificarMantenimiento()
         {
             if(bGestionAutobusCargado)
             {
-                buscarAutobuses();
+                buscarAutobusesRev();
                 var oBtnModificarMantenimiento=document.getElementById("btnModificarMantenimiento");
                 oBtnModificarMantenimiento.addEventListener("click",fModificarMantenimiento,false);
-                //document.frmModificarMantenimiento.buscarAutobus.addEventListener("click", buscaCamposAutobus, false);
+                document.frmModificarMantenimiento.buscarAutobus.addEventListener("click", buscaCamposMantenimiento, false);
             }
             else
             {
                 $.getScript("js/gestion/gestionAutobus.js", function(){
-                    buscarAutobuses();
+                    buscarAutobusesRev();
                     bGestionAutobusCargado=true;
                     var oBtnModificarMantenimiento=document.getElementById("btnModificarMantenimiento");
                     oBtnModificarMantenimiento.addEventListener("click",fModificarMantenimiento,false);
-                    //document.frmModificarMantenimiento.buscarAutobus.addEventListener("click", buscaCamposAutobus, false);
+                    document.frmModificarMantenimiento.buscarAutobus.addEventListener("click", buscaCamposMantenimiento, false);
                 });
             }
             

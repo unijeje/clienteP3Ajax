@@ -51,6 +51,9 @@ oRadioMantenimientoSeleccion2.addEventListener("click", muestraFormsMantenimient
 
 comboEstadoInicialAutubuses();
 */
+
+
+
 function fAltaAutobus(oEvento){
 
     var oE = oEvento || windows.event;
@@ -113,15 +116,20 @@ function fModificarAutobus(oEvento)
 {
     var oE = oEvento || windows.event;
     var oForm=oE.target.parentNode.parentNode.parentNode; //recupera el formulario padre sobre el que esta el boton
+    oFormTarget=oForm;
 
     if (validarAutobus(oForm)){
-        var sMatriculaAutobus=frmAutobusModificar.txtAutobusMatricula.value.trim();
+        var sMatriculaAutobus=frmAutobusModificar.txtAutobusMatriculaB.value.trim();
         var iAsientosAutobus=parseInt(frmAutobusModificar.txtAutobusAsientos.value.trim());
         var sModeloAutobus=frmAutobusModificar.txtAutobusModelo.value.trim();
         var iConsumoAutobus=parseFloat(frmAutobusModificar.txtAutobusConsumo.value.trim());
 
         var oNuevoAutobus=new Autobus(sMatriculaAutobus,iAsientosAutobus,sModeloAutobus,iConsumoAutobus);
+        var datos="autobus="+JSON.stringify(oNuevoAutobus);
 
+        $.post("php/modificarAutobus.php",datos,mostrarMensajeAccion,"json");
+
+        /*
         var bInsercion=oGestion.modificarAutobus(oNuevoAutobus);
         if (bInsercion)
         {
@@ -131,7 +139,7 @@ function fModificarAutobus(oEvento)
             comboEstadoInicialAutubuses();
         }
         else
-            mensaje("No se ha podido modificar el autobús");
+            mensaje("No se ha podido modificar el autobús");*/
     }
 }
 
@@ -144,18 +152,19 @@ function fAltaMantenimiento(oEvento)
     if (validarMantenimiento(oForm)){
         var sDescripcion=frmAltaMantenimiento.txtDescripcionMantenimiento.value.trim();
         var fImporte=parseFloat(frmAltaMantenimiento.txtImporteMantenimiento.value.trim());
-        var dFecha=new Date(frmAltaMantenimiento.txtMantenimientoFecha.value.trim()).toLocaleDateString("es-ES");
+        //var dFecha=new Date(frmAltaMantenimiento.txtMantenimientoFecha.value.trim()).toLocaleDateString("es-ES");
+        var dFecha=frmAltaMantenimiento.txtMantenimientoFecha.value.trim();
         var sMatricula=frmAltaMantenimiento.txtAutobusMantenimiento.value.trim();
 
         //dFecha.toLocaleDateString("es-ES");
         //console.log(dFecha);
         //console.log(sMatricula);
         var oNuevoMantenimiento=new Mantenimiento(sDescripcion,fImporte,dFecha,sMatricula);
-
+        console.log(oNuevoMantenimiento);
         var datos="mantenimiento="+JSON.stringify(oNuevoMantenimiento);
 
         $.post("php/altaMantenimiento.php",datos,mostrarMensajeAccion,"json");
-        
+
         //console.log(oNuevoMantenimiento.fecha);
         /*var bInsercion=oGestion.altaMantenimiento(oNuevoMantenimiento);
         if(bInsercion){
@@ -209,19 +218,26 @@ function fModificarMantenimiento(oEvento)
 
     if (validarMantenimiento(oForm)){
         var sDescripcion=frmModificarMantenimiento.txtDescripcionMantenimiento.value.trim();
-        var sMatricula=frmModificarMantenimiento.comboAutobusRevisado.value.trim();
+        var sMatricula=frmModificarMantenimiento.txtAutobusMantenimiento.value.trim();
         var fImporte=parseFloat(frmModificarMantenimiento.txtImporteMantenimiento.value.trim());
         var dFecha=frmModificarMantenimiento.txtMantenimientoFechaN.value.trim();
         //console.log(sMatricula);
         if(dFecha=="")
         {
-            dFecha=new Date(frmModificarMantenimiento.txtMantenimientoFecha.value.trim()).toLocaleDateString("es-ES");
+            //dFecha=new Date(frmModificarMantenimiento.txtMantenimientoFecha.value.trim()).toLocaleDateString("es-ES");
+            dFecha=frmModificarMantenimiento.txtMantenimientoFecha.value.trim();
         }
         else{
-             dFecha=new Date(dFecha).toLocaleDateString("es-ES");
+             //dFecha=new Date(dFecha).toLocaleDateString("es-ES");
+             dFecha=dFecha;
         }
         //console.log(dFecha);
-        var oMantenimiento=new Mantenimiento(sDescripcion,fImporte,dFecha,sMatricula);
+        var oNuevoMantenimiento=new Mantenimiento(sDescripcion,fImporte,dFecha,sMatricula);
+        oFormTarget=oForm;
+
+        var datos="mantenimiento="+JSON.stringify(oNuevoMantenimiento);
+        $.post("php/modificarMantenimiento.php",datos,mostrarMensajeAccion,"json");
+        /*
         var bModificado=oGestion.modificarMantenimiento(oMantenimiento);
         if( bModificado)
         {
@@ -235,7 +251,7 @@ function fModificarMantenimiento(oEvento)
 
         }
         else
-            mensaje("Error al modificar el mantenimiento");
+            mensaje("Error al modificar el mantenimiento");*/
     }
 }
 
@@ -465,11 +481,14 @@ function buscaCamposAutobus(oEvento){
    
     //console.log(oRespuesta);
     //console.log(oForm.txtAutobusMatricula);
+    if(oRespuesta.matricula==undefined)
+        mensaje("No se encuentra autobus con esa matricula");
+    else{
      oForm.txtAutobusMatricula.value=oRespuesta.matricula;
      oForm.txtAutobusAsientos.value=oRespuesta.asientos;
      oForm.txtAutobusModelo.value=oRespuesta.modelo;
      oForm.txtAutobusConsumo.value=oRespuesta.consumo;
-
+    }
     },"json");
 }
 
@@ -483,9 +502,13 @@ function buscaCamposMantenimiento(oEvento){
    
     //console.log(oRespuesta);
     //console.log(oForm.txtAutobusMatricula);
+    if(oRespuesta.descripcion==undefined)
+        mensaje("No se encuentra mantenimiento con esa matricula");
+    else{
      oForm.txtDescripcionMantenimiento.value=oRespuesta.descripcion;
      oForm.txtImporteMantenimiento.value=oRespuesta.importe;
      oForm.txtMantenimientoFecha.value=oRespuesta.fecha;
+    }
 
     },"json");
 }
