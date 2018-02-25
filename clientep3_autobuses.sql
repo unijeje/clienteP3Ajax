@@ -133,6 +133,31 @@ INSERT INTO `conductor` (`dni`, `nombre`, `apellidos`, `sexo`, `telefono`, `emai
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `localidad`
+--
+
+CREATE TABLE IF NOT EXISTS `localidad` (
+  `nombre` varchar(60) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `localidad`
+--
+
+INSERT INTO `localidad` (`nombre`) VALUES
+('Dos Hermanas'),
+('Alcalá de Guadaira'),
+('Utrera'),
+('Los Palacios'),
+('Camas'),
+('San Juan de Aznalfarache'),
+('Sevilla');
+
+-- --------------------------------------------------------
+
+
+
+--
 -- Estructura de tabla para la tabla `mantenimiento`
 --
 
