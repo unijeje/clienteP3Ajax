@@ -1,9 +1,14 @@
 <!-- Modificar Mantenimiento -->
 				<form name="frmModificarMantenimiento" id="frmModificarMantenimiento" class="form-horizontal"> 
 					<div class="form-group">
-						<label class="col-md-3 col-sm-3 control-label" for="comboAutobusRevisado">Seleccione Autobus</label>
+						<label class="col-md-3 col-sm-3 control-label" for="comboAutobus">Matricula Autobus</label>
 						<div class="col-md-6 col-sm-8">
-							<input id="txtAutobusMantenimiento" name="txtAutobusMantenimiento" placeholder="1234ZZZ" class="form-control input-md" type="text">
+							<input id="txtAutobusMantenimiento" name="txtAutobusMantenimiento" placeholder="Matricula" class="form-control input-md" type="text">
+						</div>
+						<div class="col-md-1 col-sm-1">
+							<button id="buscarAutobus" type="button" class="btn btn-info">
+								<span class="glyphicon glyphicon-search"></span>
+								</button>
 						</div>
 					</div>
 
@@ -28,7 +33,7 @@
 					<div class="form-group">
 						<label class="col-md-3 col-sm-3 control-label" for="txtMantenimientoFechaN">Nueva fecha:</label>
 						<div class="col-md-6 col-sm-8">
-							<input id="txtMantenimientoFechaN" name="txtMantenimientoFechaN" placeholder="mm/dd/yyyy" class="form-control input-md" type="date">
+							<input id="txtMantenimientoFechaN" name="txtMantenimientoFechaN" placeholder="mm/dd/yyyy" class="form-control input-md" type="text">
 						</div>
 					</div>
 
@@ -43,3 +48,12 @@
 					
 
 				</form>
+				
+				
+				<script>
+				
+				$( function() {
+				$( "#frmModificarMantenimiento #txtMantenimientoFechaN" ).datepicker({ dateFormat: 'yy-mm-dd' });
+				} );
+				
+				</script>

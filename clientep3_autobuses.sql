@@ -137,11 +137,12 @@ INSERT INTO `conductor` (`dni`, `nombre`, `apellidos`, `sexo`, `telefono`, `emai
 --
 
 CREATE TABLE IF NOT EXISTS `mantenimiento` (
-  `id` int(9) NOT NULL,
+  `id` int(9) NOT NULL AUTO_INCREMENT,
   `matricula_autobus` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
   `importe` float NOT NULL,
   `fecha` date NOT NULL,
+  `estado` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `matricula_autobus` (`matricula_autobus`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
