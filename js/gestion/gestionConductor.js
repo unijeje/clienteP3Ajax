@@ -11,7 +11,7 @@ function altaConductor(oEvento){
 		var emailConductor= frmConductorAlta.txtConductorCorreo.value.trim();
 		var direccionConductor= frmConductorAlta.txtConductorDireccion.value.trim();
 		
-		var oConductor= new Conductor(dniConductor,nombreConductor,apellidosConductor,sexoConductor,tlfConductor,emailConductor,direccionConductor);
+		var oConductor= new Conductor(dniConductor,nombreConductor,apellidosConductor,sexoConductor,tlfConductor,emailConductor,direccionConductor,true);
 		
 		oGestion.altaConductor(oConductor);
 	}	
