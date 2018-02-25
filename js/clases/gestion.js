@@ -465,16 +465,15 @@ class Gestion
                 // si se devuelve un resultado correcto se envia el cconductor devuelta
                 if(sStatus=="success" && oDatosDevuelto.responseJSON.dni!=null)
                 {   oConductor=new Conductor(oDatosDevuelto.responseJSON.dni, oDatosDevuelto.responseJSON.nombre, oDatosDevuelto.responseJSON.apellidos, 
-					oDatosDevuelto.responseJSON.sexo, oDatosDevuelto.responseJSON.telefono, oDatosDevuelto.responseJSON.correo, oDatosDevuelto.responseJSON.direccion);
+					oDatosDevuelto.responseJSON.sexo, oDatosDevuelto.responseJSON.tlf, oDatosDevuelto.responseJSON.email, oDatosDevuelto.responseJSON.direccion);
 					
                     if(oDatosDevuelto.responseJSON.estado==false)
                         oConductor.estado=oDatosDevuelto.responseJSON.estado;
-                    //console.log(oCliente);
                 }
             }
         });
 
-        return oCliente;
+        return oConductor;
     }
 	
 	buscarVacaciones(sDni){

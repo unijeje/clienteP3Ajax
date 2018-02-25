@@ -544,13 +544,13 @@ function cargarModificarVacacion(){
 			if(bGestionConductorCargado){
                 buscarConductores();
 				var oBtnModificaVacacion= document.getElementById("btnMofificarVacaciones");
-				oBtnModificaVacacion.addEventListener("click",altaVacacion,false);
+				oBtnModificaVacacion.addEventListener("click",modificarVacaciones,false);
 			} else{
 				$.getScript("js/gestion/gestionConductor.js", function(){
                     buscarConductores();
 					bGestionConductorCargado= true;
 					var oBtnModificaVacacion= document.getElementById("btnMofificarVacaciones");
-				    oBtnModificaVacacion.addEventListener("click",altaVacacion,false);
+				    oBtnModificaVacacion.addEventListener("click",modificarVacaciones,false);
 				});
 			}
 		});
@@ -567,13 +567,13 @@ function cargarBajaVacacion(){
 			if(bGestionConductorCargado){
                 buscarConductores();
 				var oBtnBajaVacacion= document.getElementById("btnBajaVacaciones");
-				oBtnBajaVacacion.addEventListener("click",bajaVacacion,false);
+				oBtnBajaVacacion.addEventListener("click",bajaVacaciones,false);
 			} else{
 				$.getScript("js/gestion/gestionConductor.js", function(){
                     buscarConductores();
 					bGestionConductorCargado= true;
 					var oBtnBajaVacacion= document.getElementById("btnBajaVacaciones");
-				    oBtnBajaVacacion.addEventListener("click",bajaVacacion,false);
+				    oBtnBajaVacacion.addEventListener("click",bajaVacaciones,false);
 				});
 			}
 		});

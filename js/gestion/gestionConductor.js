@@ -14,10 +14,45 @@ function altaConductor(oEvento){
 		var oConductor= new Conductor(dniConductor,nombreConductor,apellidosConductor,sexoConductor,tlfConductor,emailConductor,direccionConductor,true);
 		
 		oGestion.altaConductor(oConductor);
-	}	
+	}
+}
+
+function bajaConductor(){
+	var oE= oEvento || windows.event;
+	var formBajaConductor=oE.target.parentNode.parentNode.parentNode;
+	
+	var dniConductor= formBajaConductor.txtConductorDni.value.trim();
+	var oConductor= oGestion.buscarConductor(dniConductor);
+	
+	/*if(oConductor==null){
+		mensaje("Conductor con el DNI: "+dniConductor+" no encontrado");
+	} else if(oConductor.estado==false){
+		mensaje("Ese conductor ya ha sido dado de baja");
+	} else{*/
+		var datos="datos="+JSON.stringify(oConductor);
+		$.post("php/bajaConductor",datos,respuestaBajaConductor,"text");
+	//}
+}
+
+function modificarConductor(){
 
 }
 
+function rellenaCamposConductor(){
+
+}
+
+function altaVacaciones(){
+
+}
+
+function bajaVacaciones(){
+
+}
+
+function modificarVacaciones(){
+	
+}
 
 function validarConductor(formAltaConductor){
 	var bValido= true;
@@ -127,32 +162,13 @@ function validarConductor(formAltaConductor){
 	return bValido;
 }
 
-function bajaConductor()
-{
-
-}
-
-function modificarConductor()
-{
-
-}
-
-function rellenaCamposConductor()
-{
-
-}
-
-function altaVacacion()
-{
-
-}
-
-function bajaVacacion()
-{
-
-}
-
-function modificaVacacion()
-{
-	
+function respuestaBajaConductor(sDatosDevuelto, sStatus, oAjax){
+	if(sStatus=="success" && sDatosDevuelto=="Exito"){
+		document.frmConductorAlta.reset();
+        document.frmConductorAlta.style.display="none";
+        mensaje("Conductor dado de baja correctamente");
+		buscarConductores();
+	} else{
+		mensaje("Error al dar de baja");
+	}
 }
