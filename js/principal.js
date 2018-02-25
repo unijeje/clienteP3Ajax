@@ -424,7 +424,7 @@ function cargaAltaMantenimiento()
         {
             if(bGestionAutobusCargado)
             {
-                buscarAutobuses();
+                buscarAutobusesNoRev();
                 var oBtnAltaMantenimiento=document.getElementById("btnAltaMantenimiento");
                 oBtnAltaMantenimiento.addEventListener("click",fAltaMantenimiento,false);
                 //document.frmAltaMantenimiento.buscarAutobus.addEventListener("click", buscaCamposAutobus, false);
@@ -432,7 +432,7 @@ function cargaAltaMantenimiento()
             else
             {
                 $.getScript("js/gestion/gestionAutobus.js", function(){
-                    buscarAutobuses();
+                    buscarAutobusesNoRev();
                     bGestionAutobusCargado=true;
                     var oBtnAltaMantenimiento=document.getElementById("btnAltaMantenimiento");
                     oBtnAltaMantenimiento.addEventListener("click",fAltaMantenimiento,false);
@@ -457,19 +457,19 @@ function cargaBajaMantenimiento()
         {
             if(bGestionAutobusCargado)
             {
-                buscarAutobuses();
+                buscarAutobusesRev();
                 var oBtnBajaMantenimiento=document.getElementById("btnBajaMantenimiento");
                 oBtnBajaMantenimiento.addEventListener("click",fBajaMantenimiento,false);
-                //document.frmBajaMantenimiento.buscarAutobus.addEventListener("click", buscaCamposAutobus, false);
+                document.frmBajaMantenimiento.buscarMantenimiento.addEventListener("click", buscaCamposMantenimiento, false);
             }
             else
             {
                 $.getScript("js/gestion/gestionAutobus.js", function(){
-                    buscarAutobuses();
+                    buscarAutobusesRev();
                     bGestionAutobusCargado=true;
                     var oBtnBajaMantenimiento=document.getElementById("btnBajaMantenimiento");
                     oBtnBajaMantenimiento.addEventListener("click",fBajaMantenimiento,false);
-                    //document.frmBajaMantenimiento.buscarAutobus.addEventListener("click", buscaCamposAutobus, false);
+                    document.frmBajaMantenimiento.buscarMantenimiento.addEventListener("click", buscaCamposMantenimiento, false);
                 });
             }
             
@@ -601,6 +601,9 @@ oBtnListadoConductores.addEventListener("click",mostrarListadoConductores,false)
 var oBtnListadoVacaciones=document.getElementById("btnListadoVacaciones");
 oBtnListadoVacaciones.addEventListener("click",mostrarListadoVacaciones,false);
 
+var oBtnListadoMantenimientos=document.getElementById("btnListadoMantenimientos");
+oBtnListadoMantenimientos.addEventListener("click",mostrarListadoMantenimientos,false);
+
 var oBtnListadoAlquileres=document.getElementById("btnListadoAlquileres");
 oBtnListadoAlquileres.addEventListener("click",mostrarListadoAlquileres,false);
 
@@ -623,6 +626,7 @@ var campoConductor=document.getElementById("panelConductor");
 
 function mostrarListadoAutobuses()
 {
+    oCapaListado.innerHTML="";
     $("#formulario").hide("normal");
     listadoAutobuses();
     oCapaListado.style.display="block";
@@ -631,6 +635,7 @@ function mostrarListadoAutobuses()
 
 function mostrarListadoClientes()
 {
+    oCapaListado.innerHTML="";
     $("#formulario").hide("normal");
     listadoClientes();
     $("#panelCliente").show("normal");
@@ -639,6 +644,7 @@ function mostrarListadoClientes()
 
 function mostrarListadoConductores()
 {
+    oCapaListado.innerHTML="";
     $("#formulario").hide("normal");
     listadoConductores();
     oCapaListado.style.display="block";
@@ -647,6 +653,7 @@ function mostrarListadoConductores()
 
 function mostrarListadoVacaciones()
 {
+    oCapaListado.innerHTML="";
     $("#formulario").hide("normal");
 	listadoVacaciones();
     oCapaListado.style.display="block";
@@ -655,10 +662,20 @@ function mostrarListadoVacaciones()
 
 function mostrarListadoAlquileres()
 {
+    oCapaListado.innerHTML="";
     $("#formulario").hide("normal");
     listadoAlquileres();
     oCapaListado.style.display="block";
     $("#panelCliente").hide("normal");
+}
+
+function mostrarListadoMantenimientos()
+{
+    oCapaListado.innerHTML="";
+    $("#formulario").hide("normal");
+    listadoMantenimientos();
+    oCapaListado.style.display="block";
+    $("#panelCliente").hide("normal");   
 }
 
 //eliminar dialogo que se pase como string

@@ -27,6 +27,15 @@ function ejecutaConsulta($sql)
 		
 }
 
+function ejecutaConsulta2($sql)
+{
+		//recibe una cadena conteniendo una instruccion SELECT y devuelve el numero de filas de una select
+		
+		$miconexion=connectDB();
+		$resultset= $miconexion->query($sql);
+		return $resultset->fetchColumn();
+		
+}
 function ejecutaConsultaArray($sql)
 {
 
@@ -51,5 +60,12 @@ function ejecutaConsultaAccion($sql)
 		return $accion->rowCount();
 		//return "1";
 }
-
+function devuelveUltimaId($tabla){
+		$miconexion=connectDB();
+		$consulta="SELECT MAX(id) as lastId from $tabla";
+		$resultset=ejecutaConsulta($consulta);
+		$id=$resultset->fetch(PDO::FETCH_ASSOC);
+		
+		return $id['lastId'];
+}
 ?>

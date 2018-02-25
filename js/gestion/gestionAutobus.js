@@ -138,20 +138,26 @@ function fModificarAutobus(oEvento)
 function fAltaMantenimiento(oEvento)
 {
     var oE = oEvento || windows.event;
-    var oForm=oE.target.parentNode.parentNode.parentNode; //recupera el formulario padre sobre el que esta el boton
+    var oForm=oE.target.parentNode.parentNode.parentNode;
+    oFormTarget=oForm; //recupera el formulario padre sobre el que esta el boton
 
     if (validarMantenimiento(oForm)){
         var sDescripcion=frmAltaMantenimiento.txtDescripcionMantenimiento.value.trim();
         var fImporte=parseFloat(frmAltaMantenimiento.txtImporteMantenimiento.value.trim());
         var dFecha=new Date(frmAltaMantenimiento.txtMantenimientoFecha.value.trim()).toLocaleDateString("es-ES");
-        var sMatricula=frmAltaMantenimiento.comboAutobus.value.trim();
+        var sMatricula=frmAltaMantenimiento.txtAutobusMantenimiento.value.trim();
 
         //dFecha.toLocaleDateString("es-ES");
         //console.log(dFecha);
         //console.log(sMatricula);
         var oNuevoMantenimiento=new Mantenimiento(sDescripcion,fImporte,dFecha,sMatricula);
+
+        var datos="mantenimiento="+JSON.stringify(oNuevoMantenimiento);
+
+        $.post("php/altaMantenimiento.php",datos,mostrarMensajeAccion,"json");
+        
         //console.log(oNuevoMantenimiento.fecha);
-        var bInsercion=oGestion.altaMantenimiento(oNuevoMantenimiento);
+        /*var bInsercion=oGestion.altaMantenimiento(oNuevoMantenimiento);
         if(bInsercion){
             document.frmAltaMantenimiento.reset();
             document.frmAltaMantenimiento.style.display="none";
@@ -159,23 +165,32 @@ function fAltaMantenimiento(oEvento)
 
             comboEstadoInicialAutubuses(); 
             //oGestion.actualizaComboRevisado();
-            /*
+            
             oGestion.gestionContabilidad("mantenimiento", oGestion.cuentaEmpresa.numCuenta, fImporte, dFecha);
-            */
+            
             
             mensaje("Mantenimiento añadido correctamente");
             //actualizar combo mantenimientos
         }
         else
-            mensaje("El autobús seleccionado ya tiene pasado el mantenimiento");
+            mensaje("El autobús seleccionado ya tiene pasado el mantenimiento");*/
     }
 }
 
-function fBajaMantenimiento()
+function fBajaMantenimiento(oEvento)
 {
-    var sMatricula=frmBajaMantenimiento.comboAutobusRevisado.value.trim();
+    //var sMatricula=frmBajaMantenimiento.comboAutobusRevisado.value.trim();
+    var oE = oEvento || windows.event;
+    oFormTarget=oE.target.parentNode.parentNode.parentNode;
 
-    var anulado=oGestion.bajaMantenimiento(sMatricula);
+    var sMatriculaAutobus=frmBajaMantenimiento.txtAutobusMantenimiento.value.trim();
+    //console.log(sMatriculaAutobus);
+
+    var oNuevoMantenimiento=new Mantenimiento("","","",sMatriculaAutobus);
+    var datos="mantenimiento="+JSON.stringify(oNuevoMantenimiento);
+
+    $.post("php/bajaMantenimiento.php",datos,mostrarMensajeAccion,"json");
+    /*var anulado=oGestion.bajaMantenimiento(sMatricula);
     if (anulado)
     {
         mensaje("Mantenimiento anulado correctamente");
@@ -183,7 +198,7 @@ function fBajaMantenimiento()
     }
     
     else
-        mensaje("Error al anular el mantenimiento");
+        mensaje("Error al anular el mantenimiento");*/
 
 }
 
@@ -458,12 +473,29 @@ function buscaCamposAutobus(oEvento){
     },"json");
 }
 
+function buscaCamposMantenimiento(oEvento){
+    var oE = oEvento || windows.event;
+    var oForm=oE.target.parentNode.parentNode.parentNode;
+    var datos="datos="
+    datos+=oForm.txtAutobusMantenimiento.value;
+
+    $.get("php/rellenaMantenimiento.php",datos,function(oRespuesta, sStatus, oAjax){
+   
+    //console.log(oRespuesta);
+    //console.log(oForm.txtAutobusMatricula);
+     oForm.txtDescripcionMantenimiento.value=oRespuesta.descripcion;
+     oForm.txtImporteMantenimiento.value=oRespuesta.importe;
+     oForm.txtMantenimientoFecha.value=oRespuesta.fecha;
+
+    },"json");
+}
+
 function mostrarMensajeAccion(oRespuesta, sStatus, oAjax){
     if(oRespuesta[0]){
         oFormTarget.reset();
         oFormTarget.style.display="none";
     }
-
+    buscarAutobuses();
     mensaje(oRespuesta[1]);
     oFormTarget=null;
 }

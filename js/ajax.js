@@ -452,6 +452,72 @@ function respuestaAutoCompleteAutobus(oRespuesta, sStatus, oAjax)
                return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
            };
         }
+		/*
+        if( $("#frmAltaMantenimiento #txtAutobusMantenimiento").length>0)
+        {
+        $("#frmAltaMantenimiento #txtAutobusMantenimiento").autocomplete({
+           source: autobuses,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmAltaMantenimiento #txtAutobusMantenimiento").val(ui.item.value);
+                //$("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
+
+        if( $("#frmBajaMantenimiento #txtAutobusMantenimiento").length>0)
+        {
+        $("#frmBajaMantenimiento #txtAutobusMantenimiento").autocomplete({
+           source: autobuses,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmBajaMantenimiento #txtAutobusMantenimiento").val(ui.item.value);
+                //$("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
+
+        if( $("#frmModificarMantenimiento #txtAutobusMantenimiento").length>0)
+        {
+        $("#frmModificarMantenimiento #txtAutobusMantenimiento").autocomplete({
+           source: autobuses,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmModificarMantenimiento #txtAutobusMantenimiento").val(ui.item.value);
+                //$("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }*/
+    }
+}
+
+function buscarAutobusesNoRev()
+{
+    $.get("php/buscarAutobusNoRev.php", respuestaAutoCompleteAutobusNoRev, "json");
+}
+
+function respuestaAutoCompleteAutobusNoRev(oRespuesta, sStatus, oAjax)
+{
+    if(oAjax.status==200)
+    {
+
+        var autobuses=[];
+        
+        for(var i=0;i<oRespuesta.length;i++)
+        {
+            //arrayDNI.push(oRespuesta[i].dni);
+            var arrayDNI={};
+            arrayDNI["value"]=oRespuesta[i].matricula;
+            arrayDNI["desc"]="Modelo: "+oRespuesta[i].modelo+" nº Asientos: "+oRespuesta[i].asientos;
+            autobuses.push(arrayDNI);
+        }   
+       
 
         if( $("#frmAltaMantenimiento #txtAutobusMantenimiento").length>0)
         {
@@ -467,6 +533,58 @@ function respuestaAutoCompleteAutobus(oRespuesta, sStatus, oAjax)
            };
         }
 
+        if( $("#frmBajaMantenimiento #txtAutobusMantenimiento").length>0)
+        {
+        $("#frmBajaMantenimiento #txtAutobusMantenimiento").autocomplete({
+           source: autobuses,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmBajaMantenimiento #txtAutobusMantenimiento").val(ui.item.value);
+                //$("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
+
+        if( $("#frmModificarMantenimiento #txtAutobusMantenimiento").length>0)
+        {
+        $("#frmModificarMantenimiento #txtAutobusMantenimiento").autocomplete({
+           source: autobuses,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmModificarMantenimiento #txtAutobusMantenimiento").val(ui.item.value);
+                //$("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
+    }
+}
+
+function buscarAutobusesRev()
+{
+    $.get("php/buscarAutobusRev.php", respuestaAutoCompleteAutobusRev, "json");
+}
+
+function respuestaAutoCompleteAutobusRev(oRespuesta, sStatus, oAjax)
+{
+    if(oAjax.status==200)
+    {
+
+        var autobuses=[];
+        
+        for(var i=0;i<oRespuesta.length;i++)
+        {
+            //arrayDNI.push(oRespuesta[i].dni);
+            var arrayDNI={};
+            arrayDNI["value"]=oRespuesta[i].matricula;
+            arrayDNI["desc"]="Modelo: "+oRespuesta[i].modelo+" nº Asientos: "+oRespuesta[i].asientos;
+            autobuses.push(arrayDNI);
+        }   
+       
+      
         if( $("#frmBajaMantenimiento #txtAutobusMantenimiento").length>0)
         {
         $("#frmBajaMantenimiento #txtAutobusMantenimiento").autocomplete({
