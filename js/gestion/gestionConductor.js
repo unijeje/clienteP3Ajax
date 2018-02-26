@@ -75,12 +75,19 @@ function altaVacaciones(oEvento){
 		var fechaFin= frmAltaDeVacaciones.fechaFin.value.trim();
 		
 		var oVacaciones= new Vacaciones(dniConductor,fechaInicio,fechaFin,descripcion,true);
-		oGestion.altaVacaciones(oVacaciones);
+		
+		if(oGestion.buscarConductor(dniConductor)){
+			oGestion.altaVacaciones(oVacaciones);
+		} else{
+			mensaje("No existe ese conductor");
+			document.frmAltaDeVacaciones.reset();
+            document.frmAltaDeVacaciones.style.display="none";
+		}
 	}
 }
 
-function bajaVacaciones(){
-
+function bajaVacaciones(oEvento){
+	
 }
 
 function modificarVacaciones(){
