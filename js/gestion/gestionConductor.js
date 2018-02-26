@@ -73,15 +73,38 @@ function altaVacaciones(oEvento){
 		var descripcion= frmAltaDeVacaciones.descripcion.value.trim();
 		var fechaInicio= frmAltaDeVacaciones.fechaIni.value.trim();
 		var fechaFin= frmAltaDeVacaciones.fechaFin.value.trim();
+		var fechaInicioParaComprobar= new Date(frmAltaDeVacaciones.fechaIni.value.trim());
+		var fechaFinParaComprobar= new Date(frmAltaDeVacaciones.fechaFin.value.trim());
 		
 		var oVacaciones= new Vacaciones(dniConductor,fechaInicio,fechaFin,descripcion,true);
 		
-		if(oGestion.buscarConductor(dniConductor)){
-			oGestion.altaVacaciones(oVacaciones);
+		if(fechaFinParaComprobar-fechaInicioParaComprobar>=0){
+			frmAltaDeVacaciones.fechaIni.parentNode.parentNode.classList.remove("has-error");
+			frmAltaDeVacaciones.fechaFin.parentNode.parentNode.classList.remove("has-error");
+			falloValidacion("", frmAltaDeVacaciones.fechaIni);
+			falloValidacion("", frmAltaDeVacaciones.fechaFin);
+			
+			if(oGestion.buscarConductor(dniConductor)){
+				if(oGestion.buscarVacacion(dniConductor)==true){
+					mensaje("Ese conductor ya tiene vacaciones");
+					document.frmAltaDeVacaciones.reset();
+					document.frmAltaDeVacaciones.style.display="none";
+				} else{
+					oGestion.altaVacaciones(oVacaciones);
+				}
+			} else{
+				mensaje("No existe ese conductor");
+				document.frmAltaDeVacaciones.reset();
+				document.frmAltaDeVacaciones.style.display="none";
+			}
 		} else{
-			mensaje("No existe ese conductor");
-			document.frmAltaDeVacaciones.reset();
-            document.frmAltaDeVacaciones.style.display="none";
+			frmAltaDeVacaciones.fechaIni.parentNode.parentNode.classList.add("has-error");
+			frmAltaDeVacaciones.fechaFin.parentNode.parentNode.classList.add("has-error");
+			frmAltaDeVacaciones.fechaIni.focus();
+			frmAltaDeVacaciones.fechaFin.focus();
+			var error= "Rango de fechas incorrecto";
+			falloValidacion(error, frmAltaDeVacaciones.fechaIni);
+			falloValidacion(error, frmAltaDeVacaciones.fechaFin);
 		}
 	}
 }

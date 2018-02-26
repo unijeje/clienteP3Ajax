@@ -431,7 +431,7 @@ function respuestaAutoCompleteVacaciones(oRespuesta, sStatus, oAjax){
 				  return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
 			  };
 		}
-/*
+
 	   if( $("#frmModificarVacaciones #txtVacacionConductor").length>0)
 	   {
 	   $("#frmModificarVacaciones #txtVacacionConductor").autocomplete({
@@ -445,7 +445,7 @@ function respuestaAutoCompleteVacaciones(oRespuesta, sStatus, oAjax){
 			  return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
 		  };
 	   }
-
+		/*
 	   if( $("#frmAltaDeVacaciones #txtVacacionConductor").length>0)
 	   {
 	   $("#frmAltaDeVacaciones #txtVacacionConductor").autocomplete({

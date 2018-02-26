@@ -473,21 +473,17 @@ class Gestion
     }
 	
 	buscarVacacion(sDni){
-		var oConductor=null;
+		var bRespuesta=false;
 		var dni= "dni="+sDni;
 		
         //se hace llamada asyncrona para que espere a la respuesta antes de hacer el return
         $.get("php/buscarVacacionesDni.php",dni,function(oDatosDevueltos,sStatus,oAjax){
 			if(oDatosDevueltos.estado==false){
-				oConductor={
-							dni: oDatosDevueltos.dni,
-							nombre: oDatosDevueltos.nombre,
-							apellidos: oDatosDevueltos.apellidos
-						  };
+				bRespuesta= true;							
 			}
 		},"json");
 
-        return oConductor;
+        return bRespuesta;
 	}
 		
     //autobuses
