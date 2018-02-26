@@ -628,3 +628,32 @@ function respuestaAutoCompleteAutobusRev(oRespuesta, sStatus, oAjax)
         }
     }
 }
+
+function rellenarComboLocalidades(sCombo)
+{
+    var oArrayLocalidades = null;
+    if (localStorage["localidades"] != null) {
+        oArrayLocalidades = JSON.parse(localStorage["localidades"]);
+        //console.log(localStorage["localidades"]);
+        
+        $("#"+sCombo).empty();
+
+         $.each(oArrayLocalidades, function(i, elemento) {
+            $('<option value="' + elemento.nombre + '" >' + elemento.nombre + '</option>').appendTo("#"+sCombo);
+
+        });
+        
+    }
+    else
+    {
+        $.get('php/getLocalidades.php', null, function(oArrayLocalidades, sStatus, oXHR)
+        {
+            localStorage["localidades"] = JSON.stringify(oArrayLocalidades);
+            //console.log(localStorage["localidades"]);
+            $("#"+sCombo).empty();
+            $.each(oArrayLocalidades, function(i, elemento) {
+                $('<option value="' + elemento.nombre + '" >' + elemento.nombre + '</option>').appendTo("#"+sCombo);
+            });
+        }, 'json');
+    }
+}
