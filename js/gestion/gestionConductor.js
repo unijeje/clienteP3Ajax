@@ -17,25 +17,51 @@ function altaConductor(oEvento){
 	}
 }
 
-function bajaConductor(){
+function bajaConductor(oEvento){
 	var oE= oEvento || windows.event;
 	var formBajaConductor=oE.target.parentNode.parentNode.parentNode;
 	
 	var dniConductor= formBajaConductor.txtConductorDni.value.trim();
 	var oConductor= oGestion.buscarConductor(dniConductor);
 	
-	/*if(oConductor==null){
-		mensaje("Conductor con el DNI: "+dniConductor+" no encontrado");
-	} else if(oConductor.estado==false){
-		mensaje("Ese conductor ya ha sido dado de baja");
-	} else{*/
-		var datos="datos="+JSON.stringify(oConductor);
-		$.post("php/bajaConductor",datos,respuestaBajaConductor,"text");
-	//}
+	if(oConductor==null)
+        mensaje("Conductor con el DNI: "+dniConductor+" no encontrado");
+    else if(oConductor.estado==false)
+        mensaje("Ese conductor ya ha sido dado de baja");
+    else
+    {
+        var bBaja=oGestion.bajaConductor(oConductor);
+        if(bBaja)
+        {
+            mensaje("Conductor "+dniConductor+" dado de baja correctamente");
+            document.frmConductorBaja.reset();
+            document.frmConductorBaja.style.display="none";
+            buscarClientes();
+        }
+        else
+            mensaje("Error al dar de baja: "+dniConductor);
+            
+    }
 }
 
-function modificarConductor(){
-
+function modificarConductor(oEvento){
+	var oE = oEvento || windows.event;
+	var frmModificar=oE.target.parentNode.parentNode.parentNode;
+	
+	if(validarConductor(frmModificar)){
+		var dniConductor= frmConductorModificar.txtConductorDni.value.trim();
+		var nombreConductor= frmConductorModificar.txtConductorNombre.value.trim();
+		var apellidosConductor= frmConductorModificar.txtConductorApellidos.value.trim();
+		var sexoConductor= frmConductorModificar.radioConductorSexo.value;
+		var tlfConductor= frmConductorModificar.txtConductorTelefono.value.trim();
+		var emailConductor= frmConductorModificar.txtConductorCorreo.value.trim();
+		var direccionConductor= frmConductorModificar.txtConductorDireccion.value.trim();
+		
+		var oNuevoConductor= new Conductor(dniConductor,nombreConductor,apellidosConductor,sexoConductor,tlfConductor,emailConductor,direccionConductor);
+		var datos= "datos="+JSON.stringify(oNuevoConductor);
+		
+		$.post("php/modificarConductor.php",datos,respuestaModificarConductor,"json");
+	}
 }
 
 function rellenaCamposConductor(){
@@ -162,13 +188,41 @@ function validarConductor(formAltaConductor){
 	return bValido;
 }
 
-function respuestaBajaConductor(sDatosDevuelto, sStatus, oAjax){
-	if(sStatus=="success" && sDatosDevuelto=="Exito"){
-		document.frmConductorAlta.reset();
-        document.frmConductorAlta.style.display="none";
-        mensaje("Conductor dado de baja correctamente");
+function respuestaModificarConductor(oDatosDevuelto, sStatus, oAjax){
+	if(oDatosDevuelto[0]){
+		document.frmConductorModificar.reset();
+        document.frmConductorModificar.style.display="none";
+		mensaje(oDatosDevuelto[1]);
 		buscarConductores();
-	} else{
-		mensaje("Error al dar de baja");
 	}
+}
+
+function rellenaCamposConductor(oEvento) //actualiza campos usando el dni del campo txtConductorDni del formulario del que se le ha enviado
+{
+    var oE = oEvento || window.event;
+    var oForm=oE.target.parentNode.parentNode.parentNode; //recupera el formulario padre sobre el que esta el combo
+    
+    var oConductor=oGestion.buscarConductor(oForm.txtConductorDni.value);//recupera el conductor a traves del DNI
+    //console.log(oForm);
+    if(oConductor)
+    {
+		oForm.txtConductorNombre.value=oConductor.nombre;
+		oForm.txtConductorApellidos.value=oConductor.apellidos;    
+		oForm.radioConductorSexo.value=oConductor.sexo;
+		oForm.txtConductorTelefono.value=oConductor.telefono;
+		oForm.txtConductorCorreo.value=oConductor.email;
+		oForm.txtConductorDireccion.value= oConductor.direccion;
+    }
+    else
+    {
+        mensaje("No se encuentra ese DNI");
+       
+		oForm.txtConductorNombre.value="";
+		oForm.txtConductorApellidos.value="";   
+		oForm.radioConductorSexo.value="";
+		oForm.txtConductorTelefono.value=""; 
+		oForm.txtConductorCorreo.value="";
+		oForm.txtConductorDireccion.value="";
+    }
+    
 }

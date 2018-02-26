@@ -369,40 +369,27 @@ class Gestion
 	}
 	
 	bajaConductor(oConductor){ //funciona
-		var bEncontrado= false; // console.log(oConductor.dni);
 		
-		for(var i=0; i<this._conductores.length && bEncontrado==false; i++){
-			if(this._conductores[i].dni==oConductor.dni){
-				bEncontrado= true; 
-				this._conductores[i].estado=false; //false es dado de baja
-				this.actualizaComboConductores();				
-			}
-		}
-		
-		return bEncontrado;
-	}
-	
-	modificarConductor(oConductor,dniRecibido){
-        var bEncontrado=true; //console.log(dniRecibido);
-		/*
-        if(this.buscarConductor(oConductor.dni)!=null && oConductor.dni!=dniRecibido){
-            bEncontrado=false;
-			console.log(bEncontrado);
-			oConductor.dni= dniRecibido;
-         }  */ 
-        
-        for(var i=0;i<this._conductores.length;i++){
-            if(this._conductores[i].dni==dniRecibido){
-				bEncontrado=false;
-                //console.log(i);                    
-                this._conductores[i]=oConductor;
-                this.actualizaComboConductores();                
+		var sDatos="datos="+oConductor.dni;
+        var res=false;//no se ha encontrado
+       
+	   $.ajax({
+            url :"php/bajaConductor.php",
+            async : false,
+            cache : false, 
+            method : "POST", 
+            dataType : "text",
+            data : sDatos,
+            complete : function(sDatosDevuelto, sStatus)
+            {
+                if(sDatosDevuelto.responseText=="Exito")
+                    res=true;
             }
-        }
+        });
+
+        return res;
+	}
 		
-        return !bEncontrado;       
-    }
-	
 	altaVacaciones(oVacaciones){
 		var bEncontrado= false;
 		

@@ -314,7 +314,7 @@ function respuestaAutoCompleteConductor(oRespuesta, sStatus, oAjax)
                return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
            };
         }
-		/*
+		
 		if( $("#frmConductorBaja #txtConductorDni").length>0)
         {
         $("#frmConductorBaja #txtConductorDni").autocomplete({
@@ -328,7 +328,21 @@ function respuestaAutoCompleteConductor(oRespuesta, sStatus, oAjax)
                return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
            };
         }
-        */
+		
+		if( $("#frmConductorModificar #txtConductorDni").length>0)
+        {
+        $("#frmConductorModificar #txtConductorDni").autocomplete({
+           source: dnis,
+           minLength: 0,
+           select: function(event, ui){
+                $("#frmConductorModificar #txtConductorDni").val(ui.item.value);
+                //$("#cliente-dni").val(ui.item.value);
+                return false;
+           }}).autocomplete("instance")._renderItem=function(ul, item){
+               return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+           };
+        }
+        
        if( $("#frmBajaDeVacaciones #txtVacacionConductor").length>0)
        {
        $("#frmBajaDeVacaciones #txtVacacionConductor").autocomplete({
