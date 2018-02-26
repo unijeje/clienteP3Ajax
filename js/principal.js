@@ -525,12 +525,12 @@ function cargarAltaVacacion(){
 	if($("#frmAltaDeVacaciones").length==0){
 		$("<div>").appendTo("#formulario").load("formu/altaVacaciones.html", function(){
 			if(bGestionConductorCargado){
-                buscarConductores();
+                buscarVacaciones();
 				var oBtnAltaVacacion= document.getElementById("btnAltaVacaciones");
 				oBtnAltaVacacion.addEventListener("click",altaVacacion,false);
 			} else{
 				$.getScript("js/gestion/gestionConductor.js", function(){
-                    buscarConductores();
+                    buscarVacaciones();
 					bGestionConductorCargado= true;
 					var oBtnAltaVacacion= document.getElementById("btnAltaVacaciones");
 				    oBtnAltaVacacion.addEventListener("click",altaVacaciones,false);
@@ -548,12 +548,12 @@ function cargarModificarVacacion(){
 	if($("#frmModificarVacaciones").length==0){
 		$("<div>").appendTo("#formulario").load("formu/modificaVacaciones.html", function(){
 			if(bGestionConductorCargado){
-                buscarConductores();
+                buscarVacaciones();
 				var oBtnModificaVacacion= document.getElementById("btnMofificarVacaciones");
 				oBtnModificaVacacion.addEventListener("click",modificarVacaciones,false);
 			} else{
 				$.getScript("js/gestion/gestionConductor.js", function(){
-                    buscarConductores();
+                    buscarVacaciones();
 					bGestionConductorCargado= true;
 					var oBtnModificaVacacion= document.getElementById("btnMofificarVacaciones");
 				    oBtnModificaVacacion.addEventListener("click",modificarVacaciones,false);

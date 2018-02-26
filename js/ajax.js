@@ -366,7 +366,7 @@ function buscarVacaciones(){
 	$.get("php/buscarVacaciones.php", respuestaAutoCompleteVacaciones, "json");
 }
 
-function respuestaAutoCompleteVacaciones(){
+function respuestaAutoCompleteVacaciones(oRespuesta, sStatus, oAjax){
 	if(oAjax.status==200)
     {
 
@@ -384,7 +384,7 @@ function respuestaAutoCompleteVacaciones(){
 		if( $("#frmBajaDeVacaciones #txtVacacionConductor").length>0)
 		{
 		   $("#frmBajaDeVacaciones #txtVacacionConductor").autocomplete({
-			  source: dnis,
+			  source: conductores,
 			  minLength: 0,
 			  select: function(event, ui){
 				   $("#frmBajaDeVacaciones #txtVacacionConductor").val(ui.item.value);
@@ -398,7 +398,7 @@ function respuestaAutoCompleteVacaciones(){
 	   if( $("#frmModificarVacaciones #txtVacacionConductor").length>0)
 	   {
 	   $("#frmModificarVacaciones #txtVacacionConductor").autocomplete({
-		  source: dnis,
+		  source: conductores,
 		  minLength: 0,
 		  select: function(event, ui){
 			   $("#frmModificarVacaciones #txtVacacionConductor").val(ui.item.value);
@@ -412,7 +412,7 @@ function respuestaAutoCompleteVacaciones(){
 	   if( $("#frmAltaDeVacaciones #txtVacacionConductor").length>0)
 	   {
 	   $("#frmAltaDeVacaciones #txtVacacionConductor").autocomplete({
-		  source: dnis,
+		  source: conductores,
 		  minLength: 0,
 		  select: function(event, ui){
 			   $("#frmAltaDeVacaciones #txtVacacionConductor").val(ui.item.value);
