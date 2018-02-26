@@ -527,7 +527,7 @@ function cargarAltaVacacion(){
                     buscarConductores();
 					bGestionConductorCargado= true;
 					var oBtnAltaVacacion= document.getElementById("btnAltaVacaciones");
-				    oBtnAltaVacacion.addEventListener("click",altaVacacion,false);
+				    oBtnAltaVacacion.addEventListener("click",altaVacaciones,false);
 				});
 			}
 		});

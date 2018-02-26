@@ -465,11 +465,29 @@ class Gestion
 	
 	buscarVacaciones(sDni){
 		var oConductor=null;
-        for(var i=0;i<this._vacaciones.length && oConductor==null;i++)
-        {
-            if(sDni==this._vacaciones[i].dni)
-                oConductor=this._vacaciones[i];
-        }
+		var sDatos= "dni="+sDni;
+		
+        //se hace llamada asyncrona para que espere a la respuesta antes de hacer el return
+        $.ajax({
+            url :"php/buscarVacacionesDni.php",
+            async : false,
+            cache : false, 
+            method : "GET", 
+            dataType : "json",
+            data : sDatos,
+            complete : function(oDatosDevuelto, sStatus)
+            {
+                // si se devuelve un resultado correcto se envia el cconductor devuelta
+                if(sStatus=="success" && oDatosDevuelto.responseJSON.dni!=null){
+					oConductor=new Conductor(oDatosDevuelto.responseJSON.dni, oDatosDevuelto.responseJSON.nombre, oDatosDevuelto.responseJSON.apellidos, 
+					oDatosDevuelto.responseJSON.sexo, oDatosDevuelto.responseJSON.tlf, oDatosDevuelto.responseJSON.email, oDatosDevuelto.responseJSON.direccion);
+					
+                    if(oDatosDevuelto.responseJSON.estado==false)
+                        oConductor.estado=oDatosDevuelto.responseJSON.estado;
+                }
+            }
+        });
+
         return oConductor;
 	}
 		
