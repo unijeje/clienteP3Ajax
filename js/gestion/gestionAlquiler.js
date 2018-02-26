@@ -393,7 +393,7 @@ function rellenaCamposAlquiler(oEvento) //actualiza
     //console.log(oForm.name);
     var oAlquiler=oGestion.buscarAlquiler(oForm.txtAlquilerID.value);
 
-    console.log(oAlquiler);
+    //console.log(oAlquiler);
     
    
     oForm.txtAlquilerID.value=oAlquiler.id;
