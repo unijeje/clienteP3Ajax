@@ -480,7 +480,7 @@ function respuestaAutoCompleteAutobus(oRespuesta, sStatus, oAjax)
                return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
            };
         }
-		/*
+		
         if( $("#frmAltaMantenimiento #txtAutobusMantenimiento").length>0)
         {
         $("#frmAltaMantenimiento #txtAutobusMantenimiento").autocomplete({
@@ -494,7 +494,7 @@ function respuestaAutoCompleteAutobus(oRespuesta, sStatus, oAjax)
                return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
            };
         }
-
+        /*
         if( $("#frmBajaMantenimiento #txtAutobusMantenimiento").length>0)
         {
         $("#frmBajaMantenimiento #txtAutobusMantenimiento").autocomplete({

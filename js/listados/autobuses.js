@@ -75,7 +75,7 @@ function respuestaListadoAutobuses()
 			oTexto=document.createTextNode("No revisado");
 		oCelda.appendChild(oTexto);
 		oCelda=oFila.insertCell();
-		if(oFilas[i].estado)// para que no salga true o false en la tabla
+		if(oFilas[i].estado>0)// para que no salga true o false en la tabla
 			oTexto=document.createTextNode("Activo");
 		else
 			oTexto=document.createTextNode("Baja");
