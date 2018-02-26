@@ -1,7 +1,7 @@
 <?php
 	include("functions.php");
 	
-	$dni= json_decode($_POST["datos"]);
+	$dni=$_POST['datos'];
 	$sql= "UPDATE conductor SET estado=false WHERE dni='".$dni."'";
 	
 	$resultset= ejecutaConsultaAccion($sql);

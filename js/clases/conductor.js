@@ -2,7 +2,7 @@
 //objeto
 class Conductor
 {
-    constructor(sDni,sNombre,sApellidos,sSexo,iTlf,sEmail,sDireccion,iNumCuenta){
+    constructor(sDni,sNombre,sApellidos,sSexo,iTlf,sEmail,sDireccion){
 		this.dni= sDni;
 		this.nombre= sNombre;
 		this.apellidos= sApellidos;
