@@ -14,7 +14,7 @@ function respuestaListadoAlquileres(oXML, sStatus, oAjax)
 	if(tablaEliminar!=null) //si hay una tabla en el div de listados la quita para reemplazarla
 		tablaEliminar.remove();
 
-	console.log(oXML);
+	//console.log(oXML);
 	
 	
 	var cabeceras=[];
@@ -29,7 +29,8 @@ function respuestaListadoAlquileres(oXML, sStatus, oAjax)
 	cabeceras[8]="Cliente";
 	cabeceras[9]="Autobus";
 	cabeceras[10]="Conductor";
-	cabeceras[11]="estado";
+	cabeceras[11]="Localidad";
+	cabeceras[12]="estado";
 
 	var oCelda;
 	var oTexto;

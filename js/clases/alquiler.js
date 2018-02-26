@@ -2,7 +2,7 @@
 //objeto
 class Alquiler
 {
-    constructor(dniConductor, matriculaAutobus, sID, iHoras, dFecha, iNumPers, sDescripcion, sOrigen, sDestino, iKMS, sCliente)
+    constructor(dniConductor, matriculaAutobus, sID, iHoras, dFecha, iNumPers, sDescripcion, sOrigen, sDestino, iKMS, sCliente, sLocalidad)
     {
         this.conductor=dniConductor;
         this.autobuses=matriculaAutobus;
@@ -15,6 +15,7 @@ class Alquiler
         this.destino=sDestino;
         this.kms=iKMS;
         this.cliente=sCliente;
+        this.localidad=sLocalidad;
     }
     //funciones
     

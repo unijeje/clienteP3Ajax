@@ -108,7 +108,7 @@ class Gestion
                     //constructor(dniConductor, matriculaAutobus, sID, iHoras, dFecha, iNumPers, sDescripcion, sOrigen, sDestino, iKMS, sCliente)
                     oAlquiler=new Alquiler(oDatosDevuelto.responseJSON.dni_conductor, oDatosDevuelto.responseJSON.matricula_autobus, oDatosDevuelto.responseJSON.id,
                     oDatosDevuelto.responseJSON.horas,oDatosDevuelto.responseJSON.fecha, oDatosDevuelto.responseJSON.numpersonas, oDatosDevuelto.responseJSON.descripcion,
-                    oDatosDevuelto.responseJSON.origen, oDatosDevuelto.responseJSON.destino, oDatosDevuelto.responseJSON.kms, oDatosDevuelto.responseJSON.cliente);
+                    oDatosDevuelto.responseJSON.origen, oDatosDevuelto.responseJSON.destino, oDatosDevuelto.responseJSON.kms, oDatosDevuelto.responseJSON.cliente, oDatosDevuelto.responseJSON.localidad);
                     
                     //console.log(oAlquiler);
                     
@@ -155,6 +155,7 @@ class Gestion
                         destino : oAlquiler.destino,
                         kms : parseInt(oAlquiler.kms),
                         cliente : oAlquiler.cliente,
+                        localidad : oAlquiler.localidad
                     };
         
         var sDatosEnvio = "datos=" + JSON.stringify(oAlquiler); //convertir el objeto a JSON

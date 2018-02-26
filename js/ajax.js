@@ -500,7 +500,7 @@ function respuestaAutoCompleteAutobus(oRespuesta, sStatus, oAjax)
                return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
            };
         }
-		/*
+		
         if( $("#frmAltaMantenimiento #txtAutobusMantenimiento").length>0)
         {
         $("#frmAltaMantenimiento #txtAutobusMantenimiento").autocomplete({
@@ -514,7 +514,7 @@ function respuestaAutoCompleteAutobus(oRespuesta, sStatus, oAjax)
                return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
            };
         }
-
+        /*
         if( $("#frmBajaMantenimiento #txtAutobusMantenimiento").length>0)
         {
         $("#frmBajaMantenimiento #txtAutobusMantenimiento").autocomplete({
@@ -660,5 +660,34 @@ function respuestaAutoCompleteAutobusRev(oRespuesta, sStatus, oAjax)
                return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
            };
         }
+    }
+}
+
+function rellenarComboLocalidades(sCombo)
+{
+    var oArrayLocalidades = null;
+    if (localStorage["localidades"] != null) {
+        oArrayLocalidades = JSON.parse(localStorage["localidades"]);
+        //console.log(localStorage["localidades"]);
+        
+        $("#"+sCombo).empty();
+
+         $.each(oArrayLocalidades, function(i, elemento) {
+            $('<option value="' + elemento.nombre + '" >' + elemento.nombre + '</option>').appendTo("#"+sCombo);
+
+        });
+        
+    }
+    else
+    {
+        $.get('php/getLocalidades.php', null, function(oArrayLocalidades, sStatus, oXHR)
+        {
+            localStorage["localidades"] = JSON.stringify(oArrayLocalidades);
+            //console.log(localStorage["localidades"]);
+            $("#"+sCombo).empty();
+            $.each(oArrayLocalidades, function(i, elemento) {
+                $('<option value="' + elemento.nombre + '" >' + elemento.nombre + '</option>').appendTo("#"+sCombo);
+            });
+        }, 'json');
     }
 }

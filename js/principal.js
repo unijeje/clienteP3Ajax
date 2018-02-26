@@ -52,6 +52,7 @@ function cargaAltaAlquiler()
                 buscarClientes();
                 buscarConductores();
                 buscarAutobuses();
+                rellenarComboLocalidades("frmNuevoAlquiler #txtAlquilerLocalidad");
                 var oBtnDarAltaAlquiler=document.getElementById("btnAltaAlquiler");
                 oBtnDarAltaAlquiler.addEventListener("click", altaAlquiler, false);
                 
@@ -63,6 +64,7 @@ function cargaAltaAlquiler()
                     buscarClientes();
                     buscarConductores();
                     buscarAutobuses();
+                    rellenarComboLocalidades("frmNuevoAlquiler #txtAlquilerLocalidad");
                     bGestionAlquilerCargado=true;
                     var oBtnDarAltaAlquiler=document.getElementById("btnAltaAlquiler");
                     oBtnDarAltaAlquiler.addEventListener("click", altaAlquiler, false);
@@ -89,6 +91,7 @@ function cargaBajaAlquiler()
             if(bGestionAlquilerCargado)
             {
                 buscarAlquileres();
+                rellenarComboLocalidades("frmBorraAlquiler #txtAlquilerLocalidad");
                 document.frmBorraAlquiler.buscarAlquiler.addEventListener("click", rellenaCamposAlquiler, false);
                 var oBajaAlquiler=document.getElementById("btnBorrarAlquiler");
                 oBajaAlquiler.addEventListener("click", bajaAlquiler, false);
@@ -97,6 +100,7 @@ function cargaBajaAlquiler()
             {
                 $.getScript("js/gestion/gestionAlquiler.js", function(){
                     buscarAlquileres();
+                    rellenarComboLocalidades("frmBorraAlquiler #txtAlquilerLocalidad");
                     document.frmBorraAlquiler.buscarAlquiler.addEventListener("click", rellenaCamposAlquiler, false);
                     bGestionAlquilerCargado=true;
                     var oBajaAlquiler=document.getElementById("btnBorrarAlquiler");
@@ -125,6 +129,7 @@ function cargaModificaAlquiler()
                 buscarClientes();
                 buscarConductores();
                 buscarAutobuses();
+                rellenarComboLocalidades("frmModificarAlquiler #txtAlquilerLocalidad");
                 document.frmModificarAlquiler.buscarAlquiler.addEventListener("click", rellenaCamposAlquiler, false);
                 var oModificarAlquiler=document.getElementById("btnModificarAlquiler");
                 oModificarAlquiler.addEventListener("click", modificarAlquiler, false);
@@ -136,6 +141,7 @@ function cargaModificaAlquiler()
                     buscarClientes();
                     buscarConductores();
                     buscarAutobuses();
+                    rellenarComboLocalidades("frmModificarAlquiler #txtAlquilerLocalidad");
                     document.frmModificarAlquiler.buscarAlquiler.addEventListener("click", rellenaCamposAlquiler, false);
                     bGestionAlquilerCargado=true;
                     var oModificarAlquiler=document.getElementById("btnModificarAlquiler");

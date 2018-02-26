@@ -4,7 +4,7 @@ include("functions.php");
 
 $id=$_GET['id'];
 
-$sql="SELECT id,horas,fecha,numpersonas, descripcion, origen, destino, kms, cliente, matricula_autobus, dni_conductor  from alquiler where id='".$id."';";
+$sql="SELECT id,horas,fecha,numpersonas, descripcion, origen, destino, kms, cliente, matricula_autobus, dni_conductor, localidad  from alquiler where id='".$id."';";
 
 
 $resultset=ejecutaConsulta($sql);

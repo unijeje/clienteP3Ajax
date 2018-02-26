@@ -67,6 +67,7 @@ function altaAlquiler(oEvento)
         var sOrigen=oForm.txtAlquilerOrigen.value.trim();
         var sDestino=oForm.txtAlquilerDestino.value.trim();
         var iKMs=oForm.txtAlquilerKms.value.trim();
+        var sLocalidad=oForm.txtAlquilerLocalidad.value;
         
         //conductores
         var sDniConductor=oForm.txtConductorDni.value.trim();
@@ -75,7 +76,7 @@ function altaAlquiler(oEvento)
         var sMatriculaAutobus=oForm.txtAutobusMatricula.value.trim();
 
         //arrayConductores, arrayAutobuses, sID, iHoras, dFecha, iNumPers, sDescripcion, sOrigen, sDestino, iKMS, oCliente
-        var oAlquiler=new Alquiler(sDniConductor, sMatriculaAutobus, sIDAlquiler, sHoras, dFecha, iNumPers, sDesc, sOrigen, sDestino, iKMs, sCliente);
+        var oAlquiler=new Alquiler(sDniConductor, sMatriculaAutobus, sIDAlquiler, sHoras, dFecha, iNumPers, sDesc, sOrigen, sDestino, iKMs, sCliente, sLocalidad);
         //console.log(oAlquiler);
         
         oGestion.altaAlquiler(oAlquiler);
@@ -406,5 +407,6 @@ function rellenaCamposAlquiler(oEvento) //actualiza
     oForm.txtAlquilerKms.value=oAlquiler.kms;
     oForm.txtConductorDni.value=oAlquiler.conductor;
     oForm.txtAutobusMatricula.value=oAlquiler.autobuses;
+    oForm.txtAlquilerLocalidad.value=oAlquiler.localidad;
     
 }
