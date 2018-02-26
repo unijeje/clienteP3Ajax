@@ -565,12 +565,12 @@ function cargarBajaVacacion(){
 	if($("#frmBajaDeVacaciones").length==0){
 		$("<div>").appendTo("#formulario").load("formu/borraVacaciones.html", function(){
 			if(bGestionConductorCargado){
-                buscarConductores();
+                buscarVacaciones();
 				var oBtnBajaVacacion= document.getElementById("btnBajaVacaciones");
 				oBtnBajaVacacion.addEventListener("click",bajaVacaciones,false);
 			} else{
 				$.getScript("js/gestion/gestionConductor.js", function(){
-                    buscarConductores();
+                    buscarVacaciones();
 					bGestionConductorCargado= true;
 					var oBtnBajaVacacion= document.getElementById("btnBajaVacaciones");
 				    oBtnBajaVacacion.addEventListener("click",bajaVacaciones,false);

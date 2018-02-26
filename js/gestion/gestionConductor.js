@@ -64,10 +64,6 @@ function modificarConductor(oEvento){
 	}
 }
 
-function rellenaCamposConductor(){
-
-}
-
 function altaVacaciones(){
 
 }

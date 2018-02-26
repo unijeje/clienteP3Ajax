@@ -342,48 +342,6 @@ function respuestaAutoCompleteConductor(oRespuesta, sStatus, oAjax)
                return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
            };
         }
-        
-       if( $("#frmBajaDeVacaciones #txtVacacionConductor").length>0)
-       {
-       $("#frmBajaDeVacaciones #txtVacacionConductor").autocomplete({
-          source: dnis,
-          minLength: 0,
-          select: function(event, ui){
-               $("#frmBajaDeVacaciones #txtVacacionConductor").val(ui.item.value);
-               //$("#cliente-dni").val(ui.item.value);
-               return false;
-          }}).autocomplete("instance")._renderItem=function(ul, item){
-              return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
-          };
-       }
-
-       if( $("#frmModificarVacaciones #txtVacacionConductor").length>0)
-       {
-       $("#frmModificarVacaciones #txtVacacionConductor").autocomplete({
-          source: dnis,
-          minLength: 0,
-          select: function(event, ui){
-               $("#frmModificarVacaciones #txtVacacionConductor").val(ui.item.value);
-               //$("#cliente-dni").val(ui.item.value);
-               return false;
-          }}).autocomplete("instance")._renderItem=function(ul, item){
-              return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
-          };
-       }
-
-       if( $("#frmAltaDeVacaciones #txtVacacionConductor").length>0)
-       {
-       $("#frmAltaDeVacaciones #txtVacacionConductor").autocomplete({
-          source: dnis,
-          minLength: 0,
-          select: function(event, ui){
-               $("#frmAltaDeVacaciones #txtVacacionConductor").val(ui.item.value);
-               //$("#cliente-dni").val(ui.item.value);
-               return false;
-          }}).autocomplete("instance")._renderItem=function(ul, item){
-              return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
-          };
-       }
 
     }
 }
@@ -404,6 +362,68 @@ function respuestaAltaConductor(){
     }
 }
 
+function buscarVacaciones(){
+	$.get("php/buscarVacaciones.php", respuestaAutoCompleteVacaciones, "json");
+}
+
+function respuestaAutoCompleteVacaciones(){
+	if(oAjax.status==200)
+    {
+
+        var conductores=[];
+        
+        for(var i=0;i<oRespuesta.length;i++)
+        {
+            //arrayDNI.push(oRespuesta[i].dni);
+            var arrayDNI={};
+            arrayDNI["value"]=oRespuesta[i].dni;
+            arrayDNI["desc"]="Modelo: "+oRespuesta[i].nombre+" nº Asientos: "+oRespuesta[i].apellidos;
+            conductores.push(arrayDNI);
+        } 
+		
+		if( $("#frmBajaDeVacaciones #txtVacacionConductor").length>0)
+		{
+		   $("#frmBajaDeVacaciones #txtVacacionConductor").autocomplete({
+			  source: dnis,
+			  minLength: 0,
+			  select: function(event, ui){
+				   $("#frmBajaDeVacaciones #txtVacacionConductor").val(ui.item.value);
+				   //$("#cliente-dni").val(ui.item.value);
+				   return false;
+			  }}).autocomplete("instance")._renderItem=function(ul, item){
+				  return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+			  };
+		}
+
+	   if( $("#frmModificarVacaciones #txtVacacionConductor").length>0)
+	   {
+	   $("#frmModificarVacaciones #txtVacacionConductor").autocomplete({
+		  source: dnis,
+		  minLength: 0,
+		  select: function(event, ui){
+			   $("#frmModificarVacaciones #txtVacacionConductor").val(ui.item.value);
+			   //$("#cliente-dni").val(ui.item.value);
+			   return false;
+		  }}).autocomplete("instance")._renderItem=function(ul, item){
+			  return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+		  };
+	   }
+
+	   if( $("#frmAltaDeVacaciones #txtVacacionConductor").length>0)
+	   {
+	   $("#frmAltaDeVacaciones #txtVacacionConductor").autocomplete({
+		  source: dnis,
+		  minLength: 0,
+		  select: function(event, ui){
+			   $("#frmAltaDeVacaciones #txtVacacionConductor").val(ui.item.value);
+			   //$("#cliente-dni").val(ui.item.value);
+			   return false;
+		  }}).autocomplete("instance")._renderItem=function(ul, item){
+			  return $("<li>").append("<div>"+item.value+"<br>"+item.desc+"</div>").appendTo(ul);
+		  };
+	   }
+	}
+}
 
 function buscarAutobuses()
 {
