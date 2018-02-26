@@ -1,11 +1,7 @@
 <?php
 	include("functions.php");
 	
-	$sql= "SELECT c.dni,c.nombre,c.apellidos FROM conductor c,vacaciones v WHERE c.dni=v.dni_conductor AND v.estado=false AND c.estado=true";
+	$sql= "SELECT dni,nombre,apellidos FROM conductor WHERE vacaciones=false AND estado=true";
 	
-	$resultset= ejecutaConsulta($sql);
-	
-	$datos=$resultset->fetch(PDO::FETCH_ASSOC);
-
+	$datos=ejecutaConsultaArray($sql);
 	echo json_encode($datos);
-?>

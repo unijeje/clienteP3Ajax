@@ -386,7 +386,24 @@ function buscarVacaciones(){
 	$.get("php/buscarVacaciones.php", respuestaAutoCompleteVacaciones, "json");
 }
 
-function respuestaAutoCompleteVacaciones(oRespuesta, sStatus, oAjax){	
+function respuestaAltaVacaciones(){
+	var oAjax = this;
+
+    // 5. Proceso la respuesta cuando llega
+    if (oAjax.readyState == 4 && oAjax.status == 200) {
+        
+		if(parseInt(oAjax.responseText)>0){
+            document.frmAltaDeVacaciones.reset();
+            document.frmAltaDeVacaciones.style.display="none";
+            mensaje("Vacaciones asignadas correctamente");
+            buscarVacaciones();
+            } else
+				mensaje("Ese conductor ya tiene vacaciones");
+    }
+}
+
+function respuestaAutoCompleteVacaciones(oRespuesta, sStatus, oAjax){
+
 	if(oAjax.status==200)
     {
 

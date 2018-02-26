@@ -392,20 +392,28 @@ class Gestion
 	}
 		
 	altaVacaciones(oVacaciones){
-		var bEncontrado= false;
+		// Instanciar objeto Ajax
+        var oAjax = instanciarXHR();
+
+        //1. Preparar parametros con JSON
+		var oVacaciones= {
+			dni: oVacaciones.dni,
+			fechaIni: oVacaciones.fechaIni,
+			fechaFin: oVacaciones.fechaFin,
+			descripcion: oVacaciones.descripcion
+		};
 		
-		for(var i=0;i<this._vacaciones.length && bEncontrado==false;i++){
-			if(this._vacaciones[i].dni==oVacaciones.dni){
-				bEncontrado=true;
-			}
-		}
+		var sDatosEnvio= "datos="+JSON.stringify(oVacaciones);
 		
-		if(bEncontrado==false){
-			this._vacaciones.push(oVacaciones);
-            this.actualizaComboVacaciones();
-		}
+		//2. Configurar la llamada --> Asincrono por defecto
+        oAjax.open("POST", encodeURI("php/altaVacaciones.php"));
+        oAjax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		
-		return !bEncontrado;
+		//3. Asociar manejador de evento de la respuesta
+        oAjax.addEventListener("readystatechange", respuestaAltaVacaciones, false);
+		
+		//4. Hacer la llamada
+        oAjax.send(sDatosEnvio);
 	}
 	
 	bajaVacaciones(oVacaciones){

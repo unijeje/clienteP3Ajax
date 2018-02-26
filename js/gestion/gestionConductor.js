@@ -11,7 +11,7 @@ function altaConductor(oEvento){
 		var emailConductor= frmConductorAlta.txtConductorCorreo.value.trim();
 		var direccionConductor= frmConductorAlta.txtConductorDireccion.value.trim();
 		
-		var oConductor= new Conductor(dniConductor,nombreConductor,apellidosConductor,sexoConductor,tlfConductor,emailConductor,direccionConductor,true);
+		var oConductor= new Conductor(dniConductor,nombreConductor,apellidosConductor,sexoConductor,tlfConductor,emailConductor,direccionConductor,true,false);
 		
 		oGestion.altaConductor(oConductor);
 	}
@@ -60,12 +60,23 @@ function modificarConductor(oEvento){
 		var oNuevoConductor= new Conductor(dniConductor,nombreConductor,apellidosConductor,sexoConductor,tlfConductor,emailConductor,direccionConductor);
 		var datos= "datos="+JSON.stringify(oNuevoConductor);
 		
-		$.post("php/modificarConductor.php",datos,respuestaModificarConductor,"json");
+		$.post("php/modificarConductor.php",datos,respuestaConductor,"json");
 	}
 }
 
-function altaVacaciones(){
-
+function altaVacaciones(oEvento){
+	var oE = oEvento || windows.event;
+	var formVacaciones=oE.target.parentNode.parentNode.parentNode; //console.log(formVacaciones);
+	
+	if(validarVacaciones(formVacaciones)){		
+		var dniConductor= frmAltaDeVacaciones.txtVacacionConductor.value.trim();
+		var descripcion= frmAltaDeVacaciones.descripcion.value.trim();
+		var fechaInicio= frmAltaDeVacaciones.fechaIni.value.trim();
+		var fechaFin= frmAltaDeVacaciones.fechaFin.value.trim();
+		
+		var oVacaciones= new Vacaciones(dniConductor,fechaInicio,fechaFin,descripcion,true);
+		oGestion.altaVacaciones(oVacaciones);
+	}
 }
 
 function bajaVacaciones(){
@@ -184,7 +195,7 @@ function validarConductor(formAltaConductor){
 	return bValido;
 }
 
-function respuestaModificarConductor(oDatosDevuelto, sStatus, oAjax){
+function respuestaConductor(oDatosDevuelto, sStatus, oAjax){
 	if(oDatosDevuelto[0]){
 		document.frmConductorModificar.reset();
         document.frmConductorModificar.style.display="none";
