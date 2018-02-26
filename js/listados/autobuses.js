@@ -69,7 +69,7 @@ function respuestaListadoAutobuses()
 		oTexto=document.createTextNode(oFilas[i].consumo);
 		oCelda.appendChild(oTexto);
 		oCelda=oFila.insertCell();
-		if(oFilas[i].itv)
+		if(oFilas[i].itv>0)
 			oTexto=document.createTextNode("Revisado");
 		else
 			oTexto=document.createTextNode("No revisado");
