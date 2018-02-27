@@ -384,7 +384,11 @@ class Gestion
             complete : function(sDatosDevuelto, sStatus)
             {
                 if(sDatosDevuelto.responseText=="Exito")
-                    res=true;
+                {
+					res=true;
+					buscarVacacionesActivas();
+					buscarVacaciones();
+				}
             }
         });
 
@@ -461,7 +465,7 @@ class Gestion
                 // si se devuelve un resultado correcto se envia el cconductor devuelta
                 if(sStatus=="success" && oDatosDevuelto.responseJSON.dni!=null)
                 {   oConductor=new Conductor(oDatosDevuelto.responseJSON.dni, oDatosDevuelto.responseJSON.nombre, oDatosDevuelto.responseJSON.apellidos, 
-					oDatosDevuelto.responseJSON.sexo, oDatosDevuelto.responseJSON.tlf, oDatosDevuelto.responseJSON.email, oDatosDevuelto.responseJSON.direccion);
+					oDatosDevuelto.responseJSON.sexo, oDatosDevuelto.responseJSON.telefono, oDatosDevuelto.responseJSON.email, oDatosDevuelto.responseJSON.direccion);
 					
                     if(oDatosDevuelto.responseJSON.estado==false)
                         oConductor.estado=oDatosDevuelto.responseJSON.estado;
@@ -478,7 +482,7 @@ class Gestion
 		
         //se hace llamada asyncrona para que espere a la respuesta antes de hacer el return
         $.get("php/buscarVacacionesDni.php",dni,function(oDatosDevueltos,sStatus,oAjax){
-			if(oDatosDevueltos.estado==false){
+			if(oDatosDevueltos.estado==true){
 				bRespuesta= true;							
 			}
 		},"json");

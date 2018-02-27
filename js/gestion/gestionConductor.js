@@ -11,7 +11,7 @@ function altaConductor(oEvento){
 		var emailConductor= frmConductorAlta.txtConductorCorreo.value.trim();
 		var direccionConductor= frmConductorAlta.txtConductorDireccion.value.trim();
 		
-		var oConductor= new Conductor(dniConductor,nombreConductor,apellidosConductor,sexoConductor,tlfConductor,emailConductor,direccionConductor,true,false);
+		var oConductor= new Conductor(dniConductor,nombreConductor,apellidosConductor,sexoConductor,tlfConductor,emailConductor,direccionConductor,true);
 		
 		oGestion.altaConductor(oConductor);
 	}
@@ -231,6 +231,8 @@ function respuestaConductor(oDatosDevuelto, sStatus, oAjax){
         document.frmConductorModificar.style.display="none";
 		mensaje(oDatosDevuelto[1]);
 		buscarConductores();
+		buscarVacacionesActivas();
+		buscarVacaciones();
 	}
 }
 
@@ -306,7 +308,7 @@ function rellenaCamposConductor(oEvento){ //actualiza campos usando el dni del c
 		oForm.txtConductorNombre.value=oConductor.nombre;
 		oForm.txtConductorApellidos.value=oConductor.apellidos;    
 		oForm.radioConductorSexo.value=oConductor.sexo;
-		oForm.txtConductorTelefono.value=oConductor.telefono;
+		oForm.txtConductorTelefono.value=oConductor.tlf;
 		oForm.txtConductorCorreo.value=oConductor.email;
 		oForm.txtConductorDireccion.value= oConductor.direccion;
     } else{

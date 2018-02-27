@@ -11,7 +11,6 @@ class Conductor
 		this.email= sEmail;
 		this.direccion= sDireccion;
 		this.estado= true;
-		this.vacaciones= false;
 	}
 }
 

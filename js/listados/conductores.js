@@ -78,7 +78,7 @@ function respuestaListadoConductores()
 			oTexto=document.createTextNode(oFilas[i].sexo);
 			oCelda.appendChild(oTexto);
 			oCelda=oFila.insertCell();
-			oTexto=document.createTextNode(oFilas[i].tlf);
+			oTexto=document.createTextNode(oFilas[i].telefono);
 			oCelda.appendChild(oTexto);
 			oCelda=oFila.insertCell();
 			oTexto=document.createTextNode(oFilas[i].email);
