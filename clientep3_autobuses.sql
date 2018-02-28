@@ -160,7 +160,7 @@ INSERT INTO `localidad` (`nombre`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `mantenimiento` (
-  `id` int(9) NOT NULL,
+  `id` int(9) NOT NULL AUTO_INCREMENT,
   `matricula_autobus` varchar(10) COLLATE utf8_spanish_ci NOT NULL,
   `descripcion` text COLLATE utf8_spanish_ci NOT NULL,
   `importe` float NOT NULL,
@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `mantenimiento` (
   `estado` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `matricula_autobus` (`matricula_autobus`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci AUTO_INCREMENT=27 ;
 
 -- --------------------------------------------------------
 
