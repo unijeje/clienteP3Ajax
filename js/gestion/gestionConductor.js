@@ -36,7 +36,7 @@ function bajaConductor(oEvento){
             mensaje("Conductor "+dniConductor+" dado de baja correctamente");
             document.frmConductorBaja.reset();
             document.frmConductorBaja.style.display="none";
-            buscarClientes();
+            buscarConductores();
         }
         else
             mensaje("Error al dar de baja: "+dniConductor);

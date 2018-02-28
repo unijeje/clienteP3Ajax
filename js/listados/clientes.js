@@ -113,6 +113,7 @@ function filtrarNombreCliente()
 	sHTML+='<input type="text" name="txtNombreCliente" id="txtNombreCliente" placeholder="nombre"/></div>';
 	//sHTML+="</div>";
 	$("#frmFiltrarCliente").append(sHTML);
+	
 	/*
 	$("#cerrarDialogCliente").click(function(){
 		cerrarDialogo("dialog");

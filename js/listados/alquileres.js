@@ -1,5 +1,3 @@
-
-
 function listadoAlquileres(){
 	
 	$.get("php/listadoAlquileres.php", respuestaListadoAlquileres, "xml");
@@ -65,7 +63,7 @@ function respuestaListadoAlquileres(oXML, sStatus, oAjax)
 		}
 
 		oCelda=oFila.insertCell();
-		if(oAlquileres[i].children[11].textContent>0)// para que no salga true o false en la tabla
+		if(oAlquileres[i].children[12].textContent>0)// para que no salga true o false en la tabla
 			oTexto=document.createTextNode("Activo");
 		else
 		{

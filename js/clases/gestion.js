@@ -15,75 +15,10 @@ class Gestion
         //cuenta/factura falta
     }
     //funciones
-    añadirCuenta(sNumCuenta)
-    {
-        var bExiste=this.buscarCuenta(sNumCuenta);
-        if(!bExiste)
-        {
-            var oCuenta=new Cuenta(sNumCuenta);
-            this._cuentas.push(oCuenta);
-        }
-        else
-        {
-            mensaje("Ya existe una cuenta con ese número. No se ha añadido");
-        }
-    }
-	
-    buscarCuenta(sNumCuenta)
-    {
-        var oCuenta=null;
-        for(var i=0;i<this._cuentas.length && oCuenta==null;i++)
-        {
-            if(sNumCuenta==this._cuentas[i].numCuenta)
-                oCuenta=this._cuentas[i];
-        }
-        return oCuenta;
-    }
+ 
 
-    gestionContabilidad(sAsunto, numCuenta, fImporte, dFecha)
-    {
-        var dFecha=new Date(dFecha).toLocaleDateString("es-ES");
-        //var dFecha=new Date(dFecha);
-        var oApunte=new Apuntes(fImporte, dFecha, sAsunto);
-        var oCuenta=this.buscarCuenta(numCuenta);
-        if(sAsunto=="nomina")
-        {
-            //restarle al num cuenta de gestion
-            //añadirlo al num de cuenta del conductor
-            oCuenta.saldo=parseFloat(oCuenta.saldo+fImporte);
-            this.cuentaEmpresa.saldo=parseFloat(this.cuentaEmpresa.saldo-fImporte);
-
-            //añadir apunte a cuenta
-            this.cuentaEmpresa.apuntes.push(oApunte);
-            oCuenta.apuntes.push(new Apuntes(fImporte, dFecha, sAsunto));
-
-        }
-        else if(sAsunto=="mantenimiento")
-        {
-            //restarle al num cuenta de gestion
-            this.cuentaEmpresa.saldo=parseFloat(this.cuentaEmpresa.saldo-fImporte);
-            this.cuentaEmpresa.apuntes.push(oApunte);
-        }
-        else if(sAsunto=="alquiler")
-        {
-            //sumarle al num cuenta de gestion
-            this.cuentaEmpresa.saldo=parseFloat(this.cuentaEmpresa.saldo+fImporte);
-            this.cuentaEmpresa.apuntes.push(oApunte);
-        }
-
-    }
+   
     //alquiler
-
-    /*Se le pasa un nº de personas y devuelve el nº de autobuses necesario*/
-    calcNumAutobuses(iNumPers)
-    {
-        var iCapacidad=30; // cada 30 personas se necesitara un autobus
-        var numBuses=0;
-
-        numBuses=Math.ceil(iNumPers/iCapacidad); //redondear a la alta
-
-        return numBuses;
-    }
 
     buscarAlquiler(sID)
     {
@@ -588,44 +523,7 @@ class Gestion
         return res;
     }
 
-    actualizaComboAutobus() 
-    {
-
-        var oComboBajaAutobus=document.frmAutobusBaja.comboAutobus;
-        var oComboModificaAutobus=document.frmAutobusModificar.comboAutobus;
-        var oComboSeleccionaAutobus=document.frmNuevoAlquiler.querySelector(".alquilerAutobusesOriginal").childNodes[3].childNodes[1];
-        var oComboModificaAlquiler=document.frmModificarAlquiler.querySelector(".alquilerAutobusesOriginal").childNodes[3].childNodes[1];
-        var oComboBorraAlquiler=document.frmBorraAlquiler.querySelector(".alquilerAutobusesOriginal").childNodes[3].childNodes[1];
-        var oComboAutobusMantenimiento=document.frmAltaMantenimiento.comboAutobus;
-       
-
-        while (oComboBajaAutobus.firstChild) { //tienen el mismo nº de hijos
-            oComboBajaAutobus.removeChild(oComboBajaAutobus.firstChild);
-            oComboModificaAutobus.removeChild(oComboModificaAutobus.firstChild);
-            oComboSeleccionaAutobus.removeChild(oComboSeleccionaAutobus.firstChild);
-            oComboModificaAlquiler.removeChild(oComboModificaAlquiler.firstChild);
-            oComboBorraAlquiler.removeChild(oComboBorraAlquiler.firstChild);
-            oComboAutobusMantenimiento.removeChild(oComboAutobusMantenimiento.firstChild);
-        }
   
-
-        for(var i=0;i<this._autobuses.length;i++)
-        {
-            if(this._autobuses[i].estado==true) //solo mostrar los dados de alta
-            {
-                var newSelect=document.createElement("option");
-                newSelect.value=this._autobuses[i].matricula;
-                newSelect.text=this._autobuses[i].matricula+" - "+this._autobuses[i].modelo;
-                oComboBajaAutobus.appendChild(newSelect);
-                oComboModificaAutobus.appendChild(oComboBajaAutobus.lastChild.cloneNode(true));
-                oComboSeleccionaAutobus.appendChild(oComboBajaAutobus.lastChild.cloneNode(true));
-                oComboModificaAlquiler.appendChild(oComboBajaAutobus.lastChild.cloneNode(true));
-                oComboBorraAlquiler.appendChild(oComboBajaAutobus.lastChild.cloneNode(true));
-                oComboAutobusMantenimiento.appendChild(oComboBajaAutobus.lastChild.cloneNode(true));
-            }    
-        }
-
-    }
 
     actualizaComboRevisado(){
         var oComboBajaMantenimientoAutobus=document.frmBajaMantenimiento.comboAutobusRevisado;
@@ -655,19 +553,7 @@ class Gestion
 
 
     //mantenimiento
-    buscarMantenimiento(sMatricula)
-    {
-        var oMantenimiento=null;
-
-        //for(var i=0;i<this._mantenimientos.length && oMantenimiento==null;i++)
-        for (var i=this._mantenimientos.length-1;i>=0 && oMantenimiento==null;i--)
-        {
-            if(sMatricula==this._mantenimientos[i].matriculaAutobus)
-                oMantenimiento=this._mantenimientos[i];
-        }
-        return oMantenimiento;
-
-    }
+    
 
 
     altaMantenimiento(oMantenimiento)

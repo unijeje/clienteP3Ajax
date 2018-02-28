@@ -1,3 +1,6 @@
+var oBtnFiltroMantenimientos=document.getElementById("filtrarMantenimientos");
+oBtnFiltroMantenimientos.addEventListener("click", listadoMantenimientosFiltro, false);
+
 //todos y mantenimiento
 function listadoMantenimientos()
 {
@@ -85,10 +88,9 @@ function respuestaListadoMantenimientos()
 	oTabla.classList.add("table-striped");
 	oTabla.classList.add("text-center");
 	busqueda="<center><input class='btn btn-primary' id='filtrarMantenimientos' type='button' value='Mostrar todos los mantenimientos'></center></br>";
-	oCapaListado.innerHTML=busqueda;
+	//oCapaListado.innerHTML=busqueda;
 	oCapaListado.appendChild(oTabla);
-	var oBtnFiltroMantenimientos=document.getElementById("filtrarMantenimientos");
-    oBtnFiltroMantenimientos.addEventListener("click", listadoMantenimientosFiltro, false);
+	
 	}
 }
 

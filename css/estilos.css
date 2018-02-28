@@ -16,7 +16,7 @@ button{
     display:none;
 }
 
-#panelCliente, #panelConductor
+#panelCliente, #panelConductor, #panelConductor
 {
     display:none;
     width:100%;

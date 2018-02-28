@@ -636,56 +636,63 @@ var campoConductor=document.getElementById("panelConductor");
 
 function mostrarListadoAutobuses()
 {
-    oCapaListado.innerHTML="";
     $("#formulario").hide("normal");
     listadoAutobuses();
     oCapaListado.style.display="block";
     $("#panelCliente").hide("normal");
+	$("#panelMantenimiento").hide("normal");
+	$("#panelConductor").hide("normal");
 }
 
 function mostrarListadoClientes()
 {
-    oCapaListado.innerHTML="";
     $("#formulario").hide("normal");
     listadoClientes();
     $("#panelCliente").show("normal");
     oCapaListado.style.display="block";
+	$("#panelMantenimiento").hide("normal");
+	$("#panelConductor").hide("normal");
 }
 
 function mostrarListadoConductores()
 {
-    oCapaListado.innerHTML="";
     $("#formulario").hide("normal");
     listadoConductores();
     oCapaListado.style.display="block";
     $("#panelCliente").hide("normal");
+	$("#panelMantenimiento").hide("normal");
+	$("#panelConductor").hide("normal");
 }
 
 function mostrarListadoVacaciones()
 {
-    oCapaListado.innerHTML="";
     $("#formulario").hide("normal");
 	listadoVacaciones();
     oCapaListado.style.display="block";
     $("#panelCliente").hide("normal");
+	$("#panelMantenimiento").hide("normal");
+	$("#panelConductor").show("normal");
 }
 
 function mostrarListadoAlquileres()
 {
-    oCapaListado.innerHTML="";
     $("#formulario").hide("normal");
     listadoAlquileres();
     oCapaListado.style.display="block";
     $("#panelCliente").hide("normal");
+	$("#panelMantenimiento").hide("normal");
+	$("#panelConductor").hide("normal");
 }
 
 function mostrarListadoMantenimientos()
 {
-    oCapaListado.innerHTML="";
     $("#formulario").hide("normal");
     listadoMantenimientos();
     oCapaListado.style.display="block";
-    $("#panelCliente").hide("normal");   
+    $("#panelCliente").hide("normal");
+	$("#panelMantenimiento").show("normal");
+	$("#panelConductor").hide("normal");
+	
 }
 
 //eliminar dialogo que se pase como string
@@ -749,85 +756,7 @@ function validarRadio(arrayRadio)
     return res;
 }
 
- //autobuses
-function comboEstadoInicialAutubuses()
-{
-    var oComboBajaAutobus=document.frmAutobusBaja.comboAutobus;
-    var oComboModificaAutobus=document.frmAutobusModificar.comboAutobus;
-    var oComboAutobusMantenimiento=document.frmAltaMantenimiento.comboAutobus;
-
-    var oComboBajaAutobusesRevisados=document.frmBajaMantenimiento.comboAutobusRevisado;
-    var oComboModificarAutobusesRevisados=document.frmModificarMantenimiento.comboAutobusRevisado;
-
-    if(oComboBajaAutobus.firstChild){
-        oComboBajaCliente.firstChild.selected;// seleccionar el primero al cargar el programa
-        oComboModificaCliente.firstChild.selected;// seleccionar el primero al cargar el programa
-        oComboAutobusMantenimiento.firstChild.selected;
-
-        var oAutobus=oGestion.buscarAutobus(frmAutobusModificar.comboAutobus.value);
-        if(oAutobus)
-        {
-        frmAutobusModificar.txtAutobusMatricula.value=oAutobus.matricula;
-        frmAutobusModificar.txtAutobusAsientos.value=oAutobus.asientos;
-        frmAutobusModificar.txtAutobusModelo.value=oAutobus.modelo;
-        frmAutobusModificar.txtAutobusConsumo.value=oAutobus.consumo;
-
-        frmAutobusBaja.txtAutobusMatricula.value=oAutobus.matricula;
-        frmAutobusBaja.txtAutobusAsientos.value=oAutobus.asientos;
-        frmAutobusBaja.txtAutobusModelo.value=oAutobus.modelo;
-        frmAutobusBaja.txtAutobusConsumo.value=oAutobus.consumo;
-        }
-    }
-    else
-    {
-        frmAutobusModificar.txtAutobusMatricula.value=null;
-        frmAutobusModificar.txtAutobusAsientos.value=null;
-        frmAutobusModificar.txtAutobusModelo.value=null;
-        frmAutobusModificar.txtAutobusConsumo.value=null;
-
-        frmAutobusBaja.txtAutobusMatricula.value=null;
-        frmAutobusBaja.txtAutobusAsientos.value=null;
-        frmAutobusBaja.txtAutobusModelo.value=null;
-        frmAutobusBaja.txtAutobusConsumo.value=null;
-    }
-
-    if (oComboBajaAutobusesRevisados.firstChild)
-    {
-        oComboBajaAutobusesRevisados.firstChild.selected;
-        oComboModificarAutobusesRevisados.firstChild.selected;
-
-        var oMantenimiento=oGestion.buscarMantenimiento(frmModificarMantenimiento.comboAutobusRevisado.value);
-
-        if(oMantenimiento)
-        {
-
-        
-        frmModificarMantenimiento.txtDescripcionMantenimiento.value=oMantenimiento.descripcion;
-        frmModificarMantenimiento.txtImporteMantenimiento.value=oMantenimiento.importe;
-        frmModificarMantenimiento.txtMantenimientoFecha.value=oMantenimiento.fecha;
-
-        frmBajaMantenimiento.txtDescripcionMantenimiento.value=oMantenimiento.descripcion;
-        frmBajaMantenimiento.txtImporteMantenimiento.value=oMantenimiento.importe;
-        frmBajaMantenimiento.txtMantenimientoFecha.value=oMantenimiento.fecha;
-
-    }
-
-     }   
-
-     else{
-        frmModificarMantenimiento.txtDescripcionMantenimiento.value=null;
-        frmModificarMantenimiento.txtImporteMantenimiento.value=null;
-        frmModificarMantenimiento.txtMantenimientoFecha.value=null;
-
-        frmBajaMantenimiento.txtDescripcionMantenimiento.value=null;
-        frmBajaMantenimiento.txtImporteMantenimiento.value=null;
-        frmBajaMantenimiento.txtMantenimientoFecha.value=null;
-     }
-
-
-
- }
-
+ 
 
 // EXPRESIONES REGULARES
 

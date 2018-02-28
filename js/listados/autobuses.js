@@ -55,6 +55,7 @@ function respuestaListadoAutobuses()
 	}
 
 	for ( var i=0;i<oFilas.length;i++){
+		var sBotonRecuperar="";
 		oFila=oTabla.insertRow(1);
 		oCelda=oFila.insertCell();
 		oTexto=document.createTextNode(oFilas[i].matricula);
@@ -78,14 +79,22 @@ function respuestaListadoAutobuses()
 		if(oFilas[i].estado>0)// para que no salga true o false en la tabla
 			oTexto=document.createTextNode("Activo");
 		else
+		{	
 			oTexto=document.createTextNode("Baja");
+			sBotonRecuperar='<button id="recuperarAutobus" type="button" class="btn btn-info"><span class="glyphicon glyphicon-plus-sign"></span></button>';
+		}
 
 		oCelda.appendChild(oTexto);
+		oFila.innerHTML+="<td>"+sBotonRecuperar+"</td>";
+		oCelda=oFila.insertCell();
 	}
 
 	oTabla.classList.add("table");
 	oTabla.classList.add("table-striped");
 	oTabla.classList.add("text-center");
 	oCapaListado.appendChild(oTabla);
+	var oBotones=document.querySelectorAll("#recuperarAutobus");
+	for(var i=0;i<oBotones.length;i++)
+		oBotones[i].addEventListener("click", recuperarAutobus, false);
 	}
 }

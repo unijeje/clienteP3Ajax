@@ -805,3 +805,25 @@ function rellenarComboLocalidades(sCombo)
         }, 'json');
     }
 }
+
+//recuperar desde la tabla de mostrar
+function recuperarAutobus(oEvento)
+{
+    var oE=oEvento ||window.event;
+
+    //console.log(oE.target.parentNode.parentNode);
+    var sID=oE.target.parentNode.parentNode.cells[0].textContent;
+
+    var sDatos="id="+sID;
+	
+    $.post("php/reactivarAutobus.php",sDatos,function(sDatosDevuelto, sStatus, oAjax){
+        //console.log(sDatosDevuelto);
+        if(sStatus=="success" && sDatosDevuelto=="Exito")
+        {
+            listadoAutobuses();
+            buscarAlquileres();
+        } 
+    },"text");
+	
+
+}
