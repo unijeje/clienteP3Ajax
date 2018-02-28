@@ -527,7 +527,7 @@ function cargarAltaVacacion(){
 			if(bGestionConductorCargado){
                 buscarVacaciones();
 				var oBtnAltaVacacion= document.getElementById("btnAltaVacaciones");
-				oBtnAltaVacacion.addEventListener("click",altaVacacion,false);
+				oBtnAltaVacacion.addEventListener("click",altaVacaciones,false);
 			} else{
 				$.getScript("js/gestion/gestionConductor.js", function(){
                     buscarVacaciones();
@@ -551,12 +551,14 @@ function cargarModificarVacacion(){
                 buscarVacacionesActivas();
 				var oBtnModificaVacacion= document.getElementById("btnMofificarVacaciones");
 				oBtnModificaVacacion.addEventListener("click",modificarVacaciones,false);
+				document.frmModificarVacaciones.buscarVacacionMod.addEventListener("click",rellenaCamposModificarVacaciones,false);
 			} else{
 				$.getScript("js/gestion/gestionConductor.js", function(){
                     buscarVacacionesActivas();
 					bGestionConductorCargado= true;
 					var oBtnModificaVacacion= document.getElementById("btnMofificarVacaciones");
 				    oBtnModificaVacacion.addEventListener("click",modificarVacaciones,false);
+					document.frmModificarVacaciones.buscarVacacionMod.addEventListener("click",rellenaCamposModificarVacaciones,false);
 				});
 			}
 		});
@@ -574,12 +576,14 @@ function cargarBajaVacacion(){
                 buscarVacacionesActivas();
 				var oBtnBajaVacacion= document.getElementById("btnBajaVacaciones");
 				oBtnBajaVacacion.addEventListener("click",bajaVacaciones,false);
+				document.frmBajaDeVacaciones.buscarVacacionSelec.addEventListener("click",rellenaCamposBajaVacaciones,false);
 			} else{
 				$.getScript("js/gestion/gestionConductor.js", function(){
                     buscarVacacionesActivas();
 					bGestionConductorCargado= true;
 					var oBtnBajaVacacion= document.getElementById("btnBajaVacaciones");
 				    oBtnBajaVacacion.addEventListener("click",bajaVacaciones,false);
+					document.frmBajaDeVacaciones.buscarVacacionSelec.addEventListener("click",rellenaCamposBajaVacaciones,false);
 				});
 			}
 		});

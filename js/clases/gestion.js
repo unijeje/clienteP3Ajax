@@ -1,4 +1,3 @@
-
 //objeto
 class Gestion
 {
@@ -29,6 +28,7 @@ class Gestion
             mensaje("Ya existe una cuenta con ese número. No se ha añadido");
         }
     }
+	
     buscarCuenta(sNumCuenta)
     {
         var oCuenta=null;
@@ -422,14 +422,25 @@ class Gestion
 	
 	bajaVacaciones(oVacaciones){
 		var bEncontrado= false;
+		var sDatos="datos="+oVacaciones.dni;
 		
-		for(var i=0; i<this._vacaciones.length && bEncontrado==false; i++){
-			if(this._vacaciones[i].dni==oVacaciones.dni){
-				bEncontrado= true; 
-				this._vacaciones[i].estado=false; //false es dado de baja
-				this.actualizaComboVacaciones();				
-			}
-		}
+		$.ajax({
+            url :"php/bajaVacacion.php",
+            async : false,
+            cache : false, 
+            method : "POST", 
+            dataType : "text",
+            data : sDatos,
+            complete : function(sDatosDevuelto, sStatus)
+            {
+                if(sDatosDevuelto.responseText=="Exito")
+                {
+					bEncontrado=true;
+					buscarVacacionesActivas();
+					buscarVacaciones();
+				}
+            }
+        });
 		
 		return bEncontrado;
 	}
@@ -475,6 +486,33 @@ class Gestion
 
         return oConductor;
     }
+	
+	buscarDatosVacacion(sDni){
+		var oVacaciones= null;
+		var sDatos="dni="+sDni;
+		
+		$.ajax({
+            url :"php/buscarDatosVacaciones.php",
+            async : false,
+            cache : false, 
+            method : "GET", 
+            dataType : "json",
+            data : sDatos,
+            complete : function(oDatosDevuelto, sStatus)
+            {
+                // si se devuelve un resultado correcto se envia el cconductor devuelta
+                if(sStatus=="success" && oDatosDevuelto.responseJSON.dni_conductor!=null)
+                {   oVacaciones=new Vacaciones(oDatosDevuelto.responseJSON.dni_conductor, oDatosDevuelto.responseJSON.fecha_ini, oDatosDevuelto.responseJSON.fecha_fin, 
+					oDatosDevuelto.responseJSON.descripcion,oDatosDevuelto.responseJSON.estado);
+					//console.log(oVacaciones);
+                    if(oDatosDevuelto.responseJSON.estado==false)
+                        oVacaciones.estado=oDatosDevuelto.responseJSON.estado;
+                }
+            }
+        });
+
+        return oVacaciones;
+	}
 	
 	buscarVacacion(sDni){
 		var bRespuesta=false;

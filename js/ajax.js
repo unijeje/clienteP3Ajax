@@ -198,6 +198,27 @@ function recuperarConductor(oEvento)
 
 }
 
+function recuperarVacacion(oEvento)
+{
+    var oE=oEvento ||window.event;
+
+    //console.log(oE.target.parentNode.parentNode);
+    var sDni=oE.target.parentNode.parentNode.cells[0].textContent;
+    
+    var sDatos="dni="+sDni;
+
+    $.post("php/reactivarVacacion.php",sDatos,function(sDatosDevuelto, sStatus, oAjax){
+        //console.log(sDatosDevuelto);
+        if(sStatus=="success" && sDatosDevuelto=="Exito")
+        {
+			buscarVacacionesActivas();
+			buscarVacaciones();
+            listadoVacaciones();
+        } 
+    },"text");
+
+}
+
 function respuestaAltaAlquiler()
 {
     var oAjax = this;
