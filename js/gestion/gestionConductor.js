@@ -319,7 +319,7 @@ function validarVacaciones(formVacaciones){
 	var fechaFin= formVacaciones.fechaFinal.value.trim();
 	formVacaciones.fechaFinal.value= formVacaciones.fechaFinal.value.trim();
 	
-	if(fechaFinal==""){
+	if(fechaFin==""){
 		formVacaciones.fechaFinal.parentNode.parentNode.classList.add("has-error");
 		formVacaciones.fechaFinal.focus();
 		error= "Seleccione una fecha fin";
