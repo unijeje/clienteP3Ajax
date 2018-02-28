@@ -15,15 +15,16 @@ $mensaje=$fila;
 if($fila == 1)
 	$mensaje="El autobus seleccionado tiene un mantenimiento asignado actualmente";
 else{
+    $mensaje=$insert;
     if(ejecutaConsultaAccion($insert) > 0){
-    	
+    	$mensaje="hola";
     	if(ejecutaConsultaAccion($update) >0){
     		$mensaje="Mantenimiento introducido correctamente en la base de datos";
 			$resultado=true;
     	}
     }
     else
-    	$mensaje="Ya existe un autobus con esa matricula en la base de datos";
+    	$mensaje="Error al insertar el mantenimiento";
 }
 $datos=[];
 $datos[]=$resultado;
